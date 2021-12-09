@@ -74,6 +74,11 @@
   display: none !important; /* Chrome, Safari, and Opera */
 }
 
+.Modal .content ul{
+  position: relative;
+  left: -2%;
+}
+
 .Modal .content div {
   height: 50px;
   display: flex;

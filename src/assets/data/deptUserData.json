@@ -1,0 +1,72 @@
+[
+	{
+		"no" : 1,
+		"id" : "abc1",
+		"user_name" : "둘리",
+		"image" : "",
+		"position" : "부장",
+		"comment" : "잘하자",
+		"email" : "dooly@gmail.com",
+		"auth" : "0"
+	},
+	{
+		"no" : 2,
+		"id" : "abc2",
+		"user_name" : "도우너",
+		"image" : "",
+		"position" : "과장",
+		"comment" : "화이팅",
+		"email" : "도우너@gmail.com",
+		"auth" : "1"
+	},
+	{
+		"no" : 3,
+		"id" : "abc3",
+		"user_name" : "마이콜",
+		"image" : "",
+		"position" : "대리",
+		"comment" : "으쌰으쌰",
+		"email" : "michol@gmail.com",
+		"auth" : "1"
+	},
+	{
+		"no" : 4,
+		"id" : "abc4",
+		"user_name" : "오징어",
+		"image" : "",
+		"position" : "대리",
+		"comment" : "열정열정",
+		"email" : "squid@naver.com",
+		"auth" : "1"
+	},
+	{
+		"no" : 5,
+		"id" : "abc5",
+		"user_name" : "또치",
+		"image" : "",
+		"position" : "사원",
+		"comment" : "가즈아",
+		"email" : "ddochi@gmail.com",
+		"auth" : "2"
+	},
+	{
+		"no" : 6,
+		"id" : "abc6",
+		"user_name" : "고길동",
+		"image" : "",
+		"position" : "사원",
+		"comment" : "할 수 있다!",
+		"email" : "gogil@gmail.com",
+		"auth" : "2"
+	},
+	{
+		"no" : 7,
+		"id" : "abc7",
+		"user_name" : "희동이",
+		"image" : "",
+		"position" : "사원",
+		"comment" : "깐따삐야!",
+		"email" : "huidong@naver.com",
+		"auth" : "2"
+	}
+]
