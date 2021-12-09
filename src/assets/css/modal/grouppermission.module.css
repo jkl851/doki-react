@@ -85,6 +85,11 @@
     overflow-y: auto;
 }
 
+.Modal .content ul{
+  position: relative;
+  left: -2%;
+}
+
 .Modal .content div{
   height: 50px;
   display: flex;

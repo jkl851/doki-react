@@ -1,17 +1,13 @@
 import React from 'react';
+import User from './User.js'
 
-const EntireUserList = ({userList}) => {
+const EntireUserList = ({userDatas}) => {
+    console.log(userDatas);
     return (
-        <Fragmen>
-            <ul > 
-                {/* className={styles.MessageList} */}
-                {messages.map(message => <Message key={`guestbook_message_${message.no}`}
-                                                    no={message.no}
-                                                    name={message.name}
-                                                    message={message.message} 
-                                                    notifyDeleteMessage={notifyDeleteMessage}/>)}
-            </ul>
-        </Fragmen>
+        <ul > 
+            {userDatas.map(userData => 
+                <User name={userData.user_name + " " + userData.position}/>)}
+        </ul>
     );
 };
 
