@@ -1,0 +1,13 @@
+.main_content {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.main_content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+.main_content {
+  margin-left: auto;
+  width: calc(100% - 280px);
+  height: 93vh;
+  overflow: auto;
+}
