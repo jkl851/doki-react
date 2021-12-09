@@ -79,16 +79,12 @@
   overflow-y: auto;
 }
 
-<<<<<<< HEAD
-.Modal .content div {
-=======
 .Modal .content ul{
   position: relative;
   left: -2%;
 }
 
 .Modal .content div{
->>>>>>> soo
   height: 50px;
   display: flex;
   margin: 5px 5px 5px 5px;
