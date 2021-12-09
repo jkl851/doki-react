@@ -4,7 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid #c5c5c5;
-  border-radius: 5px;
+  border-radius: 10px;
   background: #fff;
   color: #333;
   outline: 0;
@@ -66,6 +66,12 @@
   height: 365px;
   margin: 5px 5px 5px 5px;
   overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.Modal .content::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, and Opera */
 }
 
 .Modal .content div {
