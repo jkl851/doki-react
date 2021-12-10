@@ -1,7 +1,7 @@
 import React from 'react';
 import DeptUser from './DeptUser'
 
-const DeptUserList = ({deptUserDatas}) => {
+const DeptUserList = ({deptUserDatas, isSidebar}) => {
     return (
         <ul>
             {deptUserDatas.map(deptUserData => 
@@ -9,6 +9,7 @@ const DeptUserList = ({deptUserDatas}) => {
                     key={deptUserData.no}
                     name={deptUserData.user_name + " " + deptUserData.position}
                     auth={deptUserData.auth}
+                    isSidebar={isSidebar}
                     />)}
         </ul>
     );
