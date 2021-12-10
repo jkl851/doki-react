@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Compose from "./Compose";
-import Toolbar from "./Toolbar";
-import ToolbarButton from "./ToolbarButton";
-import Message from "./Message";
+import Compose from "./Compose/index";
+import Toolbar from "./Toolbar/index";
+import ToolbarButton from "./ToolbarButton/index";
+import Message from "./Message/index";
 import moment from "moment";
 
 import "./MessageList.css";
@@ -156,6 +156,7 @@ export default function MessageList(props) {
 
   return (
     <div className="message-list">
+      
       <Toolbar
         title="Conversation Title"
         rightItems={[
