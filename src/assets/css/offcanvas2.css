@@ -1,8 +1,8 @@
-.messeage-list {
+.sidenav2 {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   right: 0;
   background-color: #fff;
@@ -10,7 +10,7 @@
   transition: 0.5s;
 }
 
-.messeage-list a {
+.sidenav2 a {
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -18,11 +18,11 @@
   transition: 0.3s;
 }
 
-.messeage-list a:hover {
+.sidenav2 a:hover {
   color: #f1f1f1;
 }
 
-.messeage-list .closebtn {
+.sidenav2 .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -30,23 +30,23 @@
   margin-left: 50px;
 }
 
-#main {
+#main2 {
   transition: margin-right 0s;
   padding: 16px;
 }
 
 @media screen and (max-height: 450px) {
-  .messeage-list {
+  .sidenav2 {
     padding-top: 0px;
   }
-  .messeage-list a {
+  .sidenav2 a {
     font-size: 18px;
   }
 }
-.messeage-list {
+.sidenav2 {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.messeage-list::-webkit-scrollbar {
+.sidenav2::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
 }
