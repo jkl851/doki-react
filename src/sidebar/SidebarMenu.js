@@ -12,18 +12,15 @@ import SearchImg from '../assets/images/Search.png'
 import CloseImg from '../assets/images/Close.png'
 import EntireUserList from './EntireUserList'
 import EntireUserDatas from '../assets/data/entireUserData.json'
-import DeptUserDatas from '../assets/data/deptUserData.json'
 import DeptUserList from './DeptUserList'
-
+import axios from 'axios';
 
 ReactModal.setAppElement('#root');
 
 export default function SidebarMenu() {
     const [inviteState, setInviteState] = useState({isOpen : false});
     const [groupPermissionState, setGroupPermissionState] = useState({isOpen : false});
- 
-
-
+    const [deptUserDatas, setDeptUserDatas] = useState([]);
     const inviteClick = () => {
         setInviteState({isOpen: true})
     }
@@ -39,6 +36,21 @@ export default function SidebarMenu() {
     const closeGroupPermissionModal = () => {
         setGroupPermissionState({isOpen: false})
     }
+
+    // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
+    const departmentNo = 1;
+
+    // dependency를 []로 해주었기 때문에 한번 밖에 실행이 안된다
+    // 어떤 dependency를 줄지 고민
+    useEffect(async() => {
+        await axios.get('http://localhost:8080/doki/user/getUserList/1')
+        .then((Response) => {
+            setDeptUserDatas(Response.data);
+            console.log("get중...")
+        })
+        .catch((Error) => {console.log(Error)})
+    }, [])
+
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
             <br/>
@@ -105,7 +117,7 @@ export default function SidebarMenu() {
                             </div>
                         </div>
                         <div className={GroupPermmissionStyles['content']}  >
-                            <DeptUserList deptUserDatas={DeptUserDatas}/>
+                            <DeptUserList deptUserDatas={deptUserDatas}/>
                         </div>
 
                     </div>
@@ -113,7 +125,7 @@ export default function SidebarMenu() {
             </div>
             
             <div className="sidebar-user">
-                <SidebarUser deptUserDatas={DeptUserDatas}/>
+                <SidebarUser deptUserDatas={deptUserDatas}/>
             </div>
         </div>
     )

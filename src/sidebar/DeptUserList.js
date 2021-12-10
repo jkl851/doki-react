@@ -7,7 +7,7 @@ const DeptUserList = ({deptUserDatas, isSidebar}) => {
             {deptUserDatas.map(deptUserData => 
                 <DeptUser 
                     key={deptUserData.no}
-                    name={deptUserData.user_name + " " + deptUserData.position}
+                    name={deptUserData.userName + " " + deptUserData.position}
                     auth={deptUserData.auth}
                     isSidebar={isSidebar}
                     />)}
