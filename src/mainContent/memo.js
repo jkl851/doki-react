@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 // ====에디터=====
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
+// convertToRaw: editorState 객체가 주어지면 원시 JS 구조로 변환.
+import { EditorState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styled from "styled-components";
 import "../assets/css/main_content.css";
+// convertToRaw로 변환시켜준 원시 JS 구조를 HTML로 변환.
+import draftToHtml from 'draftjs-to-html';
+
 
 const MyBlock = styled.div`
     #mydiv {
     position: absolute;
-    z-index: 0;
+    z-index: 9;
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
@@ -47,6 +51,19 @@ const MyBlock = styled.div`
   }
 `;
 //==============
+// 변환시켜준 editorState 값을 넣기 위한 div 태그 css 
+const IntroduceContent = styled.div`
+  position: relative;
+  border: 0.0625rem solid #d7e2eb;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  padding: 1.5rem;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+`;
+//==============
+
 
 const memo = () => {
   const [editorState, setEditorState] = useState(() =>
@@ -55,6 +72,8 @@ const memo = () => {
   useEffect(() => {
     console.log(editorState);
   }, [editorState]);
+
+  const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
 
   // 드래그 앤 드롭 기능 ==========================
   useEffect(() => {
@@ -132,6 +151,7 @@ const memo = () => {
                 trigger: "#",
               }}
             />
+            <IntroduceContent dangerouslySetInnerHTML={{__html: editorToHtml}}/>
           </div>
         </div>
       </MyBlock>
