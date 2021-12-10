@@ -23,7 +23,7 @@ const MyBlock = styled.div`
     padding: 10px;
     cursor: move;
     z-index: 10;
-    background-color: #2196f3;
+    background-color: #8fd8f8;
     color: #fff;
   }
   .editor {

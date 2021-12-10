@@ -3,7 +3,6 @@ import HeaderDiv from "./header/HeaderDiv";
 //import Maincontent from "./mainContent/Maincontent";
 import Sidebar from "./sidebar/Sidebar";
 import SideChat from "./sidechat/SideChat";
-
 import SideChat2 from "./sidechat/SideChat2";
 import Memo from "./mainContent/memo";
 
