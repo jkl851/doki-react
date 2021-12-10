@@ -4,12 +4,18 @@ import UserImg from '../assets/images/user3.png'
 const DeptUser = ({name, auth, isSidebar}) => {
     // 추후 profile modal을 위한 state
     const [profileIsOpen, setProfileIsOpen] = useState(false);
+    const [radioAuth, setRadioAuth] = useState(auth);
 
     const imgClick = () => {
         {/* img는 isSidebar일 때만 onClick시 profile 정보 modal을 띄운다 */}
         isSidebar && setProfileIsOpen(true);
     }
 
+    const handleChange = (e) => {
+        // e.target은 onChange 될 때의 element(<input>)이다
+        // 해당 input의 id는 string 형태이므로 Number로 바꿔준다
+        setRadioAuth(Number(e.target.id))
+    }
     return (
         <div>
             <img onClick={imgClick} src={UserImg} alt="" />
@@ -27,9 +33,9 @@ const DeptUser = ({name, auth, isSidebar}) => {
              */}
             {!isSidebar && 
                 <>
-                    <input checked={auth === '0'} type='radio' id='1' name={name} ></input>
-                    <input checked={auth === '1'} type='radio' id='1' name={name} ></input>
-                    <input checked={auth === '2'} type='radio' id='1' name={name} ></input>
+                    <input onChange={handleChange} checked={radioAuth === 0} type='radio' id='0' name={name} ></input>
+                    <input onChange={handleChange} checked={radioAuth === 1} type='radio' id='1' name={name} ></input>
+                    <input onChange={handleChange} checked={radioAuth === 2} type='radio' id='2' name={name} ></input>
                 </>
             }
         </div>
