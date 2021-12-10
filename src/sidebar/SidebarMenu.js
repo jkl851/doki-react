@@ -57,6 +57,8 @@ export default function SidebarMenu() {
                 {/* Invite Modal */}
                 <ReactModal 
                     isOpen={inviteState.isOpen} // modalState.isOpen
+                    onRequestClose={ () => setInviteState({isOpen: false}) }
+                    shouldCloseOnOverlayClick={true}
                     className={InviteStyles.Modal}>
                     <div className={InviteStyles['close']}>
                         <img onClick={closeInviteModal} src={CloseImg} alt="" />
@@ -80,7 +82,9 @@ export default function SidebarMenu() {
 
                 {/* Group Permission Modal */}
                 <ReactModal 
-                    isOpen={groupPermissionState.isOpen}
+                    isOpen={groupPermissionState.isOpen} // modalState.isOpen
+                    shouldCloseOnOverlayClick={true}
+                    onRequestClose={ () => setGroupPermissionState({isOpen: false}) }
                     className={GroupPermmissionStyles.Modal}>
                     <div className={GroupPermmissionStyles['close']}>
                         <img onClick={closeGroupPermissionModal} src={CloseImg} alt="" />
