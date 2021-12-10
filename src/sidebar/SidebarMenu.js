@@ -79,7 +79,7 @@ export default function SidebarMenu() {
 
                 {/* Group Permission Modal */}
                 <ReactModal 
-                    isOpen={groupPermissionState.isOpen} // modalState.isOpen
+                    isOpen={groupPermissionState.isOpen}
                     className={GroupPermmissionStyles.Modal}>
                     <div className={GroupPermmissionStyles['close']}>
                         <img onClick={closeGroupPermissionModal} src={CloseImg} alt="" />

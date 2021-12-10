@@ -5,7 +5,11 @@ const DeptUserList = ({deptUserDatas}) => {
     return (
         <ul>
             {deptUserDatas.map(deptUserData => 
-                <DeptUser key={deptUserData.no} name={deptUserData.user_name + " " + deptUserData.position}/>)}
+                <DeptUser 
+                    key={deptUserData.no}
+                    name={deptUserData.user_name + " " + deptUserData.position}
+                    auth={deptUserData.auth}
+                    />)}
         </ul>
     );
 };
