@@ -32,13 +32,10 @@ const MyBlock = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-<<<<<<< HEAD
-=======
 
   .editor::-webkit-scrollbar {
     display: none !important; /* Chrome, Safari, and Opera */
   }
->>>>>>> 4f37a03f3e66697727d05b53d40a99be24f01091
   
   .toolbar {
     height: 100px !important;

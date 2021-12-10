@@ -64,6 +64,19 @@ export default function SidebarMenu() {
         .catch((Error) => {console.log(Error)})
     }, [])
     
+    // 수정중..
+    // const notifyMessage = {
+    //     update: async() => {
+    //         await axios.post('http://localhost:8080/doki/user/getAllUserList')
+    //         .then((Response) => {
+    //             console.log("get AllUserList 요청!")
+    //             setAllUserDatas(Response.data);
+    
+                
+    //         })
+    //         .catch((Error) => {console.log(Error)})
+    //     }
+    // }
 
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
@@ -131,7 +144,11 @@ export default function SidebarMenu() {
                             </div>
                         </div>
                         <div className={GroupPermmissionStyles['content']}  >
-                            <DeptUserList deptUserDatas={deptUserDatas}/>
+                            <DeptUserList 
+                                deptUserDatas={deptUserDatas}
+                                // 수정중..
+                                // notifyMessage={notifyMessage} 
+                                />
                         </div>
 
                     </div>
