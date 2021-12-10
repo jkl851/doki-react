@@ -38,7 +38,7 @@ export default function SidebarMenu() {
     }
 
     // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
-    const departmentNo = 1;
+    // const departmentNo = 1;
 
     // dependency를 []로 해주었기 때문에 한번 밖에 실행이 안된다
     // 어떤 dependency를 줄지 고민
