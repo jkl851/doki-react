@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import shave from "shave";
 
 import "./ConversationListItem.css";
-// import { openMessage } from "../../assets/js/offcanvas";
+import { openNav2 } from "../../assets/js/offcanvas";
 
 export default function ConversationListItem(props) {
   useEffect(() => {
@@ -11,8 +11,13 @@ export default function ConversationListItem(props) {
 
   const { photo, name, text } = props.data;
 
+  function openMessage() {
+    document.getElementById("message-list").style.width = "400px";
+    document.getElementById("whole_wrapper").style.marginRight = "0";
+  }
+
   return (
-    <div className="conversation-list-item">
+    <div className="conversation-list-item" onDoubleClick={openNav2}>
       <img className="conversation-photo" src={photo} alt="conversation" />
       <div className="conversation-info">
         <h1 className="conversation-title">{name}</h1>

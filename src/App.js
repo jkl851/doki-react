@@ -1,8 +1,6 @@
-import React from 'react';
-import Doki from './Doki';
+import React from "react";
+import Doki from "./Doki";
 
 export default function App() {
-    return (
-        <Doki />
-    );
+  return <Doki />;
 }

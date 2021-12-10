@@ -2,7 +2,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
-  background: white;
+  background: #99999c;
   border-top: 1px solid #eeeef1;
   position: fixed;
   width: calc(100% - 20px);

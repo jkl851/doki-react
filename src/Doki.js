@@ -3,10 +3,10 @@ import HeaderDiv from "./header/HeaderDiv";
 //import Maincontent from "./mainContent/Maincontent";
 import Sidebar from "./sidebar/Sidebar";
 import SideChat from "./sidechat/SideChat";
+import SideChat2 from "./sidechat/SideChat2";
 import Memo from "./mainContent/memo";
 
 export default function Doki() {
-
   return (
     <div id="whole_wrapper">
       <HeaderDiv />
@@ -15,10 +15,11 @@ export default function Doki() {
       </div>
 
       <div className="main_content">
-          <Memo />
+        <Memo />
       </div>
 
       <SideChat />
+      <SideChat2 />
     </div>
   );
 }
