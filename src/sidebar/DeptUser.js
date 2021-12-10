@@ -15,6 +15,7 @@ const DeptUser = ({name, auth, isSidebar}) => {
         // e.target은 onChange 될 때의 element(<input>)이다
         // 해당 input의 id는 string 형태이므로 Number로 바꿔준다
         setRadioAuth(Number(e.target.id))
+        console.log("radio 선택...")
     }
     return (
         <div>

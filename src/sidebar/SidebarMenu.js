@@ -11,7 +11,6 @@ import GroupPermmissionStyles from '../assets/css/modal/grouppermission.module.c
 import SearchImg from '../assets/images/Search.png'
 import CloseImg from '../assets/images/Close.png'
 import EntireUserList from './EntireUserList'
-import EntireUserDatas from '../assets/data/entireUserData.json'
 import DeptUserList from './DeptUserList'
 import axios from 'axios';
 
@@ -21,6 +20,9 @@ export default function SidebarMenu() {
     const [inviteState, setInviteState] = useState({isOpen : false});
     const [groupPermissionState, setGroupPermissionState] = useState({isOpen : false});
     const [deptUserDatas, setDeptUserDatas] = useState([]);
+    const [allUserDatas, setAllUserDatas] = useState([]);
+
+
     const inviteClick = () => {
         setInviteState({isOpen: true})
     }
@@ -45,11 +47,23 @@ export default function SidebarMenu() {
     useEffect(async() => {
         await axios.get('http://localhost:8080/doki/user/getUserList/1')
         .then((Response) => {
+            console.log("get UserList 요청!")
             setDeptUserDatas(Response.data);
-            console.log("get중...")
         })
         .catch((Error) => {console.log(Error)})
     }, [])
+
+    useEffect(async() => {
+        await axios.get('http://localhost:8080/doki/user/getAllUserList')
+        .then((Response) => {
+            console.log("get AllUserList 요청!")
+            setAllUserDatas(Response.data);
+
+            
+        })
+        .catch((Error) => {console.log(Error)})
+    }, [])
+    
 
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
@@ -86,7 +100,7 @@ export default function SidebarMenu() {
                             <label>전체 직원 목록</label>
                         </div>
                         <div className={InviteStyles['content']}  >
-                            <EntireUserList userDatas={EntireUserDatas}/>
+                            <EntireUserList userDatas={allUserDatas}/>
                         </div>
 
                     </div>
