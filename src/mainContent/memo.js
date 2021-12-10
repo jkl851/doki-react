@@ -9,7 +9,7 @@ import "../assets/css/main_content.css";
 const MyBlock = styled.div`
     #mydiv {
     position: absolute;
-    z-index: 9;
+    z-index: 0;
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
@@ -31,7 +31,6 @@ const MyBlock = styled.div`
     margin: auto !important;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-    
   }
 <<<<<<< HEAD
 =======

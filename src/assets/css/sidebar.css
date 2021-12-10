@@ -48,37 +48,38 @@ body {
   display: none; /* Chrome, Safari, Opera*/
 }
 
-
 /* sidebar의 user list 부분  */
 
 .sidebar_user {
-  width: 100%
-}
-
-
-.userList{
   width: 100%;
 }
 
-.userList ul{
+.userList {
+  width: 100%;
+}
+
+.userList ul {
   padding: 0px 0px;
-  margin: 10px 5px;
+  margin: 5px 0px 0px 0px;
+  height: 100%;
 }
 
-.userList ul div{
+.userList ul div {
   width: 100%;
+  border-bottom: 1px solid rgb(204, 204, 204);
 }
 
-.userList ul div img{
+.userList ul div img {
   position: relative;
-  left: 2%;
-  transform: scale(0.8);
+  left: 1%;
+  transform: scale(0.7);
 }
 
-.userList ul div label{
+.userList ul div label {
   color: #636464;
   position: relative;
   left: 6%;
   text-align: center;
 
+  font-weight: bold;
 }
