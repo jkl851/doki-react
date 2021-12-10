@@ -6,7 +6,7 @@ const EntireUserList = ({userDatas}) => {
     return (
         <ul > 
             {userDatas.map(userData => 
-                <User name={userData.user_name + " " + userData.position}/>)}
+                <User key={userData.no} name={userData.user_name + " " + userData.position}/>)}
         </ul>
     );
 };
