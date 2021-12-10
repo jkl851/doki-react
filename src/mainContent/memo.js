@@ -12,7 +12,6 @@ const MyBlock = styled.div`
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
-    margin auto;
   }
 
     #mydivheader {
@@ -30,6 +29,7 @@ const MyBlock = styled.div`
     border-radius: 2px !important;
     margin: auto !important;
   }
+  
   .toolbar {
     height: 100px !important;
     width: 500px !important;
