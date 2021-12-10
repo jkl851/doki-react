@@ -15,6 +15,7 @@ import EntireUserDatas from '../assets/data/entireUserData.json'
 import DeptUserDatas from '../assets/data/deptUserData.json'
 import DeptUserList from './DeptUserList'
 
+
 ReactModal.setAppElement('#root');
 
 export default function SidebarMenu() {
@@ -56,6 +57,8 @@ export default function SidebarMenu() {
                 {/* Invite Modal */}
                 <ReactModal 
                     isOpen={inviteState.isOpen} // modalState.isOpen
+                    onRequestClose={ () => setInviteState({isOpen: false}) }
+                    shouldCloseOnOverlayClick={true}
                     className={InviteStyles.Modal}>
                     <div className={InviteStyles['close']}>
                         <img onClick={closeInviteModal} src={CloseImg} alt="" />
@@ -80,6 +83,8 @@ export default function SidebarMenu() {
                 {/* Group Permission Modal */}
                 <ReactModal 
                     isOpen={groupPermissionState.isOpen} // modalState.isOpen
+                    shouldCloseOnOverlayClick={true}
+                    onRequestClose={ () => setGroupPermissionState({isOpen: false}) }
                     className={GroupPermmissionStyles.Modal}>
                     <div className={GroupPermmissionStyles['close']}>
                         <img onClick={closeGroupPermissionModal} src={CloseImg} alt="" />
@@ -105,8 +110,11 @@ export default function SidebarMenu() {
 
                     </div>
                 </ReactModal>
-            </div> 
-            <SidebarUser/>
+            </div>
+            
+            <div className="sidebar-user">
+                <SidebarUser deptUserDatas={DeptUserDatas}/>
+            </div>
         </div>
     )
 }

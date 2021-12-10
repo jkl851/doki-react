@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderDiv from "./header/HeaderDiv";
-import Maincontent from "./mainContent/Maincontent";
+//import Maincontent from "./mainContent/Maincontent";
 import Sidebar from "./sidebar/Sidebar";
 import SideChat from "./sidechat/SideChat";
 import SideChat2 from "./sidechat/SideChat2";
+import Memo from "./mainContent/memo";
 
 export default function Doki() {
   return (
@@ -13,7 +14,9 @@ export default function Doki() {
         <Sidebar />
       </div>
 
-      <Maincontent />
+      <div className="main_content">
+        <Memo />
+      </div>
 
       <SideChat />
       <SideChat2 />
