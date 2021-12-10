@@ -25,23 +25,45 @@
 
 .Popover .content {
   position: relative;
-  padding: 1.6em;
-  font-size: 0.75em;
+  font-size: 9;
   width: 100%;
-  height: 50px;
+  height: 55px;
   /* display: inline-block; */
-  border: 1px solid pink;
+  border: 1px solid rgba(170, 170, 170, 0.3);
 }
 
 .Popover .profile {
   float: left;
   /* font-size: 2em; */
-  border: 1px solid red;
+  width: 50px;
+  height: 100%;
+}
+
+.Popover .name {
+  margin-top: 3px;
+  margin-left: 5px;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.Popover .messages {
+  margin-left: 5px;
+  width: 180px;
+  display: block;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.Popover .profile img {
+  transform: scale(0.7);
+  margin: -4px 0px 0px -7px;
 }
 
 .Popover .message {
   float: left;
-  border: 1px solid magenta;
 }
 
 .Popover .user-profile {
