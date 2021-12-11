@@ -1,7 +1,8 @@
 import React from 'react';
 import DeptUser from './DeptUser'
 
-const DeptUserList = ({deptUserDatas, isSidebar, notifyMessage, setDeptUserDatas}) => {
+const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas}) => {
+    console.log(deptUserDatas)
     return (
         <ul>
             {deptUserDatas.map(deptUserData => 

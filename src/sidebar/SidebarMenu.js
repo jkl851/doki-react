@@ -35,9 +35,19 @@ export default function SidebarMenu() {
         setInviteState({isOpen: false})
     }
 
-    const closeGroupPermissionModal = () => {
+    const closeGroupPermissionModal = async() => {
         setGroupPermissionState({isOpen: false})
-        
+
+        console.log("여기는 1번")
+        axios.put('http://localhost:8080/doki/user/updatePermission',
+                deptUserDatas
+            )
+            .then((Response) => {
+                console.log("====== update 요청 성공! ======= ");
+                console.log(Response);
+                console.log("=============================== ");
+            })
+            .catch((Error) => {console.error(Error)})
     }
 
     // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
@@ -67,26 +77,6 @@ export default function SidebarMenu() {
         })
         .catch((Error) => {console.log(Error)})
     }, [])
-    
-    // 권한 수정, 참가자 초대 시 상태 및 액션을 주고 받는 부분
-    const notifyMessage = {
-
-        updatePermission : async(deptUserNo, auth) => {
-
-            await axios.put('http://localhost:8080/doki/user/updatePermission',{
-                // 동적인 데이터 넣길 요망
-                // back에서 파싱해서 넣는다
-                deptUserNo : deptUserNo,
-                auth: auth
-            })
-            .then((Response) => {
-                console.log("====== update 요청 성공! ======= ");
-                console.log(Response);
-                console.log("=============================== ");
-            })
-            .catch((Error) => {console.log(Error)})
-        }
-    }
 
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
@@ -158,7 +148,6 @@ export default function SidebarMenu() {
                         <div className={GroupPermmissionStyles['content']}  >
                             <DeptUserList 
                                 deptUserDatas={deptUserDatas}
-                                notifyMessage={notifyMessage} 
                                 setDeptUserDatas={setDeptUserDatas}
                                 />
                         </div>

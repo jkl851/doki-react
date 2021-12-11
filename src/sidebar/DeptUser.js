@@ -26,11 +26,6 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
                 {...data, auth: Number(e.target.id)} :
                 {...data}
         }))
-        // notifyMessage.setDeptUserDatas({
-        //     deptUserNo: deptUserNo,
-        //     auth: e.target.id
-        // })
-        // notifyMessage.updatePermission(deptUserNo, e.target.id)
         console.log("radio 선택...")
     }
     return (
