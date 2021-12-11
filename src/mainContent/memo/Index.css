@@ -87,14 +87,19 @@ input.title_input::placeholder {
   color: #dddddd9e;
 }
 
-textarea.descroption_input {
+textarea.description_input {
   border: none;
   outline: none;
   background: none;
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   color: rgb(19, 19, 19);
   resize: none;
   margin-bottom: 10px;
+}
+
+input.description_input::placeholder {
+  color: #dddddd9e;
 }
 
 textarea.descroption_input::-webkit-scrollbar {
@@ -110,16 +115,20 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   -o-border-radius: 50px;
 }
 
-textarea.descroption_input::placeholder {
-  color: #dddddd9e;
-  /*#ffffff73*/
-}
-
 .addButton {
   background: #fbbc04 !important;
-  width: 200px;
+  width: 50px;
   border: none;
   outline: none;
+}
+
+.hashTagButton {
+  width: 24px;
+  height: 24px;
+  viewport-fit: 0 0 64 64;
+  margin: top 20px bottom 20px !important;
+  padding-right: 10% !important;
+  background: url("./hashtag.svg") no-repeat top left 15px;
 }
 
 .add-icon {

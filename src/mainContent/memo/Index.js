@@ -1,24 +1,25 @@
 import './Index.css';
 import Header from './Header'
-import Createnote from './Createnote'
-import Note from './Note'
+import CreateMemo from './Creatememo'
+import Memo from './Memo'
 import React,{useState} from 'react'
 
 export default function App() {
-  const [addItem,setAddItem] = useState([])
-  const addNote = (note) => {
+  const [addItem, setAddItem] = useState([]);
+
+  const addMemo = (memo) => {
     setAddItem((preValue) => {
       return[
-        ...preValue,note
+        ...preValue, memo
       ]
     })
 
-    if(note.title === '' || note.content === ''){
+    if(memo.title === '' || memo.content === ''){
       alert('제목이나 본문을 기입하세요')
       setAddItem([])
     }
   }
-  
+
   const onDelete = (id) => {
     setAddItem( (oldData) => {
      return oldData.filter( (currentValue,indx) => {
@@ -32,11 +33,13 @@ export default function App() {
       <div className="container">
         <Header />
         <div className="main_note">
-          <Createnote passNote = {addNote}/>
+          <CreateMemo 
+              passMemo = {addMemo}
+              />
 
 {          addItem.map( (value,index) => {
             return(
-              <Note
+              <Memo
                 key={index}
                 id={index}
                 titles={value.title}
