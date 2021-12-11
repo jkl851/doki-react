@@ -37,6 +37,7 @@ export default function SidebarMenu() {
 
     const closeGroupPermissionModal = () => {
         setGroupPermissionState({isOpen: false})
+        
     }
 
     // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
@@ -44,6 +45,8 @@ export default function SidebarMenu() {
 
     // dependency를 []로 해주었기 때문에 한번 밖에 실행이 안된다
     // 어떤 dependency를 줄지 고민
+    
+    // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
     useEffect(async() => {
         await axios.get('http://localhost:8080/doki/user/getUserList/1')
         .then((Response) => {
@@ -53,6 +56,7 @@ export default function SidebarMenu() {
         .catch((Error) => {console.log(Error)})
     }, [])
 
+    // 회사 전체 직원의 리스트 검색
     useEffect(async() => {
         await axios.get('http://localhost:8080/doki/user/getAllUserList')
         .then((Response) => {
@@ -64,19 +68,25 @@ export default function SidebarMenu() {
         .catch((Error) => {console.log(Error)})
     }, [])
     
-    // 수정중..
-    // const notifyMessage = {
-    //     update: async() => {
-    //         await axios.post('http://localhost:8080/doki/user/getAllUserList')
-    //         .then((Response) => {
-    //             console.log("get AllUserList 요청!")
-    //             setAllUserDatas(Response.data);
-    
-                
-    //         })
-    //         .catch((Error) => {console.log(Error)})
-    //     }
-    // }
+    // 권한 수정, 참가자 초대 시 상태 및 액션을 주고 받는 부분
+    const notifyMessage = {
+
+        updatePermission : async(deptUserNo, auth) => {
+
+            await axios.put('http://localhost:8080/doki/user/updatePermission',{
+                // 동적인 데이터 넣길 요망
+                // back에서 파싱해서 넣는다
+                deptUserNo : deptUserNo,
+                auth: auth
+            })
+            .then((Response) => {
+                console.log("====== update 요청 성공! ======= ");
+                console.log(Response);
+                console.log("=============================== ");
+            })
+            .catch((Error) => {console.log(Error)})
+        }
+    }
 
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
@@ -143,11 +153,13 @@ export default function SidebarMenu() {
                                 <label style={{fontSize: '10px'}}>관리<br/>권한</label>
                             </div>
                         </div>
+
+                        {/* 부서 참가자별 권한 주는 부분 */}
                         <div className={GroupPermmissionStyles['content']}  >
                             <DeptUserList 
                                 deptUserDatas={deptUserDatas}
-                                // 수정중..
-                                // notifyMessage={notifyMessage} 
+                                notifyMessage={notifyMessage} 
+                                setDeptUserDatas={setDeptUserDatas}
                                 />
                         </div>
 
