@@ -12,7 +12,7 @@ import draftToHtml from "draftjs-to-html";
 const MyBlock = styled.div`
   #mydiv {
     position: absolute;
-    z-index: 9;
+    z-index: 0;
     background-color: #f1f1f1;
     border: 1px solid #d3d3d3;
     text-align: center;
@@ -21,7 +21,7 @@ const MyBlock = styled.div`
   #mydivheader {
     padding: 10px;
     cursor: move;
-    z-index: 10;
+    z-index: 0;
     background-color: #8fd8f8;
     color: #fff;
   }
