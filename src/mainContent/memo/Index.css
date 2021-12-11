@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background: #ffffff;
+  width: 100%;
+  height: 100vh;
+  font-family: "PT Sans", sans-serif;
+}
+
+body::-webkit-scrollbar {
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: yellow;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 67px 1fr 29px;
+  height: 100vh;
+  width: 100%;
+}
+
+.keep-logo-heading {
+  display: grid;
+  grid-template-columns: 53px 1fr;
+}
+
+footer {
+  position: relative;
+  bottom: 0px;
+}
+
+.footerText {
+  color: #474747;
+  font-family: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_note {
+  padding: 34px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 28px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e8e9e92e;
+  -webkit-box-shadow: 0px 4px 15px 3px rgba(80, 80, 80, 0.77);
+  box-shadow: 0px 4px 15px 3px rgba(80, 80, 80, 0.77);
+}
+
+input.title_input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 19px;
+  margin-bottom: 19px;
+  font-weight: 700;
+  color: rgb(19, 19, 19);
+}
+
+input.title_input::placeholder {
+  color: #dddddd9e;
+}
+
+textarea.descroption_input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 14px;
+  color: rgb(19, 19, 19);
+  resize: none;
+  margin-bottom: 10px;
+}
+
+textarea.descroption_input::-webkit-scrollbar {
+  width: 5px;
+}
+
+textarea.descroption_input::-webkit-scrollbar-thumb {
+  background: #fbbc04;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+
+textarea.descroption_input::placeholder {
+  color: #dddddd9e;
+  /*#ffffff73*/
+}
+
+.addButton {
+  background: #fbbc04 !important;
+  width: 200px;
+  border: none;
+  outline: none;
+}
+
+.add-icon {
+  background: #fbbc04 !important;
+  color: white !important;
+  font-size: 30px !important;
+}
+
+.note {
+  width: 295px;
+  border: 1px solid #6d758d;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+  height: 208px;
+  display: grid;
+  grid-template-rows: 37px 1fr 30px;
+  overflow: hidden;
+  float: left;
+  margin: 4px;
+  -webkit-box-shadow: 0px 4px 15px 3px rgba(0, 0, 0, 0.77);
+  box-shadow: 0px 4px 15px 3px rgba(0, 0, 0, 0.77);
+}
+
+h2.note-title {
+  color: rgb(19, 19, 19);
+}
+
+span.note-description {
+  color: rgb(19, 19, 19);
+  /*#dddddd9e*/
+  word-break: break-all;
+}
+
+.note-area {
+  height: 104px;
+  overflow-y: scroll;
+}
+
+.note-area::-webkit-scrollbar {
+  width: 5px;
+}
+
+.note-area::-webkit-scrollbar-thumb {
+  background: #6d758d;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+}
+
+.delete-button {
+  background: none !important;
+  color: white !important;
+  transition: 0.5s !important;
+  -webkit-transition: 0.5s !important;
+  -moz-transition: 0.5s !important;
+  -ms-transition: 0.5s !important;
+  -o-transition: 0.5s !important;
+}
+
+.delete-button:hover {
+  background: red !important;
+}
