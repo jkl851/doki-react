@@ -7,7 +7,7 @@ import styled from "styled-components";
 import "../assets/css/main_content.css";
 
 const MyBlock = styled.div`
-    #mydiv {
+  #mydiv {
     position: absolute;
     z-index: 0;
     background-color: #f1f1f1;
@@ -15,7 +15,7 @@ const MyBlock = styled.div`
     text-align: center;
   }
 
-    #mydivheader {
+  #mydivheader {
     padding: 10px;
     cursor: move;
     z-index: 10;
@@ -32,14 +32,11 @@ const MyBlock = styled.div`
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-<<<<<<< HEAD
-=======
 
   .editor::-webkit-scrollbar {
     display: none !important; /* Chrome, Safari, and Opera */
   }
->>>>>>> 4f37a03f3e66697727d05b53d40a99be24f01091
-  
+
   .toolbar {
     height: 100px !important;
     width: 500px !important;
