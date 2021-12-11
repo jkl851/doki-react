@@ -1,22 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/normaltop.css";
-import Modal from "react-modal";
 import logo from "../assets/images/white_logo.png";
 import { openNav } from "../assets/js/offcanvas";
-import ChatAlarmModal from "./ChatAlarmModal";
-import MemoAlarmModal from "./MemoAlarmModal";
+import ChatAlarmPopover from "./ChatAlarmPopover";
+import MemoAlarmPopover from "./MemoAlarmPopover";
 import UpdateUserModal from "./UpdateUserModal";
-
-Modal.setAppElement("body");
+import axios from "axios";
+// import chatData from '../assets/data/chatMessageData.json';
 
 export default function HeaderDiv() {
+  
+  //현재 유저 no
+  let no = 3;
+  
+  //채팅 알림 받기
+  const [chatMessages, setChatMessages] = useState([]);
+  useEffect(async() => {
+    await axios.get(`http://localhost:8081/doki/alarm/getAlarm/${no}/0`)
+    .then((Response) => {
+        console.log(no + "번 유저 채팅 알림 요청!")
+        setChatMessages(Response.data);        
+    })
+    .catch((Error) => {console.log(Error)})
+  }, [])
+
+  //메모 알림 받기
+  const [memoMessages, setMemoMessages] = useState([]);
+  useEffect(async() => {
+    await axios.get(`http://localhost:8081/doki/alarm/getAlarm/${no}/1`)
+    .then((Response) => {
+        console.log(no + "번 유저 메모 알림 요청!")
+        setMemoMessages(Response.data);        
+    })
+    .catch((Error) => {console.log(Error)})
+  }, [])
+
+
+
+
   return (
     <div id="header_div">
       <div className="topnav" id="myTopnav">
         <img src={logo} style={{ width: "100px", height: "100%" }} />
         <div className="topnav-right" id="icons">
-          <MemoAlarmModal />
-          <ChatAlarmModal />
+          <MemoAlarmPopover memoMessages={memoMessages} />
+          <ChatAlarmPopover chatMessages={chatMessages} />
           <UpdateUserModal />
           <a onClick={openNav} href="#about">
             채팅
