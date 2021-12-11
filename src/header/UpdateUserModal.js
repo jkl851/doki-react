@@ -17,7 +17,7 @@ export default function MemoAlarmModal() {
     //유저 업데이트 Modal
     const [userUpdateModalData, setUserUpdateModalData] = useState({isOpen: false});
     const updateUserInfo = async(no) => {        
-            await axios.get(`http://localhost:8081/doki/user/findUser/${no}`)
+            await axios.get(`http://localhost:8080/doki/user/findUser/${no}`)
             .then((Response) => {
                 console.log("유저정보호출 : " + JSON.stringify(Response.data.list));
                 setUserUpdateModalData({
@@ -56,7 +56,7 @@ export default function MemoAlarmModal() {
             //유저 정보 수정 axios
             await axios({
                 method: 'put',
-                url: `http://localhost:8081/doki/user/update/${no}`,
+                url: `http://localhost:8080/doki/user/update/${no}`,
                 //axios 자동으로 json 변환?
                 data: {
                     no: `${no}`,

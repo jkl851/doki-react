@@ -16,7 +16,7 @@ export default function HeaderDiv() {
   //채팅 알림 받기
   const [chatMessages, setChatMessages] = useState([]);
   useEffect(async() => {
-    await axios.get(`http://localhost:8081/doki/alarm/getAlarm/${no}/0`)
+    await axios.get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
     .then((Response) => {
         console.log(no + "번 유저 채팅 알림 요청!")
         setChatMessages(Response.data);        
@@ -27,7 +27,7 @@ export default function HeaderDiv() {
   //메모 알림 받기
   const [memoMessages, setMemoMessages] = useState([]);
   useEffect(async() => {
-    await axios.get(`http://localhost:8081/doki/alarm/getAlarm/${no}/1`)
+    await axios.get(`http://localhost:8080/doki/alarm/getAlarm/${no}/1`)
     .then((Response) => {
         console.log(no + "번 유저 메모 알림 요청!")
         setMemoMessages(Response.data);        
