@@ -39,7 +39,7 @@ export default function SidebarMenu() {
         setGroupPermissionState({isOpen: false})
 
         console.log("여기는 1번")
-        axios.put('http://localhost:8080/doki/user/updatePermission',
+        await axios.put('http://localhost:8080/doki/user/updatePermission',
                 deptUserDatas
             )
             .then((Response) => {
