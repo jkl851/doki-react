@@ -1,12 +1,17 @@
 import React from 'react';
-import SearchImg from '../assets/images/Search.png'
+import UserImg from '../assets/images/user11.png'
 
-const User = ({name}) => {
+const User = ({no, name, image, isInvited}) => {
+
+    const handleChange = (e) => {
+        e.target.id // user의 no
+    }
+
     return (
         <div>
-            <img src={SearchImg} alt="" />
+            <img src={UserImg} alt="" />
             <label >{name}</label>
-            <input id={name} type='checkbox'></input>
+            <input disabled={isInvited} onChange={handleChange} id={no} type='checkbox'></input>
         </div>
     );
 };
