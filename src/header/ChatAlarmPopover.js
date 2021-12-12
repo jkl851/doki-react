@@ -43,12 +43,15 @@ export default function ChatAlarmModal({ chatMessages }) {
         }}
       >
         <Popover
+          style={{ width: "250px" }}
           isOpen={chatAlarmModal.isOpen}
           target="mypopover1"
           className={alarmModalStyles.Popover}
           toggle={togglePopover1}
         >
-          <PopoverHeader>새로운 알림 - 채팅</PopoverHeader>
+          <PopoverHeader className={alarmModalStyles["popoverHeader"]}>
+            새로운 알림 - 채팅
+          </PopoverHeader>
           <PopoverBody className={alarmModalStyles.popoverbody}>
             {chatMessages.map((chatMessage) => (
               <ChatMessage

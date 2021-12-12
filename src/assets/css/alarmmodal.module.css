@@ -4,24 +4,13 @@
 }
 
 .Popover .popoverbody {
-  padding: 0px;
+  padding: 5px 5px 0px 5px;
 }
 
-/* 
-.Popover h1 {
-    position: relative;
-    padding: .8em .5em;
-    margin: .1em 0;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    background: #e9e9e9;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.5em;
-    text-align: left;
-} */
+.Popover .popoverHeader {
+  background-color: #f3f3f5;
+  text-align: center;
+}
 
 .Popover .content {
   position: relative;
@@ -30,6 +19,7 @@
   height: 55px;
   /* display: inline-block; */
   border: 1px solid rgba(170, 170, 170, 0.3);
+  margin-bottom: 5px;
 }
 
 .Popover .profile {
@@ -57,18 +47,8 @@
   overflow: hidden;
 }
 
-.Popover .profile img {
-  transform: scale(0.7);
-  margin: -4px 0px 0px -7px;
-}
-
 .Popover .message {
   float: left;
-}
-
-.Popover .user-profile {
-  float: left;
-  padding-right: 15px;
 }
 
 .Overlay {
