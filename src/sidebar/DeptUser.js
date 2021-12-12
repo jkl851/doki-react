@@ -1,10 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import UserImg from '../assets/images/user3.png'
 
-const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUserDatas}) => {
-    // console.log("하이2")
-    // 추후 profile modal을 위한 state
-    const [profileIsOpen, setProfileIsOpen] = useState(false);
+const DeptUser = ({deptUserNo, name, image, auth, isSidebar, deptUserDatas, setDeptUserDatas}) => {
 
     const handleImgClick = () => {
         // img는 isSidebar일 때만 onClick시 profile 정보 modal을 띄운다
@@ -30,6 +27,7 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
     }
     return (
         <div>
+            {/* src에 image 변수를 이용하여 db 데이터로 적용 시킬 것!! */}
             <img onClick={handleImgClick} src={UserImg} alt="" />
             <label >{name}</label>
             {/* 
@@ -43,7 +41,7 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
                      1 : normal
                      2 : admin
              */}
-             {/* 불러낸 곳이 sidebar가 아니면 권한 modal이므로 radio 버튼 추가 */}
+             {/* 불러낸 곳이 sidebar가 아니면 권한 주기 modal이므로 radio 버튼 추가 */}
             {!isSidebar && 
                 <>
                     <input onChange={handleChange} checked={auth === '0'} type='radio' id='0' name={name} ></input>

@@ -58,7 +58,7 @@ export default function SidebarMenu() {
     
     // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
     useEffect(async() => {
-        await axios.get('http://localhost:8080/doki/user/getUserList/1')
+        await axios.get('http://localhost:8080/doki/user/getUserList/' + '1') // 부서 번호
         .then((Response) => {
             console.log("get UserList 요청!")
             setDeptUserDatas(Response.data);
@@ -113,7 +113,10 @@ export default function SidebarMenu() {
                             <label>전체 직원 목록</label>
                         </div>
                         <div className={InviteStyles['content']}  >
-                            <EntireUserList userDatas={allUserDatas}/>
+                            <EntireUserList 
+                                userDatas={allUserDatas}
+                                deptUserDatas={deptUserDatas}
+                                />
                         </div>
 
                     </div>
