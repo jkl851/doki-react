@@ -22,7 +22,7 @@ export default function App() {
 
   const onDelete = (id) => {
     setAddItem( (oldData) => {
-     return oldData.filter( (currentValue,indx) => {
+     return oldData.filter( (currentValue, indx) => {
         return indx !== id
       })
     })
@@ -31,13 +31,11 @@ export default function App() {
   return (
    
       <div className="container">
-        <Header />
         <div className="main_note">
           <CreateMemo 
-              passMemo = {addMemo}
-              />
-
-{          addItem.map( (value,index) => {
+                  passMemo = {addMemo}
+                  />
+{          addItem.map( (value, index) => {
             return(
               <Memo
                 key={index}
