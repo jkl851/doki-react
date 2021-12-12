@@ -5,9 +5,11 @@ import AlarmAddIcon from "@material-ui/icons/AlarmAdd";
 import PaletteIcon from "@material-ui/icons/PaletteOutlined";
 import AddPhotoIcon from "@material-ui/icons/AddPhotoAlternateOutlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
+import MemoAlarm from "./Components/MemoAlarm";
 
 export default function (passMemo) {
-  const [expand, setexpand] = useState(false);
+  const [expandMemo, setExpandMemo] = useState(false);
+  const [expandAlarm, setExpandAlarm] = useState(false);
 
   const [memo, setMemo] = useState({
     title: "",
@@ -17,6 +19,11 @@ export default function (passMemo) {
       repetition: "0",
     },
   });
+
+  const alarmEvent = (event) => {
+    const name = event.target.name;
+    alert(`${name} 메모의 알람 : 개발중`); //@222
+  };
 
   const InputEvent = (event) => {
     const value = event.target.value;
@@ -28,11 +35,6 @@ export default function (passMemo) {
         [name]: value,
       };
     });
-  };
-
-  const alarmEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 알람 : 개발중`);
   };
 
   const paletteEvent = (event) => {
@@ -58,18 +60,24 @@ export default function (passMemo) {
     });
   };
 
-  const expandIt = () => {
-    setexpand(true);
+  const expandCreateMemo = () => {
+    setExpandMemo(true);
   };
-  const collapseIt = () => {
-    setexpand(false);
+  const collapseCreateMemo = () => {
+    setExpandMemo(false);
   };
+
+  const expandAlarmTable = () => {
+    setExpandAlarm(!expandAlarm);
+  };
+
+
 
   return (
     <div>
-      <form onMouseLeave={collapseIt}>
+      <form onMouseLeave={collapseCreateMemo}>
         <div className="input_wrapper">
-          {expand ? (
+          {expandMemo ? (
             <input
               type="text"
               placeholder="제목"
@@ -90,36 +98,47 @@ export default function (passMemo) {
             value={memo.content}
             name="content"
             onChange={InputEvent}
-            onMouseEnter={expandIt}
+            onMouseEnter={expandCreateMemo}
             style={{ height: "18px" }}
           ></textarea>
 
-          {expand ? (
-            <div style={{ textAlign: "center" }}>
-              <Button className="alarmButton" onClick={alarmEvent}>
-                <AlarmAddIcon className="add-alarm" />
-              </Button>
+          {expandMemo ? (
+            <div className="buttons-div" style={{ textAlign: "center" }}>
+                <div className="alarm-div">
+                    <Button className="alarmButton" onClick={expandAlarmTable}>
+                        <AlarmAddIcon className="add-alarm" />
+                    </Button>
+                        {
+                        expandAlarm ?
+                        <div className="alarm-div-dropdown">
+                        <MemoAlarm className="memoAlarm"/>
+                        </div> : 
+                        false
+                        }
+                </div>
 
-              <Button className="paletteButton" onClick={paletteEvent}>
-                <PaletteIcon className="add-palette" />
-              </Button>
+                    <Button className="paletteButton" onClick={paletteEvent}>
+                        <PaletteIcon className="add-palette" />
+                    </Button>
 
-              <Button className="photoButton" onClick={photoEvent}>
-                <AddPhotoIcon className="add-photo" />
-              </Button>
+                    <Button className="photoButton" onClick={photoEvent}>
+                        <AddPhotoIcon className="add-photo" />
+                    </Button>
 
-              <Button onClick={hashTagEvent}>
-                <LocalOfferOutlinedIcon />
-              </Button>
+                    <Button onClick={hashTagEvent}>
+                        <LocalOfferOutlinedIcon />
+                    </Button>
 
-              <Button className="addButton" onClick={addEvent}>
-                <AddIcon className="add-icon" />
-              </Button>
+                    <Button className="addButton" onClick={addEvent}>
+                        <AddIcon className="add-icon" />
+                    </Button>
             </div>
           ) : (
             false
           )}
+            
         </div>
+
       </form>
     </div>
   );
