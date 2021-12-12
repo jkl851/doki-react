@@ -1,5 +1,4 @@
 import "./Index.css";
-import Header from "./Header";
 import CreateMemo from "./Creatememo";
 import Memo from "./Memo";
 import React, { useState } from "react";
@@ -30,7 +29,6 @@ export default function App() {
   return (
     <div className="main_content">
       <div className="container">
-        <Header />
         <div className="main_note">
           <CreateMemo passMemo={addMemo} />
 
