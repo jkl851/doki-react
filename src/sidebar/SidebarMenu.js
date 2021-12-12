@@ -38,9 +38,9 @@ export default function SidebarMenu() {
     const closeGroupPermissionModal = async() => {
         setGroupPermissionState({isOpen: false})
 
-        console.log("여기는 1번")
+        // url부분 /api 설정으로 하는법 알아보기
         await axios.put('http://localhost:8080/doki/user/updatePermission',
-                deptUserDatas
+                [...deptUserDatas]
             )
             .then((Response) => {
                 console.log("====== update 요청 성공! ======= ");

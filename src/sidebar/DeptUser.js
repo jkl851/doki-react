@@ -23,7 +23,7 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
         // 값이 다르면 원래 데이터를 그대로 set하는 반복문
         setDeptUserDatas(deptUserDatas.map(data => {
             return data.deptUserNo === deptUserNo ?
-                {...data, auth: Number(e.target.id)} :
+                {...data, auth: e.target.id} :
                 {...data}
         }))
         console.log("radio 선택...")
@@ -46,9 +46,9 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
              {/* 불러낸 곳이 sidebar가 아니면 권한 modal이므로 radio 버튼 추가 */}
             {!isSidebar && 
                 <>
-                    <input onChange={handleChange} checked={auth === 0} type='radio' id='0' name={name} ></input>
-                    <input onChange={handleChange} checked={auth === 1} type='radio' id='1' name={name} ></input>
-                    <input onChange={handleChange} checked={auth === 2} type='radio' id='2' name={name} ></input>
+                    <input onChange={handleChange} checked={auth === '0'} type='radio' id='0' name={name} ></input>
+                    <input onChange={handleChange} checked={auth === '1'} type='radio' id='1' name={name} ></input>
+                    <input onChange={handleChange} checked={auth === '2'} type='radio' id='2' name={name} ></input>
                 </>
             }
         </div>
