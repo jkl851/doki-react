@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Tooltip from "./Tooltip";
 import styled from "styled-components";
 
@@ -34,7 +34,7 @@ export default function Color({
   onClick,
 }) {
   const [startDate, setStartDate] = useState()
-  
+
   return (
     <Wrapper onClick={onClick}>
       <StyledCircle color={color} border={border} selectedColor={selectedColor}>
