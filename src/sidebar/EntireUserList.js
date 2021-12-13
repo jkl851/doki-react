@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import User from './User.js'
 
-const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited}) => {
+const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag, setFlag}) => {
     // console.log("====== Entire userDatas ======")
     // console.log(userDatas)
 
@@ -20,9 +20,10 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited}) => 
     
 
     // console.log(isInvited);
-
-    useEffect(async() => {
+    
+    useEffect(() => {
         const count = deptUserDatas.length;
+        console.log('count ' + count)
         setIsInvited(userDatas.map((element, index, array) => {
         // console.log(index)  // 현재 element가 속한 index
         // console.log(array)  // 해당 배열
@@ -38,10 +39,12 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited}) => 
         }))
 
         
+        
     }, [])
-    console.log(isInvited)
     
+
     
+
     return (
         <ul > 
             {userDatas.map((userData, index) => 
@@ -51,7 +54,8 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited}) => 
                     name={userData.userName + " " + userData.position}
                     image={userData.image}
                     isInvited={isInvited}
-                    setIsInvited={setIsInvited}
+                    flag={flag}
+                    setFlag={setFlag}
                 />)}
         </ul>
     );
