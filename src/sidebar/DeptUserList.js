@@ -1,20 +1,20 @@
 import React from 'react';
 import DeptUser from './DeptUser'
 
-const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas}) => {
+const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, userDropDownDatas}) => {
     // console.log("====== DeptUserDatas ======")
     // console.log(deptUserDatas)
 
     
     return (
         <ul>
-            {deptUserDatas.map(deptUserData => 
+            {userDropDownDatas.map(userDropDownData => 
                 <DeptUser
-                    key={deptUserData.deptUserNo}
-                    deptUserNo={deptUserData.deptUserNo}
-                    name={deptUserData.userName + " " + deptUserData.position}
-                    image={deptUserData.image}
-                    auth={deptUserData.auth}
+                    key={userDropDownData.deptUserNo}
+                    deptUserNo={userDropDownData.deptUserNo}
+                    name={userDropDownData.userName + " " + userDropDownData.position}
+                    image={userDropDownData.image}
+                    auth={userDropDownData.auth}
                     isSidebar={isSidebar}
                     deptUserDatas={deptUserDatas}
                     setDeptUserDatas={setDeptUserDatas}

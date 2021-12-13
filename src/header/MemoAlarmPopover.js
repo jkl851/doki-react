@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
 import MemoMessage from "./MemoMessage";
 import Overlay from "react-bootstrap/Overlay";
 import alarmModalStyles from "../assets/css/alarmmodal.module.css";
@@ -6,26 +6,55 @@ import { IoIosNotifications } from "react-icons/io";
 import { Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import "../assets/css/normaltop.css";
 
-export default function MemoAlarmModal({ memoMessages }) {
+export default function MemoAlarmPopover({ memoMessages }) {
   //메모 알람 Modal
   const target = useRef(null);
-  const [memoAlarmModal, setMemoAlarmModal] = useState({ isOpen: false });
+  const [memoAlarmPopover, setMemoAlarmPopover] = useState({ isOpen: false });
 
   const memoAlarmInfo = (no) => {
-    setMemoAlarmModal({
+    setMemoAlarmPopover({
       isOpen: true,
     });
   };
 
   //버튼을 다시 누르면 popover 종료
   const togglePopover2 = () => {
-    setMemoAlarmModal({ isOpen: !memoAlarmModal.isOpen });
+    setMemoAlarmPopover({ isOpen: !memoAlarmPopover.isOpen });
   };
 
   const pageMovement = (departmentNo) => {
-    setMemoAlarmModal({ isOpen: false });
+    setMemoAlarmPopover({ isOpen: false });
     alert(departmentNo + "번 부서로 이동!!");
   };
+
+
+
+
+    //외부클릭 감지
+    const outsideRef = useOutSideRef(null);
+    function useOutSideRef() {
+        const ref= useRef(null);
+
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(ref.current && !ref.current.contains(event.target)) {
+                    console.log('외부 클릭 감지');
+                    console.log(memoAlarmPopover.isOpen + "123");
+                    console.log('외부 클릭 감지1');
+
+                    setMemoAlarmPopover({ isOpen: false });
+                }
+            }
+            // document.addEventListener('click', handelClickOutside);
+
+            return {
+                // document.removeEventListener('click', handelClickOutside);
+            };
+        });
+
+        return ref;
+    }
+    
 
   return (
     <Fragment>
@@ -34,21 +63,19 @@ export default function MemoAlarmModal({ memoMessages }) {
       </a>
 
       <Overlay
-        show={memoAlarmModal.isOpen}
+        show={memoAlarmPopover.isOpen}
         target={target.current}
         placement="bottom"
-        rootClose={true}
-        onHide={() => {
-          setMemoAlarmModal({ isOpen: false });
-        }}
+       
       >
         <Popover
           style={{ width: "250px" }}
-          isOpen={memoAlarmModal.isOpen}
+          isOpen={memoAlarmPopover.isOpen}
           target="mypopover2"
           className={alarmModalStyles.Popover}
           toggle={togglePopover2}
-        >
+          
+                  >
           <PopoverHeader className={alarmModalStyles["popoverHeader"]}>
             새로운 알림 - 메모
           </PopoverHeader>

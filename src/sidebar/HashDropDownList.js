@@ -1,18 +1,25 @@
 import React, {Fragment} from 'react';
+import HashDropDown from './HashDropDown'
+import PropTypes from "prop-types";
 import '../assets/css/dropdown.css';
 
-export default function HashDropDownList() {
+export default function HashDropDownList({hashDropDownDatas, searchHash}) {
     return (
     
         <div id="myDropdown" className="dropdown-content">
-            <a href="#about">About</a>
-            <a href="#base">Base</a>
-            <a href="#blog">Blog</a>
-            <a href="#contact">Contact</a>
-            <a href="#custom">Custom</a>
-            <a href="#support">Support</a>
-            <a href="#tools">Tools</a>
+            {hashDropDownDatas.map(hashDropDownData =>
+                <HashDropDown
+                    key={hashDropDownData.no}
+                    name={hashDropDownData.name}
+                    searchHash={searchHash}
+                />)}
+
         </div>
 
     )
 }
+
+HashDropDownList.propTypes = {
+    name: PropTypes.string.isRequired
+  };
+  
