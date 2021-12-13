@@ -1,0 +1,18 @@
+/* 전체적용이라 앵간하면 접근 X */
+@font-face {
+  font-family: "Gmarket";
+  src: url("../css/font/GmarketSansTTFMedium.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Jeju";
+  src: url("../css/font/JejuGothic.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+#whole_wrapper {
+  font-family: "Gmarket";
+}

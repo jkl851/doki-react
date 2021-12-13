@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Compose from "./Compose/index";
-import Toolbar from "./Toolbar/index";
 import ToolbarButton from "./ToolbarButton/index";
 import Message from "./Message/index";
 import moment from "moment";
@@ -156,19 +155,6 @@ export default function MessageList(props) {
 
   return (
     <div className="message-list">
-      
-      <Toolbar
-        title="Conversation Title"
-        rightItems={[
-          <ToolbarButton
-            key="info"
-            icon="ion-ios-information-circle-outline"
-          />,
-          <ToolbarButton key="video" icon="ion-ios-videocam" />,
-          <ToolbarButton key="phone" icon="ion-ios-call" />,
-        ]}
-      />
-
       <div className="message-list-container">{renderMessages()}</div>
 
       <Compose

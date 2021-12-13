@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import User from './User.js'
 
-const EntireUserList = ({userDatas, deptUserDatas, isInvited }) => {
-    console.log("====== Entire userDatas ======")
-    console.log(userDatas)
+const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag, setFlag}) => {
+    // console.log("====== Entire userDatas ======")
+    // console.log(userDatas)
 
     // console.log("====== test ======")
-    console.log(...deptUserDatas);
+    // console.log(deptUserDatas);
     // console.log("111")
     // console.log(Object.assign({}, deptUserDatas));
     
@@ -19,7 +19,32 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited }) => {
     // console.log(obj)
     
 
-    console.log(isInvited);
+    // console.log(isInvited);
+    
+    useEffect(() => {
+        const count = deptUserDatas.length;
+        console.log('count ' + count)
+        setIsInvited(userDatas.map((element, index, array) => {
+        // console.log(index)  // 현재 element가 속한 index
+        // console.log(array)  // 해당 배열
+            for(let i=0; i<count; i++){
+                if(deptUserDatas[i].no === element.no ) {
+                    return true;
+                }
+
+                if(i+1 == count && element.no != deptUserDatas[i].no){
+                    return false;
+                }
+            }
+        }))
+
+        
+        
+    }, [])
+    
+
+    
+
     return (
         <ul > 
             {userDatas.map((userData, index) => 
@@ -28,7 +53,9 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited }) => {
                     no={userData.no}
                     name={userData.userName + " " + userData.position}
                     image={userData.image}
-                    isInvited={isInvited[index]}
+                    isInvited={isInvited}
+                    flag={flag}
+                    setFlag={setFlag}
                 />)}
         </ul>
     );

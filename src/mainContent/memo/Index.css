@@ -128,7 +128,7 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   font-size: 30px !important;
 }
 
-.note {
+.memo {
   width: 295px;
   border: 1px solid #6d758d;
   border-radius: 10px;
@@ -142,26 +142,29 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   margin: 4px;
 }
 
-h2.note-title {
+h2.memo-title {
   color: rgb(19, 19, 19);
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-span.note-description {
+span.memo-description {
   color: rgb(19, 19, 19);
   /*#dddddd9e*/
   word-break: break-all;
 }
 
-.note-area {
+.memo-area {
   height: 104px;
   overflow-y: scroll;
 }
 
-.note-area::-webkit-scrollbar {
+.memo-area::-webkit-scrollbar {
   width: 5px;
 }
 
-.note-area::-webkit-scrollbar-thumb {
+.memo-area::-webkit-scrollbar-thumb {
   background: #6d758d;
   border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -182,4 +185,15 @@ span.note-description {
 
 .delete-button:hover {
   background: red !important;
+}
+
+.alarm-div {
+  position: relative;
+  display: inline-block;
+}
+
+.alarm-div-dropdown {
+  position: absolute;
+  width: 300%;
+  background: white;
 }
