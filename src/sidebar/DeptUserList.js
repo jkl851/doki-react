@@ -2,8 +2,10 @@ import React from 'react';
 import DeptUser from './DeptUser'
 
 const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas}) => {
-    console.log("====== DeptUserDatas ======")
-    console.log(deptUserDatas)
+    // console.log("====== DeptUserDatas ======")
+    // console.log(deptUserDatas)
+
+    
     return (
         <ul>
             {deptUserDatas.map(deptUserData => 

@@ -53,18 +53,19 @@ export default function ChatAlarmModal({ chatMessages }) {
             새로운 알림 - 채팅
           </PopoverHeader>
           <PopoverBody className={alarmModalStyles.popoverbody}>
-            {chatMessages.map((chatMessage) => (
-              <ChatMessage
-                key={chatMessage.no}
-                userName={chatMessage.userName}
-                position={chatMessage.position}
-                date={chatMessage.date}
-                contents={chatMessage.contents}
-                departmentNo={chatMessage.departmentNo}
-                departmentName={chatMessage.departmentName}
-                pageMovement={pageMovement}
-              />
-            ))}
+            {chatMessages &&
+              chatMessages.map((chatMessage) => (
+                <ChatMessage
+                  key={chatMessage.no}
+                  userName={chatMessage.userName}
+                  position={chatMessage.position}
+                  date={chatMessage.date}
+                  contents={chatMessage.contents}
+                  departmentNo={chatMessage.departmentNo}
+                  departmentName={chatMessage.departmentName}
+                  pageMovement={pageMovement}
+                />
+              ))}
           </PopoverBody>
         </Popover>
       </Overlay>
