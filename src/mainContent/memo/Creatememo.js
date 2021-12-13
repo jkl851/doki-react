@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import AlarmAddIcon from "@material-ui/icons/AlarmAdd";
-import PaletteIcon from "@material-ui/icons/PaletteOutlined";
-import AddPhotoIcon from "@material-ui/icons/AddPhotoAlternateOutlined";
-import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
+import PaletteIcon from "@mui/icons-material/PaletteOutlined";
+import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
 
 export default function (passMemo) {
@@ -106,27 +106,27 @@ export default function (passMemo) {
             <div className="buttons-div" style={{ textAlign: "center" }}>
                 <div className="alarm-div">
                     <Button className="alarmButton" onClick={expandAlarmTable}>
-                        <AlarmAddIcon className="add-alarm" />
+                        <AlarmAddIcon className="add-alarm" color="action"/>
                     </Button>
                         {
                         expandAlarm ?
                         <div className="alarm-div-dropdown">
-                        <MemoAlarm className="memoAlarm"/>
+                        <MemoAlarm className="memoAlarm" />
                         </div> : 
                         false
                         }
                 </div>
 
                     <Button className="paletteButton" onClick={paletteEvent}>
-                        <PaletteIcon className="add-palette" />
+                        <PaletteIcon className="add-palette" color="action"/>
                     </Button>
 
                     <Button className="photoButton" onClick={photoEvent}>
-                        <AddPhotoIcon className="add-photo" />
+                        <AddPhotoIcon className="add-photo" color="action"/>
                     </Button>
 
                     <Button onClick={hashTagEvent}>
-                        <LocalOfferOutlinedIcon />
+                        <HashTag color="action"/>
                     </Button>
 
                     <Button className="addButton" onClick={addEvent}>
