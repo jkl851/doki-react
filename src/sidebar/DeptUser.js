@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import UserImg from '../assets/images/user3.png'
+import Modal from 'react-modal';
+import axios from "axios";
 
 const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUserDatas}) => {
     // console.log("하이2")
@@ -28,30 +30,61 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
         }))
         console.log("radio 선택...")
     }
+
+
+
+
+    //정우 작업
+    //userInfoModal 정보 불러오기
+    let no = 3; //ex) 3번 user
+    const [userInfoModalData, setUserInfoModalData] = useState({isOpen: false});
+    const getUserInfo = async(no) => {        
+        await axios.get(`http://localhost:8080/doki/user/findUser/${no}`)
+        .then((Response) => {
+            setUserInfoModalData({
+                no: Response.data.list.no,
+                id: Response.data.list.id,
+                name: Response.data.list.userName,
+                position: Response.data.list.position,
+                iamge: Response.data.list.image,
+                email: Response.data.list.email,
+                comment: Response.data.list.comment,
+                isOpen: true
+            });        
+        })
+        .catch((Error) => {console.log(Error)})
+}
+
     return (
-        <div>
-            <img onClick={handleImgClick} src={UserImg} alt="" />
-            <label >{name}</label>
-            {/* 
-                radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다
-                user의 id 또는 user의 name을 줘야할 듯?
+        // <Fragement>
+            <div onClick={()=> getUserInfo(no)} style={{cursor: 'pointer'}}>
+                <img onClick={handleImgClick} src={UserImg} alt="" />
+                <label >{name}</label>
+                {/* 
+                    radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다
+                    user의 id 또는 user의 name을 줘야할 듯?
 
-                checked는 onChange 속성을 줘야한다
-                그렇지 않으면 고정된 값으로써 다른 값 선택 불가능하다
+                    checked는 onChange 속성을 줘야한다
+                    그렇지 않으면 고정된 값으로써 다른 값 선택 불가능하다
+                    
+                    auth 0 : read-only
+                    1 : normal
+                    2 : admin
+                */}
+                {/* 불러낸 곳이 sidebar가 아니면 권한 modal이므로 radio 버튼 추가 */}
+                {!isSidebar && 
+                    <>
+                        <input onChange={handleChange} checked={auth === 0} type='radio' id='0' name={name} ></input>
+                        <input onChange={handleChange} checked={auth === 1} type='radio' id='1' name={name} ></input>
+                        <input onChange={handleChange} checked={auth === 2} type='radio' id='2' name={name} ></input>
+                    </>
+                }
+            </div>
+        // </Fragement>
 
-                auth 0 : read-only
-                     1 : normal
-                     2 : admin
-             */}
-             {/* 불러낸 곳이 sidebar가 아니면 권한 modal이므로 radio 버튼 추가 */}
-            {!isSidebar && 
-                <>
-                    <input onChange={handleChange} checked={auth === 0} type='radio' id='0' name={name} ></input>
-                    <input onChange={handleChange} checked={auth === 1} type='radio' id='1' name={name} ></input>
-                    <input onChange={handleChange} checked={auth === 2} type='radio' id='2' name={name} ></input>
-                </>
-            }
-        </div>
+        // <Modal>
+
+        // </Modal>
     );
 };
 
