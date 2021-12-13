@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
+import Palette from './Components/Palette';
+import Color from "./Components/Color";
 
 export default function (passMemo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
+  const [expandPalette, setExpandPalette] = useState(false);
 
   const [memo, setMemo] = useState({
     title: "",
@@ -18,12 +21,8 @@ export default function (passMemo) {
       time: "2021/12/12 15:00",
       repetition: "0",
     },
+    color: "#FFFFFF"
   });
-
-  const alarmEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 알람 : 개발중`); //@222
-  };
 
   const InputEvent = (event) => {
     const value = event.target.value;
@@ -35,11 +34,6 @@ export default function (passMemo) {
         [name]: value,
       };
     });
-  };
-
-  const paletteEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 파레트 : 개발중`);
   };
 
   const photoEvent = (event) => {
@@ -71,7 +65,9 @@ export default function (passMemo) {
     setExpandAlarm(!expandAlarm);
   };
 
-
+  const expandPaletteTable = () => {
+    setExpandPalette(!expandPalette);
+  };
 
   return (
     <div>
@@ -93,7 +89,7 @@ export default function (passMemo) {
           <textarea
             rows="6"
             column="20"
-            placeholder="본문"
+            placeholder=">"
             className="description_input"
             value={memo.content}
             name="content"
@@ -116,11 +112,17 @@ export default function (passMemo) {
                         false
                         }
                 </div>
-
-                    <Button className="paletteButton" onClick={paletteEvent}>
+               
+                    <Button className="paletteButton" onClick={expandPaletteTable}>
                         <PaletteIcon className="add-palette" color="action"/>
-                    </Button>
-
+                    </Button> 
+                    {
+                        expandPalette ?
+                        <Palette className="memoPalette" value={memo.color} name="color" />
+                        :
+                        false
+                    }
+            
                     <Button className="photoButton" onClick={photoEvent}>
                         <AddPhotoIcon className="add-photo" color="action"/>
                     </Button>

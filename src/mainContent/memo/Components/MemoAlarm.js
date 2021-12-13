@@ -4,7 +4,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 
-const MemoAlarm = () => {
+export default function MemoAlarm() {
 
     const [startDate, setStartDate] = useState()
 
@@ -23,4 +23,3 @@ const MemoAlarm = () => {
     );
 };
 
-export default MemoAlarm;
