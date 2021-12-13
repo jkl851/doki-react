@@ -28,13 +28,13 @@ export default function ConversationList(props) {
 
   return (
     <div className="conversation-list">
-      <Toolbar
+      {/* <Toolbar
         title="타이틀"
         leftItems={[<ToolbarButton key="cog" icon="ion-ios-cog" />]}
         rightItems={[
           <ToolbarButton key="add" icon="ion-ios-add-circle-outline" />,
         ]}
-      />
+      /> */}
       <ConversationSearch />
       {conversations.map((conversation) => (
         <ConversationListItem key={conversation.name} data={conversation} />

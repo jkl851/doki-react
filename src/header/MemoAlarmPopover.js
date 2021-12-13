@@ -53,18 +53,19 @@ export default function MemoAlarmModal({ memoMessages }) {
             새로운 알림 - 메모
           </PopoverHeader>
           <PopoverBody className={alarmModalStyles.popoverbody}>
-            {memoMessages.map((memoMessage) => (
-              <MemoMessage
-                key={memoMessage.no}
-                userName={memoMessage.userName}
-                position={memoMessage.position}
-                date={memoMessage.date}
-                contents={memoMessage.contents}
-                departmentNo={memoMessage.departmentNo}
-                departmentName={memoMessage.departmentName}
-                pageMovement={pageMovement}
-              />
-            ))}
+            {memoMessages &&
+              memoMessages.map((memoMessage) => (
+                <MemoMessage
+                  key={memoMessage.no}
+                  userName={memoMessage.userName}
+                  position={memoMessage.position}
+                  date={memoMessage.date}
+                  contents={memoMessage.contents}
+                  departmentNo={memoMessage.departmentNo}
+                  departmentName={memoMessage.departmentName}
+                  pageMovement={pageMovement}
+                />
+              ))}
           </PopoverBody>
         </Popover>
       </Overlay>
