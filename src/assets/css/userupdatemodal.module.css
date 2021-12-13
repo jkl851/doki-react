@@ -9,6 +9,7 @@
   color: #333;
   padding: 0;
   outline: 0;
+  font-family: "Gmarket";
 }
 
 .Modal .logoBox {
@@ -106,6 +107,7 @@
   margin: auto;
   margin-bottom: 20px;
   border-radius: 5px;
+  text-align: left;
 }
 
 input {
@@ -115,8 +117,4 @@ input {
 
 input:focus {
   outline: none;
-}
-
-label {
-  text-align: l;
 }
