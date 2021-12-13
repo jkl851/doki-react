@@ -21,7 +21,7 @@ export default function SidebarMenu() {
     const [groupPermissionState, setGroupPermissionState] = useState({isOpen : false});
     const [deptUserDatas, setDeptUserDatas] = useState([]);
     const [allUserDatas, setAllUserDatas] = useState([]);
-    const [isInvited, setIsInvited] = useState({});
+    const [isInvited, setIsInvited] = useState([]);
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
@@ -66,49 +66,26 @@ export default function SidebarMenu() {
             .catch((Error) => {console.error(Error)})
     }
 
-    // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
-    // const departmentNo = 1;
-
-    // dependency를 []로 해주었기 때문에 한번 밖에 실행이 안된다
-    // 어떤 dependency를 줄지 고민
-    
-    // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
     useEffect(async() => {
-        await axios.get('http://localhost:8080/doki/user/getUserList/' + '1') // 부서 번호
-        .then((Response) => {
-            console.log("get UserList 요청!")
-            setDeptUserDatas(Response.data);
-        })
+        await axios.all([
+            axios.get('http://localhost:8080/doki/user/getUserList/' + '1'),   // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
+            axios.get('http://localhost:8080/doki/user/getAllUserList')        // 회사 전체 직원의 리스트 검색
+        ]) 
+        .then(
+            axios.spread((res1, res2) => {
+                console.log("====== get DeptUserList 요청! ======")
+                setDeptUserDatas(res1.data);
+
+                console.log("====== get AllUserList 요청! ======")
+                setAllUserDatas(res2.data);
+            })
+        )
         .catch((Error) => {console.log(Error)})
+
+        
     }, [])
 
-    // 회사 전체 직원의 리스트 검색
-    useEffect(async() => {
-        await axios.get('http://localhost:8080/doki/user/getAllUserList')
-        .then((Response) => {
-            console.log("get AllUserList 요청!")
-            setAllUserDatas(Response.data);
-
-            
-        })
-        .catch((Error) => {console.log(Error)})
-    }, [])
     
-    // invite 구현중..
-    // // isInvited 체크
-    // const count = deptUserDatas.length; 
-    // useEffect(() => {
-    //     setIsInvited(allUserDatas.map((element, index, array) => {
-    //     // console.log(index)  // 현재 element가 속한 index
-    //     // console.log(array)  // 해당 배열
-    //         for(let i=0; i<count; i++){
-    //             if(element.no === deptUserDatas[i].no) {
-    //                 return true;
-    //             }
-    //         }
-    //     }))
-    // }, []);
-
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
             <br/>
@@ -148,6 +125,7 @@ export default function SidebarMenu() {
                                 userDatas={allUserDatas}
                                 deptUserDatas={deptUserDatas}
                                 isInvited={isInvited}
+                                setIsInvited={setIsInvited}
                                 />
                         </div>
 
