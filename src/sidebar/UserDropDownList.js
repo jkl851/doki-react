@@ -1,13 +1,32 @@
-import React, {Fragment} from 'react';
-import '../assets/css/dropdown.css'
+import React, {Fragment, useEffect, useState} from 'react';
+import '../assets/css/dropdown.css';
+import UserDropDown from './UserDropDown.js';
+import PropTypes from "prop-types";
 
-export default function UserDropDownList() {
-    return (
+
+export default function UserDropDownList({ userDropDownDatas, searchUser }) {
+
+    // console.log(hint);
+
+
+
+
+       return (
         <div id="myDropdown2" className="dropdown-content">
-            <a href="#">김</a>
-            <a href="#">박</a>
-            <a href="#">최</a>
+            {userDropDownDatas.map(userDropDownData => 
+                <UserDropDown 
+                    key={userDropDownData.no}
+                    no={userDropDownData.no}
+                    name={userDropDownData.userName} 
+                    hint={userDropDownData.hint}
+                    searchUser={searchUser}
+                    />)}
         </div>
 
     )
 }
+
+UserDropDownList.propTypes = {
+    name: PropTypes.string.isRequired
+  };
+  

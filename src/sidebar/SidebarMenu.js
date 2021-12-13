@@ -26,6 +26,7 @@ export default function SidebarMenu() {
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
+
     }
 
     const groupPermissionClick = () => {
@@ -34,37 +35,34 @@ export default function SidebarMenu() {
 
     const closeInviteModal = async() => {
         setInviteState({isOpen: false})
-        // console.log(flag);
-        // // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
-        // const insertData = flag.map((data,index) => {
-        //     if( data === true ){
-        //         return allUserDatas[index]
-        //     } else {
-        //         return null;
-        //     }
-        // })
-        
+        console.log(flag);
+        // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
+        const insertData = flag.map((data,index) => {
+            if( data === true ) {
+                return allUserDatas[index]
+            } else {
+                return null;
+            }
+        })
 
-        // console.log("insertData")
-        // console.log(insertData)
+        console.log("insertData")
+        console.log(insertData)
 
-        // // surl부분 /api 설정으로 하는법 알아보기
-        // await axios.post('http://localhost:8080/doki/user/inviteUsers',
-        //         // 체크된 데이터들을 담을 것
-        //         insertData
-        //     )
-        //     .then((Response) => {
-        //         console.log("====== insert 요청 성공! ======= ");
-        //         console.log(Response);
-        //         console.log("=============================== ");
+        // surl부분 /api 설정으로 하는법 알아보기
+        await axios.post('http://localhost:8080/doki/user/inviteUsers',
+                // 체크된 데이터들을 담을 것
+                insertData
+            )
+            .then((Response) => {
+                console.log("====== insert 요청 성공! ======= ");
+                setDeptUserDatas(deptUserDatas => 
+                    deptUserDatas = Response.data);
+                console.log("=============================== ");
 
-        //         // allUserDatas에 보낸 데이터(체크된 것)을 추가할 것
+                // allUserDatas에 보낸 데이터(체크된 것)을 추가할 것
 
-        //     })
-        //     .catch((Error) => {console.error(Error)})
-        // setIsInvited([...flag]);
-            
-            
+            })
+            .catch((Error) => {console.error(Error)})
     }
 
     const closeGroupPermissionModal = async() => {
