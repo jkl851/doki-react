@@ -65,5 +65,5 @@ export default function MemoMessage({
 }
 
 MemoMessage.propTypes = {
-  departmentNo: PropTypes.number.isRequired,
+  departmentNo: PropTypes.number.isRequired
 };
