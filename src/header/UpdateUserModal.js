@@ -128,13 +128,20 @@ export default function MemoAlarmModal() {
           <img src={user} alt="profile" />
           <div>{userUpdateModalData.name}</div>
         </div>
-
         <div className={updateUserModalStyles["form_wrapper"]}>
           <form ref={refForm} onSubmit={handleSubmit}>
-            <label>비밀번호</label>
+            <label
+              style={{
+                marginRight: "220px",
+                fontSize: "15px",
+                marginBottom: "2px",
+              }}
+            >
+              비밀번호
+            </label>
             <p>
               <input
-                style={{ width: "285px", height: "25px" }}
+                style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
                 type={"password"}
                 name={"password"}
                 // defaultValue={userUpdateModalData.password}
@@ -149,10 +156,18 @@ export default function MemoAlarmModal() {
                 }
               />
             </p>
-            <label>비밀번호 확인</label>
+            <label
+              style={{
+                marginRight: "190px",
+                fontSize: "15px",
+                marginBottom: "2px",
+              }}
+            >
+              비밀번호 확인
+            </label>
             <p>
               <input
-                style={{ width: "285px", height: "25px" }}
+                style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
                 type={"password"}
                 name={"passwordcheck"}
                 // defaultValue={userUpdateModalData.passwordcheck}
@@ -167,10 +182,22 @@ export default function MemoAlarmModal() {
                 }
               />
             </p>
-            <label>이메일</label>
+            <label
+              style={{
+                marginRight: "240px",
+                fontSize: "15px",
+                marginBottom: "2px",
+              }}
+            >
+              이메일
+            </label>
             <p>
               <input
-                style={{ width: "285px", height: "25px" }}
+                style={{
+                  width: "285px",
+                  height: "25px",
+                  paddingLeft: "5px",
+                }}
                 type={"text"}
                 name={"email"}
                 defaultValue={userUpdateModalData.email}
@@ -185,10 +212,18 @@ export default function MemoAlarmModal() {
                 }
               />
             </p>
-            <label>상태메세지</label>
+            <label
+              style={{
+                marginRight: "210px",
+                fontSize: "15px",
+                marginBottom: "2px",
+              }}
+            >
+              상태메세지
+            </label>
             <p>
               <input
-                style={{ width: "285px", height: "25px" }}
+                style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
                 type={"text"}
                 name={"comment"}
                 defaultValue={userUpdateModalData.comment}

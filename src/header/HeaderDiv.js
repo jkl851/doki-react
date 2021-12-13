@@ -18,7 +18,7 @@ export default function HeaderDiv() {
   useEffect(async() => {
     await axios.get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
     .then((Response) => {
-        console.log(no + "번 유저 채팅 알림 요청!")
+        // console.log(no + "번 유저 채팅 알림 요청!")
         setChatMessages(Response.data);        
     })
     .catch((Error) => {console.log(Error)})
@@ -29,7 +29,7 @@ export default function HeaderDiv() {
   useEffect(async() => {
     await axios.get(`http://localhost:8080/doki/alarm/getAlarm/${no}/1`)
     .then((Response) => {
-        console.log(no + "번 유저 메모 알림 요청!")
+        // console.log(no + "번 유저 메모 알림 요청!")
         setMemoMessages(Response.data);        
     })
     .catch((Error) => {console.log(Error)})
