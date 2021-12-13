@@ -1,21 +1,29 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import UserImg from '../assets/images/user11.png'
 
-const User = ({no, name, image, isInvited, setIsInvited}) => {
+const User = ({no, name, image, isInvited, flag, setFlag}) => {
     
-    const handleChange = (e) => {
-        // setIsInvited(() => {
-        //     return isInvited[no] = !isInvited[no];
-        // })
+    console.log(no-1 +' : '  +isInvited[no-1]);
 
-        
+    const handleChange = (e) => {
+        setFlag(isInvited.map((data, index) => {
+            if(data === false ) {
+                if(index === (no-1)){
+                    return !data;
+                } else {
+                    return data;
+                }
+            } else {
+                return data
+            }
+        }))
     }
 
     return (
         <div>
             <img src={UserImg} alt="" />
             <label >{name}</label>
-            <input disabled={isInvited[no]} onChange={handleChange} id={no} type='checkbox'></input>
+            <input checked={isInvited[no-1] === true } disabled={isInvited[no-1] === true} onChange={handleChange} id={no} type='checkbox'></input>
         </div>
     );
 };
