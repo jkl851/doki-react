@@ -26,6 +26,7 @@ export default function SidebarMenu() {
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
+
     }
 
     const groupPermissionClick = () => {
@@ -37,7 +38,7 @@ export default function SidebarMenu() {
         console.log(flag);
         // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
         const insertData = flag.map((data,index) => {
-            if( data === true ){
+            if( data === true ) {
                 return allUserDatas[index]
             } else {
                 return null;
