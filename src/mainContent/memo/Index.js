@@ -1,54 +1,50 @@
-import './Index.css';
-import Header from './Header'
-import Createnote from './Createnote'
-import Note from './Note'
-import React,{useState} from 'react'
+import "./Index.css";
+import CreateMemo from "./Creatememo";
+import Memo from "./Memo";
+import React, { useState } from "react";
+import "../../assets/css/main_content.css";
 
 export default function App() {
-  const [addItem,setAddItem] = useState([])
-  const addNote = (note) => {
-    setAddItem((preValue) => {
-      return[
-        ...preValue,note
-      ]
-    })
+  const [addItem, setAddItem] = useState([]);
 
-    if(note.title === '' || note.content === ''){
-      alert('제목이나 본문을 기입하세요')
-      setAddItem([])
+  const addMemo = (memo) => {
+    setAddItem((preValue) => {
+      return [...preValue, memo];
+    });
+
+    if (memo.title === "" || memo.content === "") {
+      alert("제목이나 본문을 기입하세요");
+      setAddItem([]);
     }
-  }
-  
+  };
+
   const onDelete = (id) => {
-    setAddItem( (oldData) => {
-     return oldData.filter( (currentValue,indx) => {
-        return indx !== id
-      })
-    })
-  }
+    setAddItem((oldData) => {
+      return oldData.filter((currentValue, indx) => {
+        return indx !== id;
+      });
+    });
+  };
 
   return (
-   
+    <div className="main_content">
       <div className="container">
-        <Header />
         <div className="main_note">
-          <Createnote passNote = {addNote}/>
+          <CreateMemo passMemo={addMemo} />
 
-{          addItem.map( (value,index) => {
-            return(
-              <Note
+          {addItem.map((value, index) => {
+            return (
+              <Memo
                 key={index}
                 id={index}
                 titles={value.title}
                 contents={value.content}
                 deleteItem={onDelete}
               />
-            )
-            })
-}
+            );
+          })}
         </div>
       </div>
-  
+    </div>
   );
 }
-

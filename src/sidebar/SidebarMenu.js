@@ -21,7 +21,7 @@ export default function SidebarMenu() {
     const [groupPermissionState, setGroupPermissionState] = useState({isOpen : false});
     const [deptUserDatas, setDeptUserDatas] = useState([]);
     const [allUserDatas, setAllUserDatas] = useState([]);
-
+    const [isInvited, setIsInvited] = useState([]);
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
@@ -31,16 +31,32 @@ export default function SidebarMenu() {
         setGroupPermissionState({isOpen: true})
     }
 
-    const closeInviteModal = () => {
+    const closeInviteModal = async() => {
         setInviteState({isOpen: false})
+
+        // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
+
+        // url부분 /api 설정으로 하는법 알아보기
+        await axios.post('http://localhost:8080/doki/user/inviteUsers',
+                // 체크된 데이터들을 담을 것
+            )
+            .then((Response) => {
+                console.log("====== insert 요청 성공! ======= ");
+                console.log(Response);
+                console.log("=============================== ");
+
+                // deptUserDatas에 보낸 데이터(체크된 것)을 추가할 것
+
+            })
+            .catch((Error) => {console.error(Error)})
     }
 
     const closeGroupPermissionModal = async() => {
         setGroupPermissionState({isOpen: false})
 
-        console.log("여기는 1번")
+        // url부분 /api 설정으로 하는법 알아보기
         await axios.put('http://localhost:8080/doki/user/updatePermission',
-                deptUserDatas
+                [...deptUserDatas]
             )
             .then((Response) => {
                 console.log("====== update 요청 성공! ======= ");
@@ -50,34 +66,26 @@ export default function SidebarMenu() {
             .catch((Error) => {console.error(Error)})
     }
 
-    // SidebarMenu의 파라미터로 1번이 넘어왔다고 가정하고 axios 요청을 한다
-    // const departmentNo = 1;
+    useEffect(async() => {
+        await axios.all([
+            axios.get('http://localhost:8080/doki/user/getUserList/' + '1'),   // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
+            axios.get('http://localhost:8080/doki/user/getAllUserList')        // 회사 전체 직원의 리스트 검색
+        ]) 
+        .then(
+            axios.spread((res1, res2) => {
+                console.log("====== get DeptUserList 요청! ======")
+                setDeptUserDatas(res1.data);
 
-    // dependency를 []로 해주었기 때문에 한번 밖에 실행이 안된다
-    // 어떤 dependency를 줄지 고민
+                console.log("====== get AllUserList 요청! ======")
+                setAllUserDatas(res2.data);
+            })
+        )
+        .catch((Error) => {console.log(Error)})
+
+        
+    }, [])
+
     
-    // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
-    useEffect(async() => {
-        await axios.get('http://localhost:8080/doki/user/getUserList/1')
-        .then((Response) => {
-            console.log("get UserList 요청!")
-            setDeptUserDatas(Response.data);
-        })
-        .catch((Error) => {console.log(Error)})
-    }, [])
-
-    // 회사 전체 직원의 리스트 검색
-    useEffect(async() => {
-        await axios.get('http://localhost:8080/doki/user/getAllUserList')
-        .then((Response) => {
-            console.log("get AllUserList 요청!")
-            setAllUserDatas(Response.data);
-
-            
-        })
-        .catch((Error) => {console.log(Error)})
-    }, [])
-
     return (
         <div className="sidebar_menu" style={{display: 'inline-block', width:'70%', height : '100%', margin: '0px 5px 0px 8px', wordBreak: 'break-all', wordWrap: 'break-word', float:'left', overflowY: 'auto', backgroundColor: '#f2f3f5'}}>
             <br/>
@@ -113,7 +121,12 @@ export default function SidebarMenu() {
                             <label>전체 직원 목록</label>
                         </div>
                         <div className={InviteStyles['content']}  >
-                            <EntireUserList userDatas={allUserDatas}/>
+                            <EntireUserList 
+                                userDatas={allUserDatas}
+                                deptUserDatas={deptUserDatas}
+                                isInvited={isInvited}
+                                setIsInvited={setIsInvited}
+                                />
                         </div>
 
                     </div>
@@ -145,8 +158,8 @@ export default function SidebarMenu() {
                         </div>
 
                         {/* 부서 참가자별 권한 주는 부분 */}
-                        <div className={GroupPermmissionStyles['content']}  >
-                            <DeptUserList 
+                        <div className={GroupPermmissionStyles['content']}>
+                            <DeptUserList
                                 deptUserDatas={deptUserDatas}
                                 setDeptUserDatas={setDeptUserDatas}
                                 />

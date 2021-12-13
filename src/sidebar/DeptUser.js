@@ -3,10 +3,7 @@ import UserImg from '../assets/images/user3.png'
 import Modal from 'react-modal';
 import axios from "axios";
 
-const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUserDatas}) => {
-    // console.log("하이2")
-    // 추후 profile modal을 위한 state
-    const [profileIsOpen, setProfileIsOpen] = useState(false);
+const DeptUser = ({deptUserNo, name, image, auth, isSidebar, deptUserDatas, setDeptUserDatas}) => {
 
     const handleImgClick = () => {
         // img는 isSidebar일 때만 onClick시 profile 정보 modal을 띄운다
@@ -25,7 +22,7 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
         // 값이 다르면 원래 데이터를 그대로 set하는 반복문
         setDeptUserDatas(deptUserDatas.map(data => {
             return data.deptUserNo === deptUserNo ?
-                {...data, auth: Number(e.target.id)} :
+                {...data, auth: e.target.id} :
                 {...data}
         }))
         console.log("radio 선택...")
@@ -56,13 +53,13 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
 }
 
     return (
-        // <Fragement>
-            <div onClick={()=> getUserInfo(no)} style={{cursor: 'pointer'}}>
-                <img onClick={handleImgClick} src={UserImg} alt="" />
-                <label >{name}</label>
-                {/* 
-                    radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다
-                    user의 id 또는 user의 name을 줘야할 듯?
+        <div>
+            {/* src에 image 변수를 이용하여 db 데이터로 적용 시킬 것!! */}
+            <img onClick={handleImgClick} src={UserImg} alt="" />
+            <label >{name}</label>
+            {/* 
+                radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다
+                user의 id 또는 user의 name을 줘야할 듯?
 
                     checked는 onChange 속성을 줘야한다
                     그렇지 않으면 고정된 값으로써 다른 값 선택 불가능하다
@@ -79,12 +76,16 @@ const DeptUser = ({deptUserNo, name, auth, isSidebar, deptUserDatas, setDeptUser
                         <input onChange={handleChange} checked={auth === 2} type='radio' id='2' name={name} ></input>
                     </>
                 }
-            </div>
-        // </Fragement>
 
-        // <Modal>
 
-        // </Modal>
+            {!isSidebar && 
+                <>
+                    <input onChange={handleChange} checked={auth === '0'} type='radio' id='0' name={name} ></input>
+                    <input onChange={handleChange} checked={auth === '1'} type='radio' id='1' name={name} ></input>
+                    <input onChange={handleChange} checked={auth === '2'} type='radio' id='2' name={name} ></input>
+                </>
+            }
+        </div>
     );
 };
 
