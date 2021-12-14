@@ -190,7 +190,9 @@ export default function SidebarMenu() {
             </div>
             
             <div className="sidebar-user">
-                <SidebarUser deptUserDatas={deptUserDatas}/>
+                <SidebarUser 
+                    deptUserDatas={deptUserDatas}
+                    setDeptUserDatas={setDeptUserDatas}/>
             </div>
         </div>
     )

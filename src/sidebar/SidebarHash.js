@@ -96,13 +96,12 @@ export default function SidebarHash() {
                 placeholder="#Hash Tag" 
                 id="myInput"
                 value={hint.hashName}
-                // value={hint}
                 onKeyUp={filterFunction} 
                 onMouseUp={myFunction} 
                 onMouseDown={myFunction3}
                 onKeyUp={onChangeSearchKey}
                 onChange={handleChange}
-                autocomplete='off'/>  
+                autoComplete='off'/>  
             <HashDropDownList 
                 hashDropDownDatas={hashDropDownDatas}
                 searchHash={searchHash}

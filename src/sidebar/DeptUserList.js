@@ -5,13 +5,13 @@ const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, userDropDownD
     
     return (
         <ul>
-            {userDropDownDatas.map(userDropDownData => 
+            {deptUserDatas.map(deptUserData => 
                 <DeptUser
-                    key={userDropDownData.deptUserNo}
-                    deptUserNo={userDropDownData.deptUserNo}
-                    name={userDropDownData.userName + " " + userDropDownData.position}
-                    image={userDropDownData.image}
-                    auth={userDropDownData.auth}
+                    key={deptUserData.deptUserNo}
+                    deptUserNo={deptUserData.deptUserNo}
+                    name={deptUserData.userName + " " + deptUserData.position}
+                    image={deptUserData.image}
+                    auth={deptUserData.auth}
                     isSidebar={isSidebar}
                     deptUserDatas={deptUserDatas}
                     setDeptUserDatas={setDeptUserDatas}

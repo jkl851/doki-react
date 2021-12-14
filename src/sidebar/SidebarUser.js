@@ -7,22 +7,22 @@ import axios from 'axios';
 import UserDropDownList from './UserDropDownList';
 import {filterFunction, myFunction2, myFunction4} from '../assets/js/dropdown';
 
-export default function SidebarUser({deptUserDatas}) {
+export default function SidebarUser({deptUserDatas, setDeptUserDatas}) {
 
     //1번 부서라고 가정
     let no = 1;
     const [userDropDownDatas, setUserDropDownDatas] = useState([]);
 
     //초기값 호출 (이름 검색 X)
-    useEffect(async() => {
-        await axios.get(`http://localhost:8080/doki/user/getUserList/${no}`)
-        .then((Response) => {
-            setUserDropDownDatas(
-                Response.data
-            );
-        })
-        .catch((Error) => {console.log(Error)})
-    }, [])
+    // useEffect(async() => {
+    //     await axios.get(`http://localhost:8080/doki/user/getUserList/${no}`)
+    //     .then((Response) => {
+    //         setUserDropDownDatas(
+    //             Response.data
+    //         );
+    //     })
+    //     .catch((Error) => {console.log(Error)})
+    // }, [])
 
 
     //검색을 입력하고 땠을때 이벤트 발생 (검색 키워드 적용)
@@ -33,7 +33,7 @@ export default function SidebarUser({deptUserDatas}) {
             }
         })
         .then((Response) => {
-            setUserDropDownDatas(
+            setDeptUserDatas(
                 Response.data
             );
         })
@@ -47,7 +47,7 @@ export default function SidebarUser({deptUserDatas}) {
                     // onMouseUp={myFunction2} 
                     // onMouseDown={myFunction4}
                     onKeyUp={onChangeSearchKey}
-                    autocomplete='off'
+                    autoComplete='off'
                     />  
                 {/* <UserDropDownList 
                     // deptUserDatas={deptUserDatas}
