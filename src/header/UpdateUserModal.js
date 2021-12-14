@@ -104,7 +104,7 @@ export default function MemoAlarmModal() {
       console.error(err);
     }
   };
-
+  
   return (
     <Fragment>
       <a onClick={() => updateUserInfo(no)} href="#about">
@@ -145,6 +145,7 @@ export default function MemoAlarmModal() {
                 type={"password"}
                 name={"password"}
                 // defaultValue={userUpdateModalData.password}
+                value={userUpdateModalData.password}
                 autoComplete={"off"}
                 placeholder={"비밀번호"}
                 onChange={(e) =>
@@ -170,6 +171,7 @@ export default function MemoAlarmModal() {
                 style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
                 type={"password"}
                 name={"passwordcheck"}
+                value={userUpdateModalData.passwordcheck}
                 // defaultValue={userUpdateModalData.passwordcheck}
                 autoComplete={"off"}
                 placeholder={"비밀번호 확인"}
