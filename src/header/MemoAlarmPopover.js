@@ -45,11 +45,12 @@ export default function MemoAlarmPopover({ memoMessages }) {
                     setMemoAlarmPopover({ isOpen: false });
                 }
             }
-            // document.addEventListener('click', handelClickOutside);
+            document.addEventListener('click', handelClickOutside);
 
-            return {
-                // document.removeEventListener('click', handelClickOutside);
-            };
+            return () => {
+              document.removeEventListener('click', handelClickOutside);
+
+            };            
         });
 
         return ref;
@@ -66,6 +67,7 @@ export default function MemoAlarmPopover({ memoMessages }) {
         show={memoAlarmPopover.isOpen}
         target={target.current}
         placement="bottom"
+        ref={outsideRef}
        
       >
         <Popover
@@ -74,12 +76,11 @@ export default function MemoAlarmPopover({ memoMessages }) {
           target="mypopover2"
           className={alarmModalStyles.Popover}
           toggle={togglePopover2}
-          
                   >
-          <PopoverHeader className={alarmModalStyles["popoverHeader"]}>
+          <PopoverHeader className={alarmModalStyles["popoverHeader"]} >
             새로운 알림 - 메모
           </PopoverHeader>
-          <PopoverBody className={alarmModalStyles.popoverbody}>
+          <PopoverBody className={alarmModalStyles.popoverbody} >
             {memoMessages &&
               memoMessages.map((memoMessage) => (
                 <MemoMessage
