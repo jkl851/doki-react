@@ -6,17 +6,31 @@ import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
-<<<<<<< HEAD
-import Palette from './Components/Palette';
-=======
 import Palette from "./Components/Palette";
->>>>>>> 3fd347fb61c80d28c162e90128187aa891ce2c03
 import Color from "./Components/Color";
 
 export default function (passMemo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
+
+  // const [changeHeight, setHeight] = useState(false);
+
+  // const heightControll = () => {
+  //   if (changeHeight === false) {
+  //     narrowHeight( () => {
+  //       style
+  //       setHeight(true)
+
+  //     });
+
+  //     console.log(chat);
+  //   } else {
+  //     closeNav2();
+  //     setHeight(false);
+  //     console.log(chat);
+  //   }
+  // };
 
   const [memo, setMemo] = useState({
     title: "",
@@ -60,6 +74,7 @@ export default function (passMemo) {
 
   const expandCreateMemo = () => {
     setExpandMemo(true);
+    this.style = { height: "1500px" };
   };
   const collapseCreateMemo = () => {
     setExpandMemo(false);
@@ -99,47 +114,10 @@ export default function (passMemo) {
             name="content"
             onChange={InputEvent}
             onMouseEnter={expandCreateMemo}
-            style={{ height: "18px" }}
           ></textarea>
 
           {expandMemo ? (
             <div className="buttons-div" style={{ textAlign: "center" }}>
-<<<<<<< HEAD
-                <div className="alarm-div">
-                    <Button className="alarmButton" onClick={expandAlarmTable}>
-                        <AlarmAddIcon className="add-alarm" color="action"/>
-                    </Button>
-                        {
-                        expandAlarm ?
-                        <div className="alarm-div-dropdown">
-                        <MemoAlarm className="memoAlarm" />
-                        </div> : 
-                        false
-                        }
-                </div>
-               
-                    <Button className="paletteButton" onClick={expandPaletteTable}>
-                        <PaletteIcon className="add-palette" color="action"/>
-                    </Button> 
-                    {
-                        expandPalette ?
-                        <Palette className="memoPalette" value={memo.color} name="color" />
-                        :
-                        false
-                    }
-            
-                    <Button className="photoButton" onClick={photoEvent}>
-                        <AddPhotoIcon className="add-photo" color="action"/>
-                    </Button>
-
-                    <Button onClick={hashTagEvent}>
-                        <HashTag color="action"/>
-                    </Button>
-
-                    <Button className="addButton" onClick={addEvent}>
-                        <AddIcon className="add-icon" />
-                    </Button>
-=======
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
                   <AlarmAddIcon className="add-alarm" color="action" />
@@ -177,14 +155,11 @@ export default function (passMemo) {
               <Button className="addButton" onClick={addEvent}>
                 <AddIcon className="add-icon" />
               </Button>
->>>>>>> 3fd347fb61c80d28c162e90128187aa891ce2c03
             </div>
           ) : (
             false
           )}
-            
         </div>
-
       </form>
     </div>
   );
