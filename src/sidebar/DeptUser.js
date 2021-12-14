@@ -71,9 +71,9 @@ const DeptUser = ({
 
   return (
     <Fragment>
-      <div onClick={() => handleImgClick(deptUserNo)}>
+      <div>
         {/* src에 image 변수를 이용하여 db 데이터로 적용 시킬 것!! */}
-        <img src={UserImg} alt="" />
+        <img src={UserImg} alt=""  onClick={() => handleImgClick(deptUserNo)} />
         <label>{name}</label>
         {/* 
                     radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다

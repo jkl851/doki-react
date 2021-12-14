@@ -4,7 +4,7 @@ import HashDropDownList from './HashDropDownList';
 import axios from 'axios';
 
 import {filterFunction, myFunction, myFunction3 } from '../assets/js/dropdown';
-import { string } from 'prop-types';
+import $ from 'jquery';
 
 export default function SidebarHash() {
 
@@ -45,44 +45,67 @@ export default function SidebarHash() {
     const [hint, setHint] = useState([]);
     const searchHash = (name) => {
         console.log("해쉬명 HINT1 : " + name);
-        // let temp = JSON.stringify(name);
-        // console.log("temp : " + temp);
         setHint({hashName: name});
-        $("#myDropdown").hide();
 
-        // console.log(`${hint}`);
-        console.log(hint);
 
-        // for(var key in name) {
-        //     console.log("key: " + key + " / " + name[key])
-        // }
+        $('#myDropdown').hide;
+        
     };
 
 
 
 
     //외부클릭 시 화면 닫기
-    const outsideRef = useOutSideRef(null);
-    function useOutSideRef() {
-        const ref= useRef(null);
+    // const outsideRef = useOutSideRef(null);
+    // function useOutSideRef() {
+    //     const ref= useRef(null);
+        
+    //     useEffect(() => {
+    //         function handelClickOutside(event) {
+    //             if(ref.current && !ref.current.contains(event.target)) {
+    //                 $("#myDropdown").hide();
+    //             } else {
+    //                 $("#myDropdown").show();
+    //             }
+    //         }
+    //         document.addEventListener('click', handelClickOutside);
+            
+    //         return () => {
+    //             document.removeEventListener('click', handelClickOutside);
+    //         };
+    //     });
+        
+    //     return ref;
+    // }
+    
 
+    //해쉬 검색창외에 다른 곳 클릭시 Dropdown을 닫게끔 하기
+    const itemRef = useItemRef(null);
+    function useItemRef() {
+        const ref1= useRef(null);
+        
         useEffect(() => {
-            function handelClickOutside(event) {
-                if(ref.current && !ref.current.contains(event.target)) {
+            function handelClickItem(event) {
+                if(ref1.current && !ref1.current.contains(event.target)) {
                     $("#myDropdown").hide();
                 } else {
                     $("#myDropdown").show();
                 }
             }
-            document.addEventListener('click', handelClickOutside);
-
+            document.addEventListener('click', handelClickItem);
+            
             return () => {
-                document.removeEventListener('click', handelClickOutside);
+                document.removeEventListener('click', handelClickItem);
             };
         });
-
-        return ref;
+        
+        return ref1;
     }
+
+
+
+
+
 
 
     //Input 값을 변경하려면 state를 이용해야함
@@ -90,8 +113,11 @@ export default function SidebarHash() {
         setHint(e.target.value);
     }
 
+    
     return (
-        <div className="dropdown" ref={outsideRef}>
+        <div className="dropdown" 
+            // ref={outsideRef}
+            >
             <input type="text" 
                 placeholder="#Hash Tag" 
                 id="myInput"
@@ -101,11 +127,14 @@ export default function SidebarHash() {
                 onMouseDown={myFunction3}
                 onKeyUp={onChangeSearchKey}
                 onChange={handleChange}
+                ref={itemRef}
                 autoComplete='off'/>  
-            <HashDropDownList 
-                hashDropDownDatas={hashDropDownDatas}
-                searchHash={searchHash}
-                />
+
+                <HashDropDownList 
+                    hashDropDownDatas={hashDropDownDatas}
+                    searchHash={searchHash}
+                    
+                    />
         </div>
     )
 }

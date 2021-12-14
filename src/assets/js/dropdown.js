@@ -14,6 +14,8 @@ function myFunction4() {
   document.getElementById("myDropdown2").classList.toggle("hide");
 }
 
+
+
 function filterFunction() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("myInput");

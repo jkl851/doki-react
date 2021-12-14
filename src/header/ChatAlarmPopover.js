@@ -38,12 +38,7 @@ export default function ChatAlarmPopover({ chatMessages }) {
             function handelClickOutside(event) {
                 if(ref.current && !ref.current.contains(event.target)) {
                   setChatAlarmPopover({ isOpen: false });
-                  $("#myPopover01").hide();
-                    console.log('외부 클릭 감지');
-                } else {
-                  $("#myPopover01").show();
-
-                }
+                } 
             }
             document.addEventListener('click', handelClickOutside);
   
@@ -58,7 +53,8 @@ export default function ChatAlarmPopover({ chatMessages }) {
   return (
     <Fragment>
       <a id="mypopover1" 
-        ref={target} 
+        // ref={target} 
+        ref={outsideRef} 
         onClick={chatAlarmInfo} href="#about">
         <IoIosText />
       </a>

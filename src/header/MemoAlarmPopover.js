@@ -67,7 +67,6 @@ export default function MemoAlarmPopover({ memoMessages }) {
         show={memoAlarmPopover.isOpen}
         target={target.current}
         placement="bottom"
-        ref={outsideRef}
        
       >
         <Popover
