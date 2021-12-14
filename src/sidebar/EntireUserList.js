@@ -1,32 +1,46 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import User from './User.js'
 
 const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag, setFlag}) => {
-    // console.log("====== Entire userDatas ======")
-    // console.log(userDatas)
+    const [checkedItems, setCheckedItems] = useState([]);
 
-    // console.log("====== test ======")
-    // console.log(deptUserDatas);
-    // console.log("111")
-    // console.log(Object.assign({}, deptUserDatas));
-    
-    // Object.assign({}, deptUserDatas).map(deptUserdata => {
-    //     deptUserdata.no ===
-    // });
-    
 
-    // console.log(JSON.stringify(deptUserDatas));
-    // console.log(obj)
-    
+    const checkedItemHandler = (isChecked, id) => {
+        if (isChecked) {
+          checkedItems.push(id);
+          setCheckedItems(checkedItems);
+        } else if (!isChecked) {
+          let pos = checkedItems.indexOf(id)
+          checkedItems.splice(pos, 1);
+          setCheckedItems(checkedItems);
+        }
+        
+        const length = isInvited.length;
+        console.log(length)
 
-    // console.log(isInvited);
+        const arr = [];
+        for(let i=0 ; i<length; i++){
+            for(let j=0; j<checkedItems.length; j++){
+                if(i === checkedItems[j]){
+                    arr[i] = true;
+                    break;
+                } 
+
+                if(j+1 === checkedItems.length){
+                    arr[i] = false;
+                }
+            }
+        }
+        
+        console.log(arr);
+        setFlag(arr);
+        
+      };
     
     useEffect(() => {
         const count = deptUserDatas.length;
         console.log('count ' + count)
         setIsInvited(userDatas.map((element, index, array) => {
-        // console.log(index)  // 현재 element가 속한 index
-        // console.log(array)  // 해당 배열
             for(let i=0; i<count; i++){
                 if(deptUserDatas[i].no === element.no ) {
                     return true;
@@ -37,14 +51,8 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag
                 }
             }
         }))
-
-        
-        
     }, [])
     
-
-    
-
     return (
         <ul > 
             {userDatas.map((userData, index) => 
@@ -54,8 +62,8 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag
                     name={userData.userName + " " + userData.position}
                     image={userData.image}
                     isInvited={isInvited}
-                    flag={flag}
-                    setFlag={setFlag}
+                    checkedItemHandler={checkedItemHandler}
+                    
                 />)}
         </ul>
     );

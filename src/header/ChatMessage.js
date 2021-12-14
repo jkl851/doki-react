@@ -11,6 +11,9 @@ export default function ChatMessage({
   departmentName,
   pageMovement,
 }) {
+
+
+
   return (
     <div
       className={alarmModalStyles.content}

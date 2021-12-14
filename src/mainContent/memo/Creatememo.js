@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
+<<<<<<< HEAD
 import { style } from "@mui/system";
+=======
+import Palette from './Components/Palette';
+import Color from "./Components/Color";
+>>>>>>> 59fb6df0f715a26152d7abec4525f01bada556c5
 
 export default function (passMemo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
+  const [expandPalette, setExpandPalette] = useState(false);
 
   // const [changeHeight, setHeight] = useState(false);
 
@@ -37,12 +43,8 @@ export default function (passMemo) {
       time: "2021/12/12 15:00",
       repetition: "0",
     },
+    color: "#FFFFFF"
   });
-
-  const alarmEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 알람 : 개발중`); //@222
-  };
 
   const InputEvent = (event) => {
     const value = event.target.value;
@@ -54,11 +56,6 @@ export default function (passMemo) {
         [name]: value,
       };
     });
-  };
-
-  const paletteEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 파레트 : 개발중`);
   };
 
   const photoEvent = (event) => {
@@ -91,6 +88,13 @@ export default function (passMemo) {
     setExpandAlarm(!expandAlarm);
   };
 
+<<<<<<< HEAD
+=======
+  const expandPaletteTable = () => {
+    setExpandPalette(!expandPalette);
+  };
+
+>>>>>>> 59fb6df0f715a26152d7abec4525f01bada556c5
   return (
     <div>
       <form onMouseLeave={collapseCreateMemo}>
@@ -111,7 +115,7 @@ export default function (passMemo) {
           <textarea
             rows="6"
             column="20"
-            placeholder="본문"
+            placeholder=">"
             className="description_input"
             value={memo.content}
             name="content"
@@ -121,6 +125,7 @@ export default function (passMemo) {
 
           {expandMemo ? (
             <div className="buttons-div" style={{ textAlign: "center" }}>
+<<<<<<< HEAD
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
                   <AlarmAddIcon className="add-alarm" color="action" />
@@ -149,6 +154,42 @@ export default function (passMemo) {
               <Button className="addButton" onClick={addEvent}>
                 <AddIcon className="add-icon" />
               </Button>
+=======
+                <div className="alarm-div">
+                    <Button className="alarmButton" onClick={expandAlarmTable}>
+                        <AlarmAddIcon className="add-alarm" color="action"/>
+                    </Button>
+                        {
+                        expandAlarm ?
+                        <div className="alarm-div-dropdown">
+                        <MemoAlarm className="memoAlarm" />
+                        </div> : 
+                        false
+                        }
+                </div>
+               
+                    <Button className="paletteButton" onClick={expandPaletteTable}>
+                        <PaletteIcon className="add-palette" color="action"/>
+                    </Button> 
+                    {
+                        expandPalette ?
+                        <Palette className="memoPalette" value={memo.color} name="color" />
+                        :
+                        false
+                    }
+            
+                    <Button className="photoButton" onClick={photoEvent}>
+                        <AddPhotoIcon className="add-photo" color="action"/>
+                    </Button>
+
+                    <Button onClick={hashTagEvent}>
+                        <HashTag color="action"/>
+                    </Button>
+
+                    <Button className="addButton" onClick={addEvent}>
+                        <AddIcon className="add-icon" />
+                    </Button>
+>>>>>>> 59fb6df0f715a26152d7abec4525f01bada556c5
             </div>
           ) : (
             false
