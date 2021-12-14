@@ -23,10 +23,10 @@ export default function SidebarMenu() {
     const [allUserDatas, setAllUserDatas] = useState([]);
     const [isInvited, setIsInvited] = useState([]);
     const [flag, setFlag] = useState([])
+    const [keyword, setKeyword] = useState('');
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
-
     }
 
     const groupPermissionClick = () => {
@@ -66,6 +66,7 @@ export default function SidebarMenu() {
             .catch((Error) => {console.error(Error)})
     }
 
+    // 부서 모달의 x 버튼 클릭 시 권한 설정한 것을 업데이트 한다
     const closeGroupPermissionModal = async() => {
         setGroupPermissionState({isOpen: false})
 
@@ -81,6 +82,7 @@ export default function SidebarMenu() {
             .catch((Error) => {console.error(Error)})
     }
 
+    // 최초 로딩 시 모든 직원의 리스트와 해당 부서의 직원을 가져온다 
     useEffect(async() => {
         await axios.all([
             await axios.get('http://localhost:8080/doki/user/getUserList/' + '1'),   // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
@@ -98,9 +100,6 @@ export default function SidebarMenu() {
             })
         )
         .catch((Error) => {console.log(Error)})
-
-        
-        
     }, [])
 
     
@@ -182,6 +181,7 @@ export default function SidebarMenu() {
                             <DeptUserList
                                 deptUserDatas={deptUserDatas}
                                 setDeptUserDatas={setDeptUserDatas}
+                                keyword={keyword}
                                 />
                         </div>
 
@@ -192,7 +192,10 @@ export default function SidebarMenu() {
             <div className="sidebar-user">
                 <SidebarUser 
                     deptUserDatas={deptUserDatas}
-                    setDeptUserDatas={setDeptUserDatas}/>
+                    setDeptUserDatas={setDeptUserDatas}
+                    keyword={keyword}
+                    setKeyword={setKeyword}
+                    />
             </div>
         </div>
     )
