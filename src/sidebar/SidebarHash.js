@@ -4,6 +4,7 @@ import HashDropDownList from './HashDropDownList';
 import axios from 'axios';
 
 import {filterFunction, myFunction, myFunction3 } from '../assets/js/dropdown';
+import { string } from 'prop-types';
 
 export default function SidebarHash() {
 
@@ -41,11 +42,20 @@ export default function SidebarHash() {
 
 
     //Dropdown 클릭시 해당 데이터 입력
-    const [hint, setHint] = useState(null);
+    const [hint, setHint] = useState([]);
     const searchHash = (name) => {
-        console.log("해쉬명 HINT : " + name);
-        // setHint({hint: name});
+        console.log("해쉬명 HINT1 : " + name);
+        // let temp = JSON.stringify(name);
+        // console.log("temp : " + temp);
+        setHint({hashName: name});
         $("#myDropdown").hide();
+
+        // console.log(`${hint}`);
+        console.log(hint);
+
+        // for(var key in name) {
+        //     console.log("key: " + key + " / " + name[key])
+        // }
     };
 
 
@@ -75,16 +85,23 @@ export default function SidebarHash() {
     }
 
 
+    //Input 값을 변경하려면 state를 이용해야함
+    function handleChange(e) {
+        setHint(e.target.value);
+    }
+
     return (
         <div className="dropdown" ref={outsideRef}>
             <input type="text" 
                 placeholder="#Hash Tag" 
-                id="myInput" 
-                // onClick={{javascript:shoion}
+                id="myInput"
+                value={hint.hashName}
+                // value={hint}
                 onKeyUp={filterFunction} 
                 onMouseUp={myFunction} 
                 onMouseDown={myFunction3}
                 onKeyUp={onChangeSearchKey}
+                onChange={handleChange}
                 autocomplete='off'/>  
             <HashDropDownList 
                 hashDropDownDatas={hashDropDownDatas}

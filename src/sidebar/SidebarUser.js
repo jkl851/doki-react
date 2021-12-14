@@ -1,10 +1,10 @@
 import React, {Fragment, useState, useEffect, useRef, useCallback} from 'react';
 import '../assets/css/dropdown.css'
 import '../assets/css/sidebar.css'
-import UserDropDownList from './UserDropDownList';
 import DeptUserList from './DeptUserList'
 import axios from 'axios';
 
+import UserDropDownList from './UserDropDownList';
 import {filterFunction, myFunction2, myFunction4} from '../assets/js/dropdown';
 
 export default function SidebarUser({deptUserDatas}) {
@@ -40,44 +40,12 @@ export default function SidebarUser({deptUserDatas}) {
         .catch((Error) => {console.log(Error)})
     }
 
-
-    //Dropdown 클릭시 해당 데이터 입력
-    // const [hint, setHint] = useState(null);
-    // const searchUser = (name) => {
-    //     console.log(name + "이름!@!#!");
-    //     setHint({hint: name});
-    // };
-
-
-    //외부클릭 감지
-    const outsideRef = useOutSideRef(null);
-    function useOutSideRef() {
-        const ref= useRef(null);
-
-        useEffect(() => {
-            function handelClickOutside(event) {
-                if(ref.current && !ref.current.contains(event.target)) {
-                    // console.log('외부 클릭 감지');
-                }
-            }
-            document.addEventListener('click', handelClickOutside);
-
-            return () => {
-                document.removeEventListener('click', handelClickOutside);
-            };
-        });
-
-        return ref;
-    }
-    
- 
-
     return (
         <>
             <div className="dropdown">
-                <input type="text" placeholder="이름" id="myInput2" ref={outsideRef} 
-                    onMouseUp={myFunction2} 
-                    onMouseDown={myFunction4}
+                <input type="text" placeholder="이름" id="myInput2"
+                    // onMouseUp={myFunction2} 
+                    // onMouseDown={myFunction4}
                     onKeyUp={onChangeSearchKey}
                     autocomplete='off'
                     />  

@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 export default function HashDropDown({name, searchHash}) {
     // const [hint, setHint] = useStat
 
+    // console.log(name)
 
     return (
-        <a href="#" onClick={() => searchHash(name)}>{name}</a>
+        <a href="#" onClick={() => searchHash(name)}># {name}</a>
 
     )
 }

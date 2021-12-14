@@ -19,7 +19,12 @@ export default function HashDropDownList({hashDropDownDatas, searchHash}) {
     )
 }
 
+//상위 component로 이동 prop 사용
 HashDropDownList.propTypes = {
     name: PropTypes.string.isRequired
   };
   
+//default prop
+HashDropDownList.defaultProps = {
+    name: ''
+}
