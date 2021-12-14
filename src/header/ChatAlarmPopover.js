@@ -29,26 +29,26 @@ export default function ChatAlarmPopover({ chatMessages }) {
   };
 
 
-    //외부클릭 시 화면 닫기
-    const outsideRef = useOutSideRef(null);
-    function useOutSideRef() {
-        const ref= useRef(null);
-  
-        useEffect(() => {
-            function handelClickOutside(event) {
-                if(ref.current && !ref.current.contains(event.target)) {
-                  setChatAlarmPopover({ isOpen: false });
-                } 
-            }
-            document.addEventListener('click', handelClickOutside);
-  
-            return () => {
-                document.removeEventListener('click', handelClickOutside);
-            };
-        });
-  
-        return ref;
-    }
+  //외부클릭 시 화면 닫기
+  const outsideRef = useOutSideRef(null);
+  function useOutSideRef() {
+      const ref= useRef(null);
+
+      useEffect(() => {
+          function handelClickOutside(event) {
+              if(ref.current && !ref.current.contains(event.target)) {
+                setChatAlarmPopover({ isOpen: false });
+              } 
+          }
+          document.addEventListener('click', handelClickOutside);
+
+          return () => {
+              document.removeEventListener('click', handelClickOutside);
+          };
+      });
+
+      return ref;
+  }
 
   return (
     <Fragment>
