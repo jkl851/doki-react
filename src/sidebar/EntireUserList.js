@@ -2,21 +2,38 @@ import React, {useState, useEffect} from 'react';
 import User from './User.js'
 
 const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag, setFlag}) => {
-    const [checkedItems, setCheckedItems] = useState(new Set());
+    const [checkedItems, setCheckedItems] = useState([]);
 
 
     const checkedItemHandler = (isChecked, id) => {
         if (isChecked) {
-          checkedItems.add(id);
+          checkedItems.push(id);
           setCheckedItems(checkedItems);
-        } else if (!isChecked && checkedItems.has(id)) {
-          checkedItems.delete(id);
+        } else if (!isChecked) {
+          let pos = checkedItems.indexOf(id)
+          checkedItems.splice(pos, 1);
           setCheckedItems(checkedItems);
         }
-
-        console.log(checkedItems)
         
-        // 핸들러 호출해서 checkedItems를 집어 넣고
+        const length = isInvited.length;
+        console.log(length)
+
+        const arr = [];
+        for(let i=0 ; i<length; i++){
+            for(let j=0; j<checkedItems.length; j++){
+                if(i === checkedItems[j]){
+                    arr[i] = true;
+                    break;
+                } 
+
+                if(j+1 === checkedItems.length){
+                    arr[i] = false;
+                }
+            }
+        }
+        
+        console.log(arr);
+        setFlag(arr);
         
       };
     
@@ -45,11 +62,6 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag
                     name={userData.userName + " " + userData.position}
                     image={userData.image}
                     isInvited={isInvited}
-                    setIsInvited={setIsInvited}
-                    flag={flag}
-                    setFlag={setFlag}
-                    checkedItems={checkedItems}
-                    setCheckedItems={setCheckedItems}
                     checkedItemHandler={checkedItemHandler}
                     
                 />)}

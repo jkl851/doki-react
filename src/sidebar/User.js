@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import UserImg from '../assets/images/user11.png'
 
-const User = ({no, name, image, isInvited, flag, setFlag, checkedItems, setCheckedItems, checkedItemHandler}) => {
+const User = ({no, name, image, isInvited, checkedItemHandler}) => {
 
     const [bChecked, setChecked] = useState(false);
 
@@ -9,41 +9,6 @@ const User = ({no, name, image, isInvited, flag, setFlag, checkedItems, setCheck
         setChecked(!bChecked);
         checkedItemHandler(target.checked, target.id-1 );
     };
-
-    const handleChange = (checked, id) => {
-        console.log(checked)
-        console.log(no-1)
-        console.log(flag)
-
-        if(checked){
-
-        } else {
-            
-        }
-        setFlag(isInvited.map((data, index) => {
-            if(data === false) {
-                if(index === (no-1)){
-                    return !data;
-                } else {
-                    return data;
-                }
-            } else {
-                return data
-            }
-        }))
-          
-        // setFlag(isInvited.map((data, index) => {
-        //     if(data === false) {
-        //         if(index === (no-1)){
-        //             return !data;
-        //         } else {
-        //             return data;
-        //         }
-        //     } else {
-        //         return data
-        //     }
-        // }))
-    }
 
     return (
         <div>

@@ -2,9 +2,6 @@ import React from 'react';
 import DeptUser from './DeptUser'
 
 const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, userDropDownDatas}) => {
-    // console.log("====== DeptUserDatas ======")
-    // console.log(deptUserDatas)
-
     
     return (
         <ul>

@@ -55,6 +55,7 @@ export default function SidebarMenu() {
             )
             .then((Response) => {
                 console.log("====== insert 요청 성공! ======= ");
+                console.log(Response.data)
                 setDeptUserDatas(deptUserDatas => 
                     deptUserDatas = Response.data);
                 console.log("=============================== ");
