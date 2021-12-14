@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
+<<<<<<< HEAD
 import Palette from './Components/Palette';
+=======
+import Palette from "./Components/Palette";
+>>>>>>> 3fd347fb61c80d28c162e90128187aa891ce2c03
 import Color from "./Components/Color";
 
 export default function (passMemo) {
@@ -21,7 +25,7 @@ export default function (passMemo) {
       time: "2021/12/12 15:00",
       repetition: "0",
     },
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   });
 
   const InputEvent = (event) => {
@@ -100,6 +104,7 @@ export default function (passMemo) {
 
           {expandMemo ? (
             <div className="buttons-div" style={{ textAlign: "center" }}>
+<<<<<<< HEAD
                 <div className="alarm-div">
                     <Button className="alarmButton" onClick={expandAlarmTable}>
                         <AlarmAddIcon className="add-alarm" color="action"/>
@@ -134,6 +139,45 @@ export default function (passMemo) {
                     <Button className="addButton" onClick={addEvent}>
                         <AddIcon className="add-icon" />
                     </Button>
+=======
+              <div className="alarm-div">
+                <Button className="alarmButton" onClick={expandAlarmTable}>
+                  <AlarmAddIcon className="add-alarm" color="action" />
+                </Button>
+                {expandAlarm ? (
+                  <div className="alarm-div-dropdown">
+                    <MemoAlarm className="memoAlarm" />
+                  </div>
+                ) : (
+                  false
+                )}
+              </div>
+
+              <Button className="paletteButton" onClick={expandPaletteTable}>
+                <PaletteIcon className="add-palette" color="action" />
+              </Button>
+              {expandPalette ? (
+                <Palette
+                  className="memoPalette"
+                  value={memo.color}
+                  name="color"
+                />
+              ) : (
+                false
+              )}
+
+              <Button className="photoButton" onClick={photoEvent}>
+                <AddPhotoIcon className="add-photo" color="action" />
+              </Button>
+
+              <Button onClick={hashTagEvent}>
+                <HashTag color="action" />
+              </Button>
+
+              <Button className="addButton" onClick={addEvent}>
+                <AddIcon className="add-icon" />
+              </Button>
+>>>>>>> 3fd347fb61c80d28c162e90128187aa891ce2c03
             </div>
           ) : (
             false
