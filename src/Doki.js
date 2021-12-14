@@ -18,7 +18,6 @@ export default function Doki() {
 
       <Memo />
 
-      <SideChat />
       <SideChat2 />
     </div>
   );
