@@ -74,7 +74,6 @@ export default function (passMemo) {
 
   const expandCreateMemo = () => {
     setExpandMemo(true);
-    this.style = { height: "1500px" };
   };
   const collapseCreateMemo = () => {
     setExpandMemo(false);

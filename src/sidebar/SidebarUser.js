@@ -3,7 +3,7 @@ import '../assets/css/dropdown.css'
 import '../assets/css/sidebar.css'
 import DeptUserList from './DeptUserList'
 
-export default function SidebarUser({deptUserDatas, setDeptUserDatas, keyword, setKeyword}) {
+export default function SidebarUser({deptUserDatas, keyword, setKeyword}) {
 
     //검색을 입력하고 땠을때 이벤트 발생 (검색 키워드 적용)
     const onChangeSearchKey = async(e) => {

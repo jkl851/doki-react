@@ -24,6 +24,16 @@ export default function SidebarMenu() {
     const [isInvited, setIsInvited] = useState([]);
     const [flag, setFlag] = useState([])
     const [keyword, setKeyword] = useState('');
+    const [allUserKeyword, setAllUserKeyword] = useState('');
+    const [deptUserKeyword, setDeptUserKeyword] = useState('');
+
+    const onChangeDeptUserSearchKey = async(e) => {
+        setDeptUserKeyword(e.target.value)
+    }
+
+    const onChangeAllUserSearchKey = async(e) => {
+        setAllUserKeyword(e.target.value)
+    }
 
     const inviteClick = () => {
         setInviteState({isOpen: true})
@@ -35,6 +45,7 @@ export default function SidebarMenu() {
 
     const closeInviteModal = async() => {
         setInviteState({isOpen: false})
+
         console.log(flag);
         // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
         const insertData = flag.map((data,index) => {
@@ -123,13 +134,14 @@ export default function SidebarMenu() {
                     isOpen={inviteState.isOpen} // modalState.isOpen
                     onRequestClose={ () => setInviteState({isOpen: false}) }
                     shouldCloseOnOverlayClick={true}
+                    onAfterClose={() => {setAllUserKeyword('')}}
                     className={InviteStyles.Modal}>
                     <div className={InviteStyles['close']}>
                         <img onClick={closeInviteModal} src={CloseImg} alt="" />
                     </div>
                     <div className={InviteStyles['search']} >
                         <div>
-                            <input type={'text'} placeholder="직원 검색"></input>
+                            <input onChange={onChangeAllUserSearchKey} vluae={allUserKeyword} type={'text'} placeholder="직원 검색"></input>
                             <img style={{height:'27px'}} src={SearchImg} alt="" />
                         </div>
                     </div>
@@ -145,6 +157,7 @@ export default function SidebarMenu() {
                                 setIsInvited={setIsInvited}
                                 flag={flag}
                                 setFlag={setFlag}
+                                allUserKeyword={allUserKeyword}
                                 />
                         </div>
 
@@ -156,13 +169,14 @@ export default function SidebarMenu() {
                     isOpen={groupPermissionState.isOpen} // modalState.isOpen
                     shouldCloseOnOverlayClick={true}
                     onRequestClose={ () => setGroupPermissionState({isOpen: false}) }
+                    onAfterClose={() => setDeptUserKeyword('')}
                     className={GroupPermmissionStyles.Modal}>
                     <div className={GroupPermmissionStyles['close']}>
                         <img onClick={closeGroupPermissionModal} src={CloseImg} alt="" />
                     </div>
                     <div className={GroupPermmissionStyles['search']} >
                         <div>
-                            <input type={'text'} placeholder="직원 검색"></input>
+                            <input onChange={onChangeDeptUserSearchKey} vluae={deptUserKeyword} type={'text'} placeholder="직원 검색"></input>
                             <img style={{height:'27px'}} src={SearchImg} alt="" />
                         </div>
                     </div>
@@ -181,7 +195,7 @@ export default function SidebarMenu() {
                             <DeptUserList
                                 deptUserDatas={deptUserDatas}
                                 setDeptUserDatas={setDeptUserDatas}
-                                keyword={keyword}
+                                keyword={deptUserKeyword}
                                 />
                         </div>
 
@@ -192,7 +206,6 @@ export default function SidebarMenu() {
             <div className="sidebar-user">
                 <SidebarUser 
                     deptUserDatas={deptUserDatas}
-                    setDeptUserDatas={setDeptUserDatas}
                     keyword={keyword}
                     setKeyword={setKeyword}
                     />
