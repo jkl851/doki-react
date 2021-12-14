@@ -15,7 +15,7 @@ export default function SidebarDivision() {
         display: "inline-block",
         width: "23%",
         minWidth: "20%",
-        backgroundColor: "#d9d9d9",
+        backgroundColor: "#e9e9e9",
         float: "left",
         height: "100%",
         overflowY: "auto",

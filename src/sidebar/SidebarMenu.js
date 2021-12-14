@@ -64,7 +64,8 @@ export default function SidebarMenu() {
         //     .catch((Error) => {console.error(Error)})
         // setIsInvited([...flag]);
             
-            
+
+        
     }
 
     const closeGroupPermissionModal = async() => {
