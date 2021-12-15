@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useContext } from "react";
+import { MemoContext} from "../modules/MemoReducer";
 import Color from "./Color";
-import {Button} from "@mui/material";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -46,9 +46,8 @@ const colors = [
   { color: "#e8eaed", tooltip: "회색" },
 ];
 
-export default function ColorPalette({ value }) {
-
-  const [ checkedcolor, setCheckedColor] = useState(value)
+export default function ColorPalette() {
+  const [ memo, dispatch ] = useContext(MemoContext);
 
   return (
     <Wrapper>
@@ -57,11 +56,12 @@ export default function ColorPalette({ value }) {
           <Color
             key={idx}
             color={color.color}
-            onClick={(newColor) => {
-              setCheckedColor(newColor)
-            }}
+            onClick={
+              (e)=>{ dispatch({ type: 'CHANGE_COLOR', color: color.color }) }
+              
+            }
             border={color.border ? color.border : color.color}
-            selectedColor={checkedcolor}
+            selectedColor={ memo.color }
             tooltip={color.tooltip}
           />
         ))}

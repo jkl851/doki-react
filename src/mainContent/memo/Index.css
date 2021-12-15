@@ -130,7 +130,6 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
 
 .memo {
   width: 295px;
-  border: 1px solid #6d758d;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 20px;
@@ -140,6 +139,8 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   overflow: hidden;
   float: left;
   margin: 4px;
+  -webkit-box-shadow: 0px 1px 2px 1px rgba(122, 122, 122, 0.77);
+  box-shadow: 0px 1px 2px 1px rgba(126, 125, 125, 0.77);
 }
 
 h2.memo-title {
@@ -147,6 +148,7 @@ h2.memo-title {
   text-overflow: ellipsis;
   overflow-x: hidden;
   overflow-y: hidden;
+  cursor: pointer;
 }
 
 span.memo-description {
@@ -158,10 +160,12 @@ span.memo-description {
 .memo-area {
   height: 104px;
   overflow-y: scroll;
+  cursor: pointer;
 }
 
 .memo-area::-webkit-scrollbar {
   width: 5px;
+  cursor: pointer;
 }
 
 .memo-area::-webkit-scrollbar-thumb {
@@ -175,7 +179,6 @@ span.memo-description {
 
 .delete-button {
   background: none !important;
-  color: white !important;
   transition: 0.5s !important;
   -webkit-transition: 0.5s !important;
   -moz-transition: 0.5s !important;

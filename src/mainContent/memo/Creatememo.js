@@ -1,18 +1,25 @@
 import React, { useState, useContext } from "react";
 import { MemoContext} from "./modules/MemoReducer";
+
+import MemoAlarm from "./Components/MemoAlarm";
+import Palette from './Components/Palette';
+
+import styled from 'styled-components';
 import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
-import MemoAlarm from "./Components/MemoAlarm";
-import Palette from './Components/Palette';
 
+const BackgroundColor = styled.div`
+  background: ${({ color }) => color}
+`
 
 export default function (passMemo) {
   const [ memo, dispatch ] = useContext(MemoContext);
 
+  // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
@@ -27,14 +34,17 @@ export default function (passMemo) {
     alert(`${name} 메모의 해쉬태그달기 : 개발중`);
   };
 
+  // 메모 추가 이벤트
   const addEvent = () => {
     passMemo.passMemo(memo);
     dispatch({type: 'INITIALIZE'})
   };
 
+  // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
     setExpandMemo(true);
   };
+  
   const collapseCreateMemo = () => {
     setExpandMemo(false);
   };
@@ -50,7 +60,7 @@ export default function (passMemo) {
   return (
     <div>
       <form onMouseLeave={collapseCreateMemo}>
-        <div className="input_wrapper">
+        <BackgroundColor className="input_wrapper" color={memo.color}>
           {expandMemo ? (
             <input
               type="text"
@@ -69,8 +79,8 @@ export default function (passMemo) {
             column="20"
             placeholder=">"
             className="description_input"
-            value={memo.content}
-            name="content"
+            value={memo.contents}
+            name="contents"
             onChange={(e)=>{ dispatch({ type: 'MEMO_INPUT', name: e.target.name, value: e.target.value }) }}
             onMouseEnter={expandCreateMemo}
           ></textarea>
@@ -96,7 +106,6 @@ export default function (passMemo) {
               {expandPalette ? (
                 <Palette
                   className="memoPalette"
-                  value={memo.color}
                   name="color"
                 />
               ) : (
@@ -118,7 +127,7 @@ export default function (passMemo) {
           ) : (
             false
           )}
-        </div>
+        </BackgroundColor>
       </form>
     </div>
   );
