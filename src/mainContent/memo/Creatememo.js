@@ -1,58 +1,21 @@
-import React, { useState } from "react";
-import { Button } from "@mui/material";
+import React, { useState, useContext } from "react";
+import { MemoContext} from "./modules/MemoReducer";
+import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import MemoAlarm from "./Components/MemoAlarm";
-import Palette from "./Components/Palette";
-import Color from "./Components/Color";
+import Palette from './Components/Palette';
+
 
 export default function (passMemo) {
+  const [ memo, dispatch ] = useContext(MemoContext);
+
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
-
-  // const [changeHeight, setHeight] = useState(false);
-
-  // const heightControll = () => {
-  //   if (changeHeight === false) {
-  //     narrowHeight( () => {
-  //       style
-  //       setHeight(true)
-
-  //     });
-
-  //     console.log(chat);
-  //   } else {
-  //     closeNav2();
-  //     setHeight(false);
-  //     console.log(chat);
-  //   }
-  // };
-
-  const [memo, setMemo] = useState({
-    title: "",
-    content: "",
-    alarm: {
-      time: "2021/12/12 15:00",
-      repetition: "0",
-    },
-    color: "#FFFFFF",
-  });
-
-  const InputEvent = (event) => {
-    const value = event.target.value;
-    const name = event.target.name;
-
-    setMemo((prevValue) => {
-      return {
-        ...prevValue,
-        [name]: value,
-      };
-    });
-  };
 
   const photoEvent = (event) => {
     const name = event.target.name;
@@ -66,10 +29,7 @@ export default function (passMemo) {
 
   const addEvent = () => {
     passMemo.passMemo(memo);
-    setMemo({
-      title: "",
-      content: "",
-    });
+    dispatch({type: 'INITIALIZE'})
   };
 
   const expandCreateMemo = () => {
@@ -98,7 +58,7 @@ export default function (passMemo) {
               className="title_input"
               value={memo.title}
               name="title"
-              onChange={InputEvent}
+              onChange={(e)=>{ dispatch({ type: 'MEMO_INPUT', name: e.target.name, value: e.target.value }) }}
             />
           ) : (
             false
@@ -111,7 +71,7 @@ export default function (passMemo) {
             className="description_input"
             value={memo.content}
             name="content"
-            onChange={InputEvent}
+            onChange={(e)=>{ dispatch({ type: 'MEMO_INPUT', name: e.target.name, value: e.target.value }) }}
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
