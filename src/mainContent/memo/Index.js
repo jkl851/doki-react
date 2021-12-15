@@ -1,7 +1,8 @@
 import "./Index.css";
 import CreateMemo from "./Creatememo";
 import Memo from "./Memo";
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
+import { MemoContext, memoReducer, memoInitialState} from "./modules/MemoReducer";
 import "../../assets/css/main_content.css";
 
 export default function App() {
@@ -30,8 +31,9 @@ export default function App() {
     <div className="main_content">
       <div className="container">
         <div className="main_note">
-          <CreateMemo passMemo={addMemo} />
-
+          <MemoContext.Provider value={ useReducer( memoReducer, memoInitialState )}>
+            <CreateMemo passMemo={addMemo} />
+          </MemoContext.Provider>
           {addItem.map((value, index) => {
             return (
               <Memo

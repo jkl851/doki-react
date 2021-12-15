@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import User from './User.js'
 
-const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag, setFlag}) => {
+const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, setFlag, allUserKeyword}) => {
     const [checkedItems, setCheckedItems] = useState([]);
 
 
@@ -55,16 +55,18 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, flag
     
     return (
         <ul > 
-            {userDatas.map((userData, index) => 
-                <User 
-                    key={userData.no}
-                    no={userData.no}
-                    name={userData.userName + " " + userData.position}
-                    image={userData.image}
-                    isInvited={isInvited}
-                    checkedItemHandler={checkedItemHandler}
-                    
-                />)}
+            {userDatas
+                .filter(userData => userData.userName.indexOf(allUserKeyword) !== -1 || userData.position.indexOf(allUserKeyword) !== -1)
+                .map((userData, index) => 
+                    <User 
+                        key={userData.no}
+                        no={userData.no}
+                        name={userData.userName + " " + userData.position}
+                        image={userData.image}
+                        isInvited={isInvited}
+                        checkedItemHandler={checkedItemHandler}
+                        
+                    />)}
         </ul>
     );
 };

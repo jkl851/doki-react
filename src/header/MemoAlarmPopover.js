@@ -27,39 +27,31 @@ export default function MemoAlarmPopover({ memoMessages }) {
     alert(departmentNo + "번 부서로 이동!!");
   };
 
+  //외부클릭 시 화면 닫기
+  const outsideRef = useOutSideRef(null);
+  function useOutSideRef() {
+      const ref= useRef(null);
 
+      useEffect(() => {
+          function handelClickOutside(event) {
+              if(ref.current && !ref.current.contains(event.target)) {
+                setMemoAlarmPopover({ isOpen: false });
+              } 
+          }
+          document.addEventListener('click', handelClickOutside);
 
-
-    //외부클릭 감지
-    const outsideRef = useOutSideRef(null);
-    function useOutSideRef() {
-        const ref= useRef(null);
-
-        useEffect(() => {
-            function handelClickOutside(event) {
-                if(ref.current && !ref.current.contains(event.target)) {
-                    console.log('외부 클릭 감지');
-                    console.log(memoAlarmPopover.isOpen + "123");
-                    console.log('외부 클릭 감지1');
-
-                    setMemoAlarmPopover({ isOpen: false });
-                }
-            }
-            document.addEventListener('click', handelClickOutside);
-
-            return () => {
+          return () => {
               document.removeEventListener('click', handelClickOutside);
+          };
+      });
 
-            };            
-        });
-
-        return ref;
-    }
+      return ref;
+  }
     
 
   return (
     <Fragment>
-      <a id="mypopover2" ref={target} onClick={memoAlarmInfo} href="#about">
+      <a id="mypopover2" ref={outsideRef} onClick={memoAlarmInfo} href="#about">
         <IoIosNotifications />
       </a>
 
@@ -67,7 +59,6 @@ export default function MemoAlarmPopover({ memoMessages }) {
         show={memoAlarmPopover.isOpen}
         target={target.current}
         placement="bottom"
-        ref={outsideRef}
        
       >
         <Popover
