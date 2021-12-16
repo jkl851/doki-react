@@ -4,7 +4,7 @@ import HashDropDownList from './HashDropDownList';
 import axios from 'axios';
 
 import {filterFunction, myFunction, myFunction3 } from '../assets/js/dropdown';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 export default function SidebarHash() {
 
