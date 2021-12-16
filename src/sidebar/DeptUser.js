@@ -229,7 +229,7 @@ const DeptUser = ({
                     textOverflow: "ellipsis",
                   }}
                   type={"text"}
-                  Value={userInfoModalData.comment}
+                  value={userInfoModalData.comment}
                   autoComplete={"off"}
                   placeholder={"상태메세지 정보가 없습니다."}
                   onChange={(e) =>
