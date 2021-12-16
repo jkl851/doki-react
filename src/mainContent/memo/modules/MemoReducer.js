@@ -11,22 +11,10 @@ export const memoInitialState = {
         repetition: "0",
       },
     color: "#FFFFFF",
-    hash: {}
+    hash: []
   };
 
-// export const memoInitialState = [];
-
-// export const memoDefault = {
-//   no:"",
-//   title: "",
-//   contents: "",
-//   alarm: {
-//       time: new Date(),
-//       repetition: "0",
-//     },
-//   color: "#FFFFFF",
-//   hash: {}
-// }
+export const memoList = [];
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
@@ -61,6 +49,11 @@ export const memoReducer = (state, action) => {
     case 'INITIALIZE':
     return {
       ...memoInitialState,
+    }
+
+    case 'ADD_MEMO':
+    return {
+      ...state,
     }
 
     default:

@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { MemoContext} from "../modules/MemoReducer";
+import React from "react";
 import Color from "./Color";
 import styled from "styled-components";
 
@@ -46,8 +45,7 @@ const colors = [
   { color: "#e8eaed", tooltip: "회색" },
 ];
 
-export default function ColorPalette() {
-  const [ memo, dispatch ] = useContext(MemoContext);
+export default function ColorPalette( {cmemo , InputEvent}) {
 
   return (
     <Wrapper>
@@ -55,13 +53,11 @@ export default function ColorPalette() {
         {colors.map((color, idx) => (
           <Color
             key={idx}
-            color={color.color}
-            onClick={
-              (e)=>{ dispatch({ type: 'CHANGE_COLOR', color: color.color }) }
-              
-            }
+            name="color"
+            value={color.color}
+            onClick={InputEvent}
             border={color.border ? color.border : color.color}
-            selectedColor={ memo.color }
+            selectedColor={ cmemo.color }
             tooltip={color.tooltip}
           />
         ))}

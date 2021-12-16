@@ -16,9 +16,25 @@ const BackgroundColor = styled.div`
   background: ${({ color }) => color}
 `
 
+const memoInitialState = {
+  no:"",
+  title: "",
+  contents: "",
+  alarm: {
+      time: new Date(),
+      repetition: "0",
+    },
+  color: "#FFFFFF",
+  hash: []
+};
+
 export default function (passMemo) {
+  // 전역 컨텍스트
   const [ memo, dispatch ] = useContext(MemoContext);
 
+  // Create Memo State
+  const [ cmemo, setCmemo] = useState(memoInitialState);
+  
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -34,10 +50,33 @@ export default function (passMemo) {
     alert(`${name} 메모의 해쉬태그달기 : 개발중`);
   };
 
+  // 메모 value 추가 이벤트
+  const InputEvent = (event) => {
+    const value = event.target.value
+    const name = event.target.name
+    console.log(value, name);
+    setCmemo( (prevValue) => {
+        return{
+            ...prevValue,
+            [name]:value
+        }
+    })
+  }
+
   // 메모 추가 이벤트
   const addEvent = () => {
-    passMemo.passMemo(memo);
-    dispatch({type: 'INITIALIZE'})
+    passMemo.passMemo(cmemo);
+    setCmemo({
+      no:"",
+      title: "",
+      contents: "",
+      alarm: {
+          time: new Date(),
+          repetition: "0",
+        },
+      color: "#FFFFFF",
+      hash: []
+    })
   };
 
   // 토글에 따른 메모 버튼 활성화
@@ -60,15 +99,15 @@ export default function (passMemo) {
   return (
     <div>
       <form onMouseLeave={collapseCreateMemo}>
-        <BackgroundColor className="input_wrapper" color={memo.color}>
+        <BackgroundColor className="input_wrapper" color={cmemo.color}>
           {expandMemo ? (
             <input
               type="text"
               placeholder="제목"
               className="title_input"
-              value={memo.title}
+              value={cmemo.title}
               name="title"
-              onChange={(e)=>{ dispatch({ type: 'MEMO_INPUT', name: e.target.name, value: e.target.value }) }}
+              onChange={InputEvent}
             />
           ) : (
             false
@@ -79,9 +118,9 @@ export default function (passMemo) {
             column="20"
             placeholder=">"
             className="description_input"
-            value={memo.contents}
+            value={cmemo.contents}
             name="contents"
-            onChange={(e)=>{ dispatch({ type: 'MEMO_INPUT', name: e.target.name, value: e.target.value }) }}
+            onChange={InputEvent}
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
@@ -93,7 +132,7 @@ export default function (passMemo) {
                 </Button>
                 {expandAlarm ? (
                   <div className="alarm-div-dropdown">
-                    <MemoAlarm className="memoAlarm" />
+                    <MemoAlarm className="memoAlarm" memo={cmemo} setCmemo={setCmemo} />
                   </div>
                 ) : (
                   false
@@ -107,6 +146,8 @@ export default function (passMemo) {
                 <Palette
                   className="memoPalette"
                   name="color"
+                  cmemo={cmemo}
+                  InputEvent={InputEvent}
                 />
               ) : (
                 false

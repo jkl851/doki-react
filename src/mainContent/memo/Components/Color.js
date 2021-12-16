@@ -28,16 +28,19 @@ const StyledCircle = styled.div`
 `;
 
 export default function Color({
-  color,
+  value,
   border,
   selectedColor,
   tooltip,
   onClick,
 }) {
+  const handleClick = (e) => {
+    onClick(e);
+  }
 
   return (
-    <Wrapper onClick={onClick}>
-      <StyledCircle color={color} border={border} selectedColor={selectedColor}>
+    <Wrapper onClick={handleClick} value={value} name="color">
+      <StyledCircle color={value} border={border} selectedColor={selectedColor}>
         <CheckOutlinedIcon/>
       </StyledCircle>
       {!!tooltip && <Tooltip content={tooltip} />}
