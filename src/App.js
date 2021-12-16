@@ -9,7 +9,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route exact path="/main" element={<Doki />} />
+        <Route exact path="/doki" element={<Doki />} />
       </Routes>
     </Router>
   );
