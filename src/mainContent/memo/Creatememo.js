@@ -20,10 +20,7 @@ const memoInitialState = {
   no:"",
   title: "",
   contents: "",
-  alarm: {
-      time: new Date(),
-      repetition: "0",
-    },
+  time: new Date(),
   color: "#FFFFFF",
   hash: []
 };
@@ -49,12 +46,9 @@ export default function (passMemo) {
     const name = event.target.name;
     alert(`${name} 메모의 해쉬태그달기 : 개발중`);
   };
-
+'#f28b82'
   // 메모 value 추가 이벤트
-  const InputEvent = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-    console.log(value, name);
+  const InputEvent = (name, value) => {
     setCmemo( (prevValue) => {
         return{
             ...prevValue,
@@ -70,10 +64,7 @@ export default function (passMemo) {
       no:"",
       title: "",
       contents: "",
-      alarm: {
-          time: new Date(),
-          repetition: "0",
-        },
+      time: new Date(),
       color: "#FFFFFF",
       hash: []
     })
@@ -107,7 +98,7 @@ export default function (passMemo) {
               className="title_input"
               value={cmemo.title}
               name="title"
-              onChange={InputEvent}
+              onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
             />
           ) : (
             false
@@ -120,7 +111,7 @@ export default function (passMemo) {
             className="description_input"
             value={cmemo.contents}
             name="contents"
-            onChange={InputEvent}
+            onChange={(e) => {InputEvent(e.target.name, e.target.value)}}
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
@@ -132,7 +123,7 @@ export default function (passMemo) {
                 </Button>
                 {expandAlarm ? (
                   <div className="alarm-div-dropdown">
-                    <MemoAlarm className="memoAlarm" memo={cmemo} setCmemo={setCmemo} />
+                    <MemoAlarm className="memoAlarm" cmemo={cmemo} InputEvent={InputEvent} />
                   </div>
                 ) : (
                   false
@@ -156,7 +147,7 @@ export default function (passMemo) {
               <Button className="photoButton" onClick={photoEvent}>
                 <AddPhotoIcon className="add-photo" color="action" />
               </Button>
-
+    
               <Button onClick={hashTagEvent}>
                 <HashTag color="action" />
               </Button>

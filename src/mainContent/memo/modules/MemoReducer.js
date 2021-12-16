@@ -1,18 +1,6 @@
 import { createContext } from "react";
 
-export const MemoContext = createContext();
-
-export const memoInitialState = {
-    no:"",
-    title: "",
-    contents: "",
-    alarm: {
-        time: new Date(),
-        repetition: "0",
-      },
-    color: "#FFFFFF",
-    hash: []
-  };
+export const MemoContext = createContext(memoList);
 
 export const memoList = [];
 
