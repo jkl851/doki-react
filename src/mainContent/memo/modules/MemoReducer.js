@@ -1,17 +1,29 @@
 import { createContext } from "react";
-
-export const MemoContext = createContext(memoList);
-
 export const memoList = [];
+export const MemoContext = createContext(memoList);
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
 
-    case 'MEMO_INPUT':
-      return {
+    case 'ADD_MEMO':
+      return [
         ...state,
-        [action.name]: action.value,
-      }
+        action.memo,
+      ]
+
+    case 'EMPTY':
+      return [
+        ...state
+      ]
+
+    case 'DEL_MEMO':
+      return  state.filter((currentValue, indx) =>  indx !== action.id)
+
+    case 'MODIFY_MEMO':
+      return [
+        ...state,
+        action.memo,
+      ]
 
     case 'CHANGE_COLOR':
       return {
@@ -33,16 +45,6 @@ export const memoReducer = (state, action) => {
         ...state,
         hash: action.hash
       }
-
-    case 'INITIALIZE':
-    return {
-      ...memoInitialState,
-    }
-
-    case 'ADD_MEMO':
-    return {
-      ...state,
-    }
 
     default:
       return state;

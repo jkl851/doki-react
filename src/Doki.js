@@ -12,11 +12,11 @@ export default function Doki() {
   return (
     <div id="whole_wrapper">
       <HeaderDiv />
+      <MemoContext.Provider value={ useReducer( memoReducer, memoList )}>
       <div id="main_sidebar">
         <Sidebar />
       </div>
 
-      <MemoContext.Provider value={ useReducer( memoReducer, memoList )}>
       <Memo />
       </MemoContext.Provider>
 

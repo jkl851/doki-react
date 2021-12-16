@@ -1,30 +1,20 @@
 import "./Index.css";
 import CreateMemo from "./Creatememo";
 import Memo from "./Memo";
-import React, { useState } from "react";
+import { MemoContext } from "./modules/MemoReducer"
+import React, { useContext } from "react";
 
 import "../../assets/css/main_content.css";
 
 export default function App() {
-  const [addItem, setAddItem] = useState([]);
+  const [ memos, dispatch ] = useContext(MemoContext);
 
   const addMemo = (memo) => {
-    setAddItem((preValue) => {
-      return [...preValue, memo];
-    });
-
     if (memo.title === "" || memo.content === "") {
       alert("제목이나 본문을 기입하세요");
-      setAddItem([]);
+      return memos
     }
-  };
-
-  const onDelete = (id) => {
-    setAddItem((oldData) => {
-      return oldData.filter((currentValue, indx) => {
-        return indx !== id;
-      });
-    });
+    dispatch({ type: 'ADD_MEMO', memo: memo });
   };
 
   return (
@@ -32,7 +22,7 @@ export default function App() {
       <div className="container">
         <div className="main_note">
             <CreateMemo passMemo={addMemo} />
-          {addItem.map((value, index) => {
+          {memos.map((value, index) => {
             return (
               <Memo
                 key={index}
@@ -40,7 +30,6 @@ export default function App() {
                 title={value.title}
                 contents={value.contents}
                 color={value.color}
-                deleteItem={onDelete}
               />
             );
           })}

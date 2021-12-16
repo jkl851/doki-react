@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { MemoContext} from "./modules/MemoReducer";
+// import { MemoContext} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
@@ -27,7 +27,7 @@ const memoInitialState = {
 
 export default function (passMemo) {
   // 전역 컨텍스트
-  const [ memo, dispatch ] = useContext(MemoContext);
+  // const [ memo, dispatch ] = useContext(MemoContext);
 
   // Create Memo State
   const [ cmemo, setCmemo] = useState(memoInitialState);
@@ -46,7 +46,7 @@ export default function (passMemo) {
     const name = event.target.name;
     alert(`${name} 메모의 해쉬태그달기 : 개발중`);
   };
-'#f28b82'
+
   // 메모 value 추가 이벤트
   const InputEvent = (name, value) => {
     setCmemo( (prevValue) => {
