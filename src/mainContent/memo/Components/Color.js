@@ -34,13 +34,6 @@ export default function Color({
   tooltip,
   onClick,
 }) {
-<<<<<<< HEAD
-
-=======
-  const handleClick = (e) => {
-    onClick(e);
-  };
->>>>>>> eff74031d6abe62e27343920556c822d1c27a2a4
 
   return (
     <Wrapper value={value} name="color" onClick={(e) => {onClick('color', value)}}>
