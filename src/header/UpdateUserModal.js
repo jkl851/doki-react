@@ -75,7 +75,6 @@ export default function MemoAlarmModal() {
           );
 
           // 비밀번호가 틀린 경우
-          // 물어보자 용수
           if (JSON.stringify(Response.data) == "false") {
             alert("비밀번호가 일치하지 않습니다.");
             setUserUpdateModalData(
@@ -86,7 +85,8 @@ export default function MemoAlarmModal() {
               })
             );
 
-            console.log(userUpdateModalData);
+            //실패시 password로 focus()
+            e.target.password.focus();
             return;
           }
 
