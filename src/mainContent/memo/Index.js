@@ -1,8 +1,8 @@
 import "./Index.css";
 import CreateMemo from "./Creatememo";
 import Memo from "./Memo";
-import React, { useState, useReducer } from "react";
-import { MemoContext, memoReducer, memoInitialState} from "./modules/MemoReducer";
+import React, { useState } from "react";
+
 import "../../assets/css/main_content.css";
 
 export default function App() {
@@ -31,16 +31,15 @@ export default function App() {
     <div className="main_content">
       <div className="container">
         <div className="main_note">
-          <MemoContext.Provider value={ useReducer( memoReducer, memoInitialState )}>
             <CreateMemo passMemo={addMemo} />
-          </MemoContext.Provider>
           {addItem.map((value, index) => {
             return (
               <Memo
                 key={index}
                 id={index}
-                titles={value.title}
-                contents={value.content}
+                title={value.title}
+                contents={value.contents}
+                color={value.color}
                 deleteItem={onDelete}
               />
             );

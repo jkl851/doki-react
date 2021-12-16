@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import React from "react";
 import Color from "./Color";
-import {Button} from "@mui/material";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -46,9 +45,7 @@ const colors = [
   { color: "#e8eaed", tooltip: "회색" },
 ];
 
-export default function ColorPalette({ value }) {
-
-  const [ checkedcolor, setCheckedColor] = useState(value)
+export default function ColorPalette( {cmemo , InputEvent}) {
 
   return (
     <Wrapper>
@@ -56,12 +53,11 @@ export default function ColorPalette({ value }) {
         {colors.map((color, idx) => (
           <Color
             key={idx}
-            color={color.color}
-            onClick={(newColor) => {
-              setCheckedColor(newColor)
-            }}
+            name="color"
+            value={color.color}
+            onClick={InputEvent}
             border={color.border ? color.border : color.color}
-            selectedColor={checkedcolor}
+            selectedColor={ cmemo.color }
             tooltip={color.tooltip}
           />
         ))}

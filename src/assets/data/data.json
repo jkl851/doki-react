@@ -1,0 +1,39 @@
+
+[
+	{
+		"no" : 1,
+		"color" : "#f28b82",
+		"pin" : "1",
+		"hash" : [
+      { "no": 1, "name": "한솥"}, 
+      { "no": 2, "name": "서브웨이"}
+    ],
+		"contents" : "내일 11시에 한솥, 서브웨이 점심중에 고르기",
+		"memoAlarmTime" : "2021-12-15 11:00",
+		"repetition" : "0"
+	},
+	{
+		"no" : 2,
+		"color" : "#a7ffeb",
+		"pin" : "0",
+		"hash" : [
+      {"no": 3,"name": "돈까스"}, 
+      {"no": 4, "name": "스윙스"} 
+    ],
+		"contents" : "돈까스먹고싶은데 스윙스될까 겁나",
+		"memoAlarmTime" : "2021-12-17 10:30",
+		"repetition" : "0"
+	},
+{
+		"no" : 3,
+		"color" : "#fdcfe8",
+		"pin" : "1",
+		"hash" : [
+      { "no": 6, "name": "생선" }, 
+      { "no": 7, "name": "동물"} 
+    ],
+		"contents" : "생선구이 먹고싶다... 생선도 동물인가?",
+		"memoAlarmTime" : "2021-12-19 20:00",
+		"repetition" : "1"
+	}
+]

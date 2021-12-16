@@ -3,15 +3,18 @@ import { createContext } from "react";
 export const MemoContext = createContext();
 
 export const memoInitialState = {
-  title: "",
-  content: "",
-  alarm: {
-      time: new Date("yyyy-MM-dd hh:mm"),
-      repetition: "0",
-    },
-  color: "#FFFFFF",
-  hash: {}
-}
+    no:"",
+    title: "",
+    contents: "",
+    alarm: {
+        time: new Date(),
+        repetition: "0",
+      },
+    color: "#FFFFFF",
+    hash: []
+  };
+
+export const memoList = [];
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
@@ -46,6 +49,11 @@ export const memoReducer = (state, action) => {
     case 'INITIALIZE':
     return {
       ...memoInitialState,
+    }
+
+    case 'ADD_MEMO':
+    return {
+      ...state,
     }
 
     default:
