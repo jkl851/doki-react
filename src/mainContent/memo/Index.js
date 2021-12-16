@@ -2,6 +2,7 @@ import "./Index.css";
 import CreateMemo from "./Creatememo";
 import Memo from "./Memo";
 import React, { useState } from "react";
+
 import "../../assets/css/main_content.css";
 
 export default function App() {
@@ -30,15 +31,15 @@ export default function App() {
     <div className="main_content">
       <div className="container">
         <div className="main_note">
-          <CreateMemo passMemo={addMemo} />
-
+            <CreateMemo passMemo={addMemo} />
           {addItem.map((value, index) => {
             return (
               <Memo
                 key={index}
                 id={index}
-                titles={value.title}
-                contents={value.content}
+                title={value.title}
+                contents={value.contents}
+                color={value.color}
                 deleteItem={onDelete}
               />
             );
