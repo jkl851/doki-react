@@ -1,9 +1,11 @@
-import React, { useState, useContext, useReducer, Fragment } from "react";
+import React, { useState, useContext, useReducer, useEffect, Fragment } from "react";
 import { MemoContext, memoReducer} from "./modules/MemoReducer";
+import axios from "axios";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
-import HashTag from './Components/HashTag';
+import HashTagWindow from './Components/HashTagWindow';
+import PostedHash from "./Components/PostedHash";
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
@@ -36,6 +38,9 @@ export default function CreateMemo() {
 
   // Create Memo State
   const [ cmemo, setCmemo] = useState(memoInitialState);
+
+  // Create Hash State
+  const [allHashDatas, setAllHashDatas] = useState([]);
   
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -108,11 +113,31 @@ export default function CreateMemo() {
     setPinned(!pinned);
   };
   
+  // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
+  useEffect(() => {
+    axios.get(`http://localhost:8080/doki/hash/getAllHashList`)
+    .then((Response) => {
+        console.log('===== Get Hash 응답받음! =====')
+        console.log(Response)
+        console.log('=============================')
+        setAllHashDatas(
+            Response.data.map(data => {
+                return {
+                no: data.no,
+                name: data.name,
+                checked: false}
+            })
+        );
+    })
+    .catch((Error) => {console.log(Error)})
+  }, [])
+  /////////////////////////////////////////////////////////////////////////
 
   return (
     <div>
       <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
         <BackgroundColor className="input_wrapper" color={cmemo.color}>
+            {/* 제목 */}
           { expandMemo ? ( 
               pinned ? (
                 <Fragment>
@@ -146,6 +171,7 @@ export default function CreateMemo() {
             false
           )}
            
+           {/* 본문 */}
           <textarea
             rows="6"
             column="20"
@@ -156,7 +182,20 @@ export default function CreateMemo() {
             onChange={(e) => {InputEvent(e.target.name, e.target.value)}}
             onMouseEnter={expandCreateMemo}
           ></textarea>
-          <div className="hash_box" />
+
+          {/* 메모에 해시가 추가되는 부분 */}
+          <div className="hash_box">
+            {
+              allHashDatas
+                .filter(data => data.checked === true)
+                .map((data, index) => {
+                  return (<PostedHash
+                    key={index}
+                    name={data.name}
+                  />)
+                })
+            }
+          </div>
 
           
             <div className="buttons-div" style={{ textAlign: "center" }}>
@@ -197,10 +236,12 @@ export default function CreateMemo() {
               <Button onClick={hashTagEvent}>
                 <HashTagIcon color="action" />
               </Button>
-              {false ? ( //false로 바꿔둠 (가리기용)
-                <HashTag
+              {expandHashTag ? ( //false로 바꿔둠 (가리기용)
+                <HashTagWindow
                   className="memoHashTag"
                   name="hashtag"
+                  allHashDatas={allHashDatas}
+                  setAllHashDatas={setAllHashDatas}
                   // cmemo={cmemo}
                   // InputEvent={InputEvent}
                 />
