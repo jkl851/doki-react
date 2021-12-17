@@ -23,16 +23,15 @@ body::-webkit-scrollbar-thumb {
   -o-border-radius: 50px;
 }
 
-.container {
+/* .container {
   display: grid;
   grid-template-rows: 67px 1fr 29px;
   height: 100vh;
   width: 100%;
-}
+} */
 
-.keep-logo-heading {
-  display: grid;
-  grid-template-columns: 53px 1fr;
+.memolistcontainer {
+  padding: 0px;
 }
 
 footer {
@@ -56,7 +55,7 @@ footer {
 form {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 75%;
   justify-content: center;
   align-items: center;
 }
@@ -129,16 +128,16 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
 }
 
 .memo {
-  width: 295px;
+  width: 280px;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 20px;
-  height: 208px;
+  height: 215px;
   display: grid;
   grid-template-rows: 37px 1fr 30px;
   overflow: hidden;
   float: left;
-  margin: 4px;
+  margin-top: 1.5em;
   -webkit-box-shadow: 0px 1px 2px 1px rgba(122, 122, 122, 0.77);
   box-shadow: 0px 1px 2px 1px rgba(126, 125, 125, 0.77);
 }

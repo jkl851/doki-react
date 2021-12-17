@@ -1,6 +1,6 @@
 import "./Index.css";
 import CreateMemo from "./Creatememo";
-import MemoListContainer from "./memoListContainer";
+import MemoListContainer from "./MemoListContainer";
 import { MemoContext } from "./modules/MemoReducer"
 import React, { useContext, useRef } from "react";
 
@@ -11,13 +11,11 @@ export default function App() {
 
   return (
     <div className="main_content">
-      <div className="container">
         <div className="main_note">
             <CreateMemo />
-              <MemoListContainer title="고정됨" filter = {{pin: "1", visible: "1"}} />
-              <MemoListContainer title="일반" filter = {{pin: "0", visible: "1"}} />
+              <MemoListContainer className="memolistcontainer" title="고정됨" filter = {{pin: "1", visible: "1"}} />
+              <MemoListContainer className="memolistcontainer" title="일반" filter = {{pin: "0", visible: "1"}} />
         </div>
-      </div>
     </div>
   );
 }

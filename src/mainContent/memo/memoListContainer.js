@@ -1,16 +1,11 @@
 import React, {useRef, useEffect, useState, useContext} from 'react';
-import { MemoContext} from "./modules/MemoReducer";
+import { MemoContext } from "./modules/MemoReducer";
 
-import MemoList from "./memoList";
-
-// 더미 데이터
-import data from "../../assets/data/memoMessageData.json";  //       더미더미더미더미더미
-//       더미더미더미더미더미
+import MemoList from "./MemoList";
 
 export default function memoList ({filter, title}) {
     // 전역 컨텍스트
-    //const [ memos, dispatch ] = useContext(MemoContext); 
-    const memos = data;  //       더미더미더미더미더미
+    const [ memos, dispatch ] = useContext(MemoContext); 
 
     // 배열용
     const ref = useRef()
@@ -38,13 +33,13 @@ export default function memoList ({filter, title}) {
     }, [])
 
     const handleResize = (e) => {
-        const colsNum = parseInt(ref.current.scrollWidth / 240)
+        const colsNum = parseInt(ref.current.scrollWidth / 300)
         if (colsNum === 0) setCols(1)
         else setCols(colsNum)
     }
 
     return (
-        <div ref={ref}>
+        <div className="memo_list" ref={ref}>
             <MemoList memos={filteredMemos} cols={cols} title={title} />
         </div>
     );

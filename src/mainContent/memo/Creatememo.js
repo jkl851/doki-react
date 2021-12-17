@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { MemoContext} from "./modules/MemoReducer";
+import React, { useState, useContext, useReducer } from "react";
+import { MemoContext, memoReducer} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
@@ -15,7 +15,7 @@ import HashTag from "@mui/icons-material/Tag";
 const BackgroundColor = styled.div`
   background: ${({ color }) => color}
 `
-
+// 메모 처음 값
 const memoInitialState = {
   no:"",
   title: "",
@@ -23,8 +23,8 @@ const memoInitialState = {
   time: new Date(),
   color: "#FFFFFF",
   hash: [],
-  pin: false,
-  visible: true
+  pin: "0",
+  visible: "1"
 };
 
 export default function CreateMemo() {
@@ -74,8 +74,8 @@ export default function CreateMemo() {
       time: new Date(),
       color: "#FFFFFF",
       hash: [],
-      pin: false,
-      visible: true
+      pin: "0",
+      visible: "1"
     })
   };
 
