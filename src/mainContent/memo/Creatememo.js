@@ -84,7 +84,7 @@ export default function CreateMemo() {
       visible: "1"
     })
     setPinned(false);
-    
+
   };
 
   // 토글에 따른 메모 버튼 활성화
@@ -111,7 +111,7 @@ export default function CreateMemo() {
 
   return (
     <div>
-      <form onMouseLeave={collapseCreateMemo}>
+      <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
         <BackgroundColor className="input_wrapper" color={cmemo.color}>
           { expandMemo ? ( 
               pinned ? (
@@ -156,6 +156,7 @@ export default function CreateMemo() {
             onChange={(e) => {InputEvent(e.target.name, e.target.value)}}
             onMouseEnter={expandCreateMemo}
           ></textarea>
+          <div className="hash_box" />
 
           
             <div className="buttons-div" style={{ textAlign: "center" }}>

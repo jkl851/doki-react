@@ -44,7 +44,8 @@ const MemoList = ( {memos , cols , title}) => {
                                                         id={index}
                                                         title={value.title}
                                                         contents={value.contents}
-                                                        color={value.color} />)
+                                                        color={value.color}
+                                                        pin={value.pin} />)
     var output = []
     if (cols !== 0) {
         output = memoList.reduce((acc, child, i) => {

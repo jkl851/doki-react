@@ -34,14 +34,9 @@ export default function Color({
   tooltip,
   onClick,
 }) {
-<<<<<<< HEAD
-  return (
-    <Wrapper onClick={onClick} value={value} name="color">
-=======
 
   return (
     <Wrapper value={value} name="color" onClick={(e) => {onClick('color', value)}}>
->>>>>>> 86e8c9b6f27bce9757801c1e7975a8909e913e5a
       <StyledCircle color={value} border={border} selectedColor={selectedColor}>
         <CheckOutlinedIcon />
       </StyledCircle>
