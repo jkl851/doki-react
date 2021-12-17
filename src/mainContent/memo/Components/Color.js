@@ -34,12 +34,8 @@ export default function Color({
   tooltip,
   onClick,
 }) {
-  const handleClick = (e) => {
-    onClick(e);
-  };
-
   return (
-    <Wrapper onClick={handleClick} value={value} name="color">
+    <Wrapper onClick={onClick} value={value} name="color">
       <StyledCircle color={value} border={border} selectedColor={selectedColor}>
         <CheckOutlinedIcon />
       </StyledCircle>

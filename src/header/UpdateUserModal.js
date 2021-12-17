@@ -104,7 +104,7 @@ export default function MemoAlarmModal() {
       console.error(err);
     }
   };
-  
+
   return (
     <Fragment>
       <a onClick={() => updateUserInfo(no)} href="#about">
@@ -118,7 +118,7 @@ export default function MemoAlarmModal() {
         shouldCloseOnOverlayClick={true}
         className={updateUserModalStyles.Modal}
         overlayClassName={updateUserModalStyles.Overlay}
-        style={{ content: { width: 350 } }}
+        style={{ content: { width: 350, border: "1px solid #b2b3b5" } }}
       >
         <div className={updateUserModalStyles["logoBox"]}>
           <img src={logo} />
@@ -244,7 +244,22 @@ export default function MemoAlarmModal() {
           <div className={updateUserModalStyles["modal-dialog-buttons"]}>
             <button
               style={{
-                width: "250px",
+                width: "125px",
+                marginTop: "20px",
+                backgroundColor: "#fff",
+                color: "black",
+              }}
+              onClick={() => {
+                refForm.current.dispatchEvent(
+                  new Event("submit", { cancelable: true, bubbles: true })
+                );
+              }}
+            >
+              로그 아웃
+            </button>
+            <button
+              style={{
+                width: "125px",
                 marginTop: "20px",
                 backgroundColor: "#5048e5",
                 color: "white",

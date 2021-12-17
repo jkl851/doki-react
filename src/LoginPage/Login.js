@@ -31,33 +31,20 @@ const Login = () => {
         alert("비밀번호가 비어있습니다.");
         return;
       }
-      const Data = { id: ID, password: Password };
 
       await axios
         .post(
           "http://localhost:8080/doki/user/login",
-          `id=${ID}&password=${Password}`,
-          {
-            withCredentials: true,
-          }
+          `id=${ID}&password=${Password}`
         )
         .then((Response) => {
-          console.log(Response);
-          console.log(Response.data);
-
-          if (Response.data.id === ID) {
-            alert("회원정보가 틀립니다.");
-          }
-          if (Response.data.result === "fail") {
-            alert("회원정보가 틀립니다.");
-          }
-          if (
-            Response.data.list.id === ID &&
-            Response.data.list.password === Password
-          ) {
-            alert("로그인 성공");
-            // window.location.href = "./main";
-            // navigate("/main");
+          // 200번 반환 뒤에
+          if (Response.data === "가능") {
+            navigate("/transfer");
+          } else {
+            alert("계정 정보를 확인하십시오.");
+            setID("");
+            setPassword("");
           }
         })
         .catch((Error) => {
