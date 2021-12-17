@@ -124,7 +124,7 @@ export default function CreateMemo() {
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
-          {true ? (
+          {expandMemo ? (
             <div className="buttons-div" style={{ textAlign: "center" }}>
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -163,7 +163,7 @@ export default function CreateMemo() {
               <Button onClick={hashTagEvent}>
                 <HashTagIcon color="action" />
               </Button>
-              {true ? (
+              {expandHashTag ? (
                 <HashTag
                   className="memoHashTag"
                   name="hashtag"

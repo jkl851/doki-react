@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
 import HashItem from './HashItem';
 import axios from 'axios'
-
+import AddIcon from '@mui/icons-material/Add';
+import SearchIcon from '@mui/icons-material/Search';
 const Wrapper = styled.div`
   position: relative;
   display: inline-block;
@@ -45,7 +46,12 @@ const HashTagWindow = () => {
             console.log(Response)
             console.log('=============================')
             setAllHashDatas(
-                Response.data
+                Response.data.map(data => {
+                    return {
+                    no: data.no,
+                    name: data.name,
+                    checked: false}
+                })
             );
         })
         .catch((Error) => {console.log(Error)})
@@ -53,6 +59,47 @@ const HashTagWindow = () => {
 
     const handleKeyword = (e) => {
         setKeyword(e.target.value);
+    }
+
+    const handleAddHashToMemo = () => {
+        // 어떤 데이터를 put?
+        const putDatas = Object.assign([], allHashDatas.map((data) =>{
+            // data.checked => true인 애들만 return
+            if(data.checked === true){
+                return data
+            }
+        } 
+        ))
+        console.log('==== put datas ====')
+        console.log(putDatas)
+        console.log('===================')
+    }
+
+    const handleToCreateHash = () => {
+        console.log('[keyword] =>> ' + keyword);
+        if(keyword === ''){
+            return;
+        }
+        
+        axios.post(`http://localhost:8080/doki/hash/addHash`,
+            {name : keyword}
+        )
+        .then((Response) => {
+            console.log('===== Add Hash 응답받음! =====')
+            console.log(Response)
+            console.log('=============================')
+            setAllHashDatas(
+                Response.data.map(data => {
+                    return {
+                    no: data.no,
+                    name: data.name,
+                    checked: false}
+                })
+            );
+            setKeyword('');
+        })
+        .catch((Error) => {console.log(Error)})
+
     }
 
     return (
@@ -73,11 +120,14 @@ const HashTagWindow = () => {
                         value={keyword}
                         style={{textAlign:'center', float: 'left', position:'relative',border:'1px solid', width: '90%', height:'100%'}}
                         type="text" placeholder='해시태그 입력'></input>
-                    <button style={{textAlign:'center', float: 'right', border:'1px solid',width: '10%', height: '100%'} }>x</button>
+                    <SearchIcon style={{textAlign:'center', float: 'right', border:'1px solid',width: '10%', height: '100%'} }/>
                 </div>
                 {/* 해시 리스트 */}
                 <div style={{overflowY: 'auto',border: '1px solid #ff0000', width: '100%', height:'210px'}}>
                     {
+                        console.log("=============="),
+                        console.log(allHashDatas),
+                        console.log("=============="),
                         allHashDatas
                             .filter(data => {
                                 return data.name.indexOf(keyword) !== -1})
@@ -86,29 +136,27 @@ const HashTagWindow = () => {
                                     key={index}
                                     no={data.no}
                                     name={data.name}
+                                    checked={data.checked}
+                                    setAllHashDatas={setAllHashDatas}
                                 />
                         })
                         
                     }
                 </div>
-
                 {
-                    
-                    allHashDatas.forEach(element => {
-                        if(element.name !== keyword){
-                            return true;
-                        }
-
-                    }) &&
+                    true &&
                     // {/* 검색의 keyword와 리스트의 해시 값의 일치 유무에 따라 display를 보였다 안보였다 토글한다*/}
-                    (<div style={{ cursor:'pointer', border:'1px solid #00ff00',width: '100%', height:'25px'}}>
-                        <img style={{float:'left', border:'1px solid', width: '10%', height:'90%'}}></img>
+                    (
+                    <div onClick={handleToCreateHash}
+                        style={{
+                            cursor:'pointer',
+                            border:'1px solid #00ff00',
+                            width: '100%', height:'25px'}}>
+                        <AddIcon style={{float:'left', border:'1px solid', width: '15%', height:'25px'}}/>
                         '
-                        <span >{keyword}</span>
+                        <span style={{width:"85%", height:"25px" , overflow: 'hidden'}}>{keyword}</span>
                         ' 만들기
                     </div>)
-            
-                    
                 }
                 
 

@@ -7,10 +7,10 @@ export default function HashDropDownList({hashDropDownDatas, searchHash}) {
     return (
     
         <div id="myDropdown" className="dropdown-content">
-            {hashDropDownDatas.map(hashDropDownData =>
+            {hashDropDownDatas.map(data =>
                 <HashDropDown
-                    key={hashDropDownData.no}
-                    name={hashDropDownData.name}
+                    key={data.no}
+                    name={data.name}
                     searchHash={searchHash}
                 />)}
 

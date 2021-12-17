@@ -9,8 +9,8 @@ import data from "../../assets/data/memoMessageData.json";  //       더미더�
 
 export default function memoList ({filter, title}) {
     // 전역 컨텍스트
-    //const [ memos, dispatch ] = useContext(MemoContext); 
-    const memos = data;  //       더미더미더미더미더미
+    const [ memos, dispatch ] = useContext(MemoContext); 
+    // const memos = data;  //       더미더미더미더미더미
 
     // 배열용
     const ref = useRef()
