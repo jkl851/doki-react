@@ -6,11 +6,11 @@ import {media} from './modules/style-utils';
 
 
 const Wrapper = styled.div`
-  padding: 0 5rem;
-  ${media.tablet`
+  padding: 0 4rem;
+  ${media.desktop`
   padding: 0 0.5rem;
 `}
-  margin-top: 3rem;
+  margin-top: 1rem;
   header {
     font-size: 0.8rem;
     padding: 1rem;
