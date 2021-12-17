@@ -7,7 +7,7 @@ import React, { useContext, useRef } from "react";
 import "../../assets/css/main_content.css";
 
 export default function App() {
-  //const [ memos, dispatch ] = useContext(MemoContext);
+  //const [ memos, dispatch ] = useContext(MemoContext); 전역컨텍스트
 
   return (
     <div className="main_content">
