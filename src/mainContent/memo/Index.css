@@ -23,16 +23,15 @@ body::-webkit-scrollbar-thumb {
   -o-border-radius: 50px;
 }
 
-.container {
+/* .container {
   display: grid;
   grid-template-rows: 67px 1fr 29px;
   height: 100vh;
   width: 100%;
-}
+} */
 
-.keep-logo-heading {
-  display: grid;
-  grid-template-columns: 53px 1fr;
+.memolistcontainer {
+  padding: 0px;
 }
 
 footer {
@@ -56,13 +55,14 @@ footer {
 form {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 75%;
   justify-content: center;
   align-items: center;
 }
 
 .input_wrapper {
   display: flex;
+  display: inline-block;
   flex-direction: column;
   width: 500px;
   margin: 28px;
@@ -75,6 +75,7 @@ form {
 
 input.title_input {
   border: none;
+  width: 445px;
   outline: none;
   background: none;
   font-size: 19px;
@@ -90,6 +91,7 @@ input.title_input::placeholder {
 textarea.description_input {
   border: none;
   outline: none;
+
   background: none;
   font-size: 15px;
   font-weight: 500;
@@ -128,17 +130,22 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   font-size: 30px !important;
 }
 
+.pin_in_cmemo {
+  position: relative;
+  cursor: pointer;
+}
+
 .memo {
-  width: 295px;
+  width: 280px;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 20px;
-  height: 208px;
+  height: 215px;
   display: grid;
   grid-template-rows: 37px 1fr 30px;
   overflow: hidden;
   float: left;
-  margin: 4px;
+  margin-top: 1.5em;
   -webkit-box-shadow: 0px 1px 2px 1px rgba(122, 122, 122, 0.77);
   box-shadow: 0px 1px 2px 1px rgba(126, 125, 125, 0.77);
 }

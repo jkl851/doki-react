@@ -1,36 +1,38 @@
-import React, { useState, useContext } from "react";
-import { MemoContext} from "./modules/MemoReducer";
+import React, { useState, useContext, useReducer, Fragment } from "react";
+import { MemoContext, memoReducer} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
+import HashTag from './Components/HashTag';
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
+import PinIcon from '@mui/icons-material/PushPinOutlined';
+import PinnedIcon from '@mui/icons-material/PushPin';
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
-import HashTag from "@mui/icons-material/Tag";
+import HashTagIcon from "@mui/icons-material/Tag";
 
 const BackgroundColor = styled.div`
   background: ${({ color }) => color}
 `
-
+// 메모 처음 값
 const memoInitialState = {
   no:"",
   title: "",
   contents: "",
-  alarm: {
-      time: new Date(),
-      repetition: "0",
-    },
+  time: new Date(),
   color: "#FFFFFF",
-  hash: []
+  hash: [],
+  pin: "0",
+  visible: "1"
 };
 
-export default function (passMemo) {
+export default function CreateMemo() {
   // 전역 컨텍스트
-  const [ memo, dispatch ] = useContext(MemoContext);
+  const [ memos, dispatch ] = useContext(MemoContext);
 
   // Create Memo State
   const [ cmemo, setCmemo] = useState(memoInitialState);
@@ -39,44 +41,50 @@ export default function (passMemo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
+  const [expandHashTag, setExpandHashTag] = useState(false);
+  const [pinned, setPinned] = useState(false);
 
   const photoEvent = (event) => {
     const name = event.target.name;
     alert(`${name} 메모의 이미지삽입 : 개발중`);
   };
 
-  const hashTagEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 해쉬태그달기 : 개발중`);
+  const hashTagEvent = () => {
+    setExpandHashTag(!expandHashTag);
   };
 
   // 메모 value 추가 이벤트
-  const InputEvent = (event) => {
-    const value = event.target.value
-    const name = event.target.name
-    console.log(value, name);
+  const InputEvent = (name, value) => {
     setCmemo( (prevValue) => {
         return{
             ...prevValue,
-            [name]:value
+            [name]: value
         }
     })
+    console.log(cmemo);
   }
 
   // 메모 추가 이벤트
   const addEvent = () => {
-    passMemo.passMemo(cmemo);
+    if (cmemo.title === "" || cmemo.contents === "") {
+      alert("제목이나 본문을 기입하세요");
+      return memos
+    }
+    dispatch({ type: 'ADD_MEMO', memo: cmemo });
+
+    // 초기화
     setCmemo({
       no:"",
       title: "",
       contents: "",
-      alarm: {
-          time: new Date(),
-          repetition: "0",
-        },
+      time: new Date(),
       color: "#FFFFFF",
-      hash: []
+      hash: [],
+      pin: "0",
+      visible: "1"
     })
+    setPinned(false);
+    
   };
 
   // 토글에 따른 메모 버튼 활성화
@@ -96,23 +104,48 @@ export default function (passMemo) {
     setExpandPalette(!expandPalette);
   };
 
+  const isPinned = () => {
+    setPinned(!pinned);
+  };
+  
+
   return (
     <div>
       <form onMouseLeave={collapseCreateMemo}>
         <BackgroundColor className="input_wrapper" color={cmemo.color}>
-          {expandMemo ? (
-            <input
-              type="text"
-              placeholder="제목"
-              className="title_input"
-              value={cmemo.title}
-              name="title"
-              onChange={InputEvent}
-            />
+          { expandMemo ? ( 
+              pinned ? (
+                <Fragment>
+                  <input
+                  type="text"
+                  placeholder="제목"
+                  className="title_input"
+                  value={cmemo.title}
+                  name="title"
+                  onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
+                  />
+                  <PinnedIcon 
+                    className="pin_in_cmemo" name="pin"
+                                    value="0" onClick={(e) => {InputEvent("pin", "0"); isPinned();}}/>
+                </Fragment> 
+              ) : (
+                <Fragment>
+                  <input
+                  type="text"
+                  placeholder="제목"
+                  className="title_input"
+                  value={cmemo.title}
+                  name="title"
+                  onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
+                  />
+                  <PinIcon className="pin_in_cmemo" name="pin" 
+                                    value="1" onClick={(e) => {InputEvent("pin", "1"); isPinned();}}/>
+               </Fragment>   
+               )
           ) : (
             false
           )}
-
+           
           <textarea
             rows="6"
             column="20"
@@ -120,11 +153,11 @@ export default function (passMemo) {
             className="description_input"
             value={cmemo.contents}
             name="contents"
-            onChange={InputEvent}
+            onChange={(e) => {InputEvent(e.target.name, e.target.value)}}
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
-          {expandMemo ? (
+          
             <div className="buttons-div" style={{ textAlign: "center" }}>
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -132,13 +165,14 @@ export default function (passMemo) {
                 </Button>
                 {expandAlarm ? (
                   <div className="alarm-div-dropdown">
-                    <MemoAlarm className="memoAlarm" memo={cmemo} setCmemo={setCmemo} />
+                    <MemoAlarm className="memoAlarm" cmemo={cmemo} InputEvent={InputEvent} />
                   </div>
                 ) : (
                   false
                 )}
               </div>
 
+              {/* Palette */}
               <Button className="paletteButton" onClick={expandPaletteTable}>
                 <PaletteIcon className="add-palette" color="action" />
               </Button>
@@ -153,21 +187,30 @@ export default function (passMemo) {
                 false
               )}
 
+              {/* Photo */}
               <Button className="photoButton" onClick={photoEvent}>
                 <AddPhotoIcon className="add-photo" color="action" />
               </Button>
-
+                
+              {/* HashTag */}
               <Button onClick={hashTagEvent}>
-                <HashTag color="action" />
+                <HashTagIcon color="action" />
               </Button>
+              {false ? ( //false로 바꿔둠 (가리기용)
+                <HashTag
+                  className="memoHashTag"
+                  name="hashtag"
+                  // cmemo={cmemo}
+                  // InputEvent={InputEvent}
+                />
+              ) : (
+                false
+              )}
 
               <Button className="addButton" onClick={addEvent}>
                 <AddIcon className="add-icon" />
               </Button>
             </div>
-          ) : (
-            false
-          )}
         </BackgroundColor>
       </form>
     </div>

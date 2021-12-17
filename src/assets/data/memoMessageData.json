@@ -3,32 +3,48 @@
 		"no" : 1,
 		"userName" : "또치1",
 		"position" : "부장",
-		"departmentNo" : 1,
 		"departmentName" : "개발부",
-		"contents" : "남은 부분은 제가 내일 와서 처리하..."
+		"title": "보거라",
+		"contents" : "남은 부분은 제가 내일 와서 처리하...",
+		"color": "#f28b82",
+		"hash": [],
+		"pin" : "1",
+		"visible": "1" 
 	},
 	{
 		"no" : 2,
 		"userName" : "또치2",
 		"position" : "차장",
-		"departmentNo" : 1,
 		"departmentName" : "개발부",
-		"contents" : "대리님 말씀하신 코드수정 완료했..."
+		"title": "대리님",
+		"contents" : "대리님 말씀하신 코드수정 완료했...",
+		"color": "#FFFFFF",
+		"hash": [],
+		"pin" : "1",
+		"visible": "1" 
 	},
 	{
 		"no" : 3,
 		"userName" : "또치3",
 		"position" : "과장",
-		"departmentNo" : 2,
 		"departmentName" : "엽업부",
-		"contents" : "클라이밍 저도 배우고 싶어서 가입..."
+		"title": "클창인생",
+		"contents" : "클라이밍 저도 배우고 싶어서 가입...",
+		"color": "#a7ffeb",
+		"hash": [],
+		"pin" : "0",
+		"visible": "1" 
 	},
 	{
 		"no" : 4,
 		"userName" : "또치4",
 		"position" : "대리",
-		"departmentNo" : 2,
 		"departmentName" : "엽업부",
-		"contents" : "안녕하세요~~~~ 반갑습니다! 저..."
+		"title": "인사",
+		"contents" : "안녕하세요~~~~ 반갑습니다! 저...",
+		"color": "#fdcfe8",
+		"hash": [],
+		"pin" : "0",
+		"visible": "1" 
 	}
 ]
