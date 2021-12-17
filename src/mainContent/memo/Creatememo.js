@@ -1,4 +1,4 @@
-import React, { useState, useContext, useReducer } from "react";
+import React, { useState, useContext, useReducer, Fragment } from "react";
 import { MemoContext, memoReducer} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
@@ -7,6 +7,8 @@ import HashTag from './Components/HashTag';
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
+import PinIcon from '@mui/icons-material/PushPinOutlined';
+import PinnedIcon from '@mui/icons-material/PushPin';
 import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
@@ -40,6 +42,7 @@ export default function CreateMemo() {
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
   const [expandHashTag, setExpandHashTag] = useState(false);
+  const [pinned, setPinned] = useState(false);
 
   const photoEvent = (event) => {
     const name = event.target.name;
@@ -49,24 +52,27 @@ export default function CreateMemo() {
   const hashTagEvent = () => {
     setExpandHashTag(!expandHashTag);
   };
+
   // 메모 value 추가 이벤트
   const InputEvent = (name, value) => {
     setCmemo( (prevValue) => {
         return{
             ...prevValue,
-            [name]:value
+            [name]: value
         }
     })
+    console.log(cmemo);
   }
 
   // 메모 추가 이벤트
   const addEvent = () => {
-    if (cmemo.title === "" || cmemo.content === "") {
+    if (cmemo.title === "" || cmemo.contents === "") {
       alert("제목이나 본문을 기입하세요");
       return memos
     }
     dispatch({ type: 'ADD_MEMO', memo: cmemo });
 
+    // 초기화
     setCmemo({
       no:"",
       title: "",
@@ -77,6 +83,8 @@ export default function CreateMemo() {
       pin: "0",
       visible: "1"
     })
+    setPinned(false);
+    
   };
 
   // 토글에 따른 메모 버튼 활성화
@@ -96,23 +104,48 @@ export default function CreateMemo() {
     setExpandPalette(!expandPalette);
   };
 
+  const isPinned = () => {
+    setPinned(!pinned);
+  };
+  
+
   return (
     <div>
       <form onMouseLeave={collapseCreateMemo}>
         <BackgroundColor className="input_wrapper" color={cmemo.color}>
-          {true ? (
-            <input
-              type="text"
-              placeholder="제목"
-              className="title_input"
-              value={cmemo.title}
-              name="title"
-              onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
-            />
+          { expandMemo ? ( 
+              pinned ? (
+                <Fragment>
+                  <input
+                  type="text"
+                  placeholder="제목"
+                  className="title_input"
+                  value={cmemo.title}
+                  name="title"
+                  onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
+                  />
+                  <PinnedIcon 
+                    className="pin_in_cmemo" name="pin"
+                                    value="0" onClick={(e) => {InputEvent("pin", "0"); isPinned();}}/>
+                </Fragment> 
+              ) : (
+                <Fragment>
+                  <input
+                  type="text"
+                  placeholder="제목"
+                  className="title_input"
+                  value={cmemo.title}
+                  name="title"
+                  onChange={ (e) => {InputEvent(e.target.name, e.target.value)}}
+                  />
+                  <PinIcon className="pin_in_cmemo" name="pin" 
+                                    value="1" onClick={(e) => {InputEvent("pin", "1"); isPinned();}}/>
+               </Fragment>   
+               )
           ) : (
             false
           )}
-
+           
           <textarea
             rows="6"
             column="20"
@@ -124,7 +157,7 @@ export default function CreateMemo() {
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
-          {true ? (
+          
             <div className="buttons-div" style={{ textAlign: "center" }}>
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -163,7 +196,7 @@ export default function CreateMemo() {
               <Button onClick={hashTagEvent}>
                 <HashTagIcon color="action" />
               </Button>
-              {true ? (
+              {false ? ( //false로 바꿔둠 (가리기용)
                 <HashTag
                   className="memoHashTag"
                   name="hashtag"
@@ -178,9 +211,6 @@ export default function CreateMemo() {
                 <AddIcon className="add-icon" />
               </Button>
             </div>
-          ) : (
-            false
-          )}
         </BackgroundColor>
       </form>
     </div>
