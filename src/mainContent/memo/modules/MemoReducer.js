@@ -7,6 +7,10 @@ export const MemoContext = createContext(memoList);
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
+    case 'GET_ALLHASH':
+      return [
+        action.hash
+      ]
 
     case 'ADD_MEMO':
       console.log(action.memo);
@@ -49,6 +53,8 @@ export const memoReducer = (state, action) => {
         ...state,
         hash: action.hash
       }
+
+    
 
     default:
       throw new Error();
