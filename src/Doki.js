@@ -17,7 +17,7 @@ export default function Doki() {
       </div>
 
       <MemoContext.Provider value={ useReducer( memoReducer, memoList )}>
-      <Memo />
+        <Memo />
       </MemoContext.Provider>
 
       <SideChat2 />

@@ -102,12 +102,6 @@ export default function SidebarHash() {
         return ref1;
     }
 
-
-
-
-
-
-
     //Input 값을 변경하려면 state를 이용해야함
     function handleChange(e) {
         setHint(e.target.value);

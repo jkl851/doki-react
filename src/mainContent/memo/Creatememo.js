@@ -3,6 +3,7 @@ import { MemoContext} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
+import HashTag from './Components/HashTag';
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
@@ -10,7 +11,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
-import HashTag from "@mui/icons-material/Tag";
+import HashTagIcon from "@mui/icons-material/Tag";
 
 const BackgroundColor = styled.div`
   background: ${({ color }) => color}
@@ -36,17 +37,16 @@ export default function (passMemo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
+  const [expandHashTag, setExpandHashTag] = useState(false);
 
   const photoEvent = (event) => {
     const name = event.target.name;
     alert(`${name} 메모의 이미지삽입 : 개발중`);
   };
 
-  const hashTagEvent = (event) => {
-    const name = event.target.name;
-    alert(`${name} 메모의 해쉬태그달기 : 개발중`);
+  const hashTagEvent = () => {
+    setExpandHashTag(!expandHashTag);
   };
-'#f28b82'
   // 메모 value 추가 이벤트
   const InputEvent = (name, value) => {
     setCmemo( (prevValue) => {
@@ -91,7 +91,7 @@ export default function (passMemo) {
     <div>
       <form onMouseLeave={collapseCreateMemo}>
         <BackgroundColor className="input_wrapper" color={cmemo.color}>
-          {expandMemo ? (
+          {true ? (
             <input
               type="text"
               placeholder="제목"
@@ -115,7 +115,7 @@ export default function (passMemo) {
             onMouseEnter={expandCreateMemo}
           ></textarea>
 
-          {expandMemo ? (
+          {true ? (
             <div className="buttons-div" style={{ textAlign: "center" }}>
               <div className="alarm-div">
                 <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -130,6 +130,7 @@ export default function (passMemo) {
                 )}
               </div>
 
+              {/* Palette */}
               <Button className="paletteButton" onClick={expandPaletteTable}>
                 <PaletteIcon className="add-palette" color="action" />
               </Button>
@@ -144,13 +145,25 @@ export default function (passMemo) {
                 false
               )}
 
+              {/* Photo */}
               <Button className="photoButton" onClick={photoEvent}>
                 <AddPhotoIcon className="add-photo" color="action" />
               </Button>
-    
+                
+              {/* HashTag */}
               <Button onClick={hashTagEvent}>
-                <HashTag color="action" />
+                <HashTagIcon color="action" />
               </Button>
+              {true ? (
+                <HashTag
+                  className="memoHashTag"
+                  name="hashtag"
+                  // cmemo={cmemo}
+                  // InputEvent={InputEvent}
+                />
+              ) : (
+                false
+              )}
 
               <Button className="addButton" onClick={addEvent}>
                 <AddIcon className="add-icon" />
