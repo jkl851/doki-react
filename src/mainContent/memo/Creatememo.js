@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-// import { MemoContext} from "./modules/MemoReducer";
+import { MemoContext} from "./modules/MemoReducer";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
@@ -22,12 +22,14 @@ const memoInitialState = {
   contents: "",
   time: new Date(),
   color: "#FFFFFF",
-  hash: []
+  hash: [],
+  pin: false,
+  visible: true
 };
 
-export default function (passMemo) {
+export default function CreateMemo() {
   // 전역 컨텍스트
-  // const [ memo, dispatch ] = useContext(MemoContext);
+  const [ memos, dispatch ] = useContext(MemoContext);
 
   // Create Memo State
   const [ cmemo, setCmemo] = useState(memoInitialState);
@@ -59,14 +61,21 @@ export default function (passMemo) {
 
   // 메모 추가 이벤트
   const addEvent = () => {
-    passMemo.passMemo(cmemo);
+    if (cmemo.title === "" || cmemo.content === "") {
+      alert("제목이나 본문을 기입하세요");
+      return memos
+    }
+    dispatch({ type: 'ADD_MEMO', memo: cmemo });
+
     setCmemo({
       no:"",
       title: "",
       contents: "",
       time: new Date(),
       color: "#FFFFFF",
-      hash: []
+      hash: [],
+      pin: false,
+      visible: true
     })
   };
 
