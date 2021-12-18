@@ -25,6 +25,7 @@ const BackgroundColor = styled.div`
 export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var id = memo.id
+  var pin = memo.pin
 
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -33,7 +34,7 @@ export default function(memo) {
 
    // 메모삭제
   const deleteMemo = () => {
-    dispatch({ type: 'DEL_MEMO', id });
+    dispatch({ type: 'DEL_MEMO', id, pin});
   };
 
   const photoEvent = (event) => {

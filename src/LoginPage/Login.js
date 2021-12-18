@@ -21,6 +21,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("왓냐")
     e.preventDefault();
     try {
       if (ID === "") {

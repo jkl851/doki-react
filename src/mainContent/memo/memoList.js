@@ -4,7 +4,6 @@ import Memo from './Memo';
 import styled from 'styled-components';
 import {media} from './modules/style-utils';
 
-
 const Wrapper = styled.div`
   padding: 0 4rem;
   ${media.desktop`
@@ -44,7 +43,8 @@ const MemoList = ( {memos , cols , title}) => {
                                                         id={index}
                                                         title={value.title}
                                                         contents={value.contents}
-                                                        color={value.color} />)
+                                                        color={value.color}
+                                                        pin={value.pin} />)
     var output = []
     if (cols !== 0) {
         output = memoList.reduce((acc, child, i) => {
