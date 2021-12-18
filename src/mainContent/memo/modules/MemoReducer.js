@@ -9,7 +9,7 @@ export const memoReducer = (state, action) => {
   switch(action.type) {
     case 'GET_ALLHASH':
       return [
-        action.hash
+        
       ]
 
     case 'GET_MEMOLIST':
