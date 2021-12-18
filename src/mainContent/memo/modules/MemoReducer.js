@@ -1,15 +1,19 @@
 import { createContext } from "react";
 import data from "../../../assets/data/memoMessageData.json";  //  더미 데이터
 
-export const memoList = data;
-//export const memoList = [];
+// export const memoList = data;
+export const memoList = [];
 export const MemoContext = createContext(memoList);
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
 
+    case 'GET_MEMOLIST':
+      return [
+        action.memoList
+      ]
+
     case 'ADD_MEMO':
-      console.log(action.memo);
       return [
         ...state,
         action.memo

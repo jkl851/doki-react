@@ -4,7 +4,6 @@ import Memo from './Memo';
 import styled from 'styled-components';
 import {media} from './modules/style-utils';
 
-
 const Wrapper = styled.div`
   padding: 0 4rem;
   ${media.desktop`

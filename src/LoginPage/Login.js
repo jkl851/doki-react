@@ -34,7 +34,7 @@ const Login = () => {
 
       await axios
         .post(
-          "http://localhost:8080/doki/user/login",
+          "doki/user/login",
           `id=${ID}&password=${Password}`
         )
         .then((Response) => {
