@@ -13,7 +13,6 @@ const Transfer = () => {
       .post("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
         if (Response.data === "no session") {
-          alert("로그인 하십시오.");
           setSession(false);
           navigate("/login");
         }

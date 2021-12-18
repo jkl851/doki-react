@@ -5,12 +5,16 @@ import updateUserModalStyles from "../assets/css/userupdatemodal.module.css";
 import user from "../assets/images/user2.png";
 import logo from "../assets/images/white_black_logo.png";
 import { IoIosContact } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 Modal.setAppElement("body");
 
 export default function MemoAlarmModal() {
   let no = 2;
+
+  const navigate = useNavigate();
 
   const refForm = useRef(null);
 
@@ -32,6 +36,20 @@ export default function MemoAlarmModal() {
           passwordcheck: Response.data.list.passwordcheck,
           isOpen: true,
         });
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+  // 유저 로그 아웃
+  const logout = async () => {
+    await axios
+      .get(`http://localhost:8080/doki/user/logout`)
+      .then((Response) => {
+        if (Response.data === "세션 제거") {
+          navigate("/login");
+        }
       })
       .catch((Error) => {
         console.log(Error);
@@ -249,11 +267,7 @@ export default function MemoAlarmModal() {
                 backgroundColor: "#fff",
                 color: "black",
               }}
-              onClick={() => {
-                refForm.current.dispatchEvent(
-                  new Event("submit", { cancelable: true, bubbles: true })
-                );
-              }}
+              onClick={logout}
             >
               로그 아웃
             </button>
