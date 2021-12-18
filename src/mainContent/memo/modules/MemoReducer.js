@@ -7,10 +7,10 @@ export const MemoContext = createContext(memoList);
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
-    case 'GET_ALLHASH':
-      return [
+    // case 'GET_ALLHASH':
+    //   return [
         
-      ]
+    //   ]
 
     case 'GET_MEMOLIST':
 

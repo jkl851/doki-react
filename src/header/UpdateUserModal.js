@@ -7,7 +7,6 @@ import logo from "../assets/images/white_black_logo.png";
 import { IoIosContact } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 Modal.setAppElement("body");
 
