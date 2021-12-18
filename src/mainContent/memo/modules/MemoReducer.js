@@ -13,9 +13,8 @@ export const memoReducer = (state, action) => {
       ]
 
     case 'GET_MEMOLIST':
-      return [
-        action.memoList
-      ]
+
+      return action.memoListFromServer
 
     case 'ADD_MEMO':
       return [

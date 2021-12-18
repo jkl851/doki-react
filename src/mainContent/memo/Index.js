@@ -17,10 +17,7 @@ export default function App() {
     useEffect(() => {
       axios.get(`http://localhost:8080/doki/list/${groupNo}`, {withCredentials: true})
       .then((Response) => {
-          console.log('===== 메모 리스트 받아오기 =====')
-          console.log(Response)
-          console.log('=============================')
-          dispatch({ type: 'GET_MEMOLIST', memoList : Response.data });
+          dispatch({ type: 'GET_MEMOLIST', memoListFromServer : Response.data });
       })
       .catch((Error) => {console.log(Error)})
   }, [])
