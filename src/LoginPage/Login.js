@@ -21,6 +21,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("왓냐")
     e.preventDefault();
     try {
       if (ID === "") {
@@ -34,7 +35,7 @@ const Login = () => {
 
       await axios
         .post(
-          "doki/user/login",
+          "http://localhost:8080/doki/user/login",
           `id=${ID}&password=${Password}`
         )
         .then((Response) => {

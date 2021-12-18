@@ -15,7 +15,7 @@ export default function App() {
   // 메인 구현 후 사이드바 클릭시 불러오는거로 이동
     const groupNo = 1;
     useEffect(() => {
-      axios.get(`http://localhost:8080/list/${groupNo}`, {withCredentials: true})
+      axios.get(`http://localhost:8080/doki/list/${groupNo}`, {withCredentials: true})
       .then((Response) => {
           console.log('===== 메모 리스트 받아오기 =====')
           console.log(Response)
