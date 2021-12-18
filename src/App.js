@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "../src/LoginPage/Login";
 import Transfer from "../src/LoginPage/Transfer";
+// import Change from "../src/LoginPage/changePassword";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import axios from "axios";
@@ -11,7 +12,8 @@ export default function App() {
     <Router>
       <Routes>
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/transfer" element={<Transfer />} />
+        <Route exact path="/doki" element={<Transfer />} />
+        {/* <Route exact path="/change" element={<Change />} /> */}
       </Routes>
     </Router>
   );

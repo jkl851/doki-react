@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import Tooltip from "./Tooltip";
 import styled from "styled-components";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
@@ -34,9 +34,14 @@ export default function Color({
   tooltip,
   onClick,
 }) {
-
   return (
-    <Wrapper value={value} name="color" onClick={(e) => {onClick('color', value)}}>
+    <Wrapper
+      value={value}
+      name="color"
+      onClick={(e) => {
+        onClick("color", value);
+      }}
+    >
       <StyledCircle color={value} border={border} selectedColor={selectedColor}>
         <CheckOutlinedIcon />
       </StyledCircle>

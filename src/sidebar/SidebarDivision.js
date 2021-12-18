@@ -1,4 +1,6 @@
+import axios from "axios";
 import React from "react";
+import "../../src/assets/css/sidedivision.css";
 import Group from "../assets/images/Group.png";
 import Server1 from "../assets/images/Server1.png";
 import Server2 from "../assets/images/Server2.png";
@@ -26,7 +28,7 @@ export default function SidebarDivision() {
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Group}
-          alt=""
+          alt="메인"
         />
       </div>
       <br />
@@ -34,14 +36,14 @@ export default function SidebarDivision() {
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server1}
-          alt=""
+          alt="개발부"
         />
       </div>
       <div>
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server2}
-          alt=""
+          alt="영업부"
         />
       </div>
       <div>

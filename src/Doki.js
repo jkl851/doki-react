@@ -18,7 +18,7 @@ export default function Doki() {
       <HeaderDiv />
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
         <div id="main_sidebar">
-          <Sidebar />
+          <Sidebar no={1} />
         </div>
         <MemoIndex />
       </MemoContext.Provider>

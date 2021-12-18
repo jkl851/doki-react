@@ -21,7 +21,6 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("왓냐")
     e.preventDefault();
     try {
       if (ID === "") {
@@ -41,7 +40,7 @@ const Login = () => {
         .then((Response) => {
           // 200번 반환 뒤에
           if (Response.data === "가능") {
-            navigate("/doki");
+            navigate("/transfer");
           } else {
             alert("계정 정보를 확인하십시오.");
             setID("");
