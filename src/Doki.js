@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import HeaderDiv from "./header/HeaderDiv";
 import {
   MemoContext,
@@ -13,16 +13,17 @@ import "../src/assets/css/Doki.css";
 import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki() {
+  const [division, setDivision] = useState(1);
+
   return (
     <div id="whole_wrapper">
       <HeaderDiv />
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
         <div id="main_sidebar">
-          <Sidebar no={1} />
+          <Sidebar no={division} />
         </div>
         <MemoIndex />
       </MemoContext.Provider>
-
       <SideChat2 />
     </div>
   );

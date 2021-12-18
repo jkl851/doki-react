@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { Fragment } from "react";
 import "../../src/assets/css/sidedivision.css";
 import Group from "../assets/images/Group.png";
 import Server1 from "../assets/images/Server1.png";
@@ -8,9 +8,10 @@ import Server3 from "../assets/images/Server3.png";
 import Server4 from "../assets/images/Server4.png";
 import Server5 from "../assets/images/Server5.png";
 
-export default function SidebarDivision() {
+export default function SidebarDivision({ callback }) {
   return (
     // 여기도 컴포넌트화 필요
+
     <div
       className="sidebar_division"
       style={{
@@ -28,7 +29,8 @@ export default function SidebarDivision() {
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Group}
-          alt="메인"
+          alt="1"
+          onClick={() => callback(1)}
         />
       </div>
       <br />
@@ -36,14 +38,15 @@ export default function SidebarDivision() {
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server1}
-          alt="개발부"
+          alt="2"
+          onClick={() => callback(2)}
         />
       </div>
       <div>
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server2}
-          alt="영업부"
+          onClick={() => callback(3)}
         />
       </div>
       <div>

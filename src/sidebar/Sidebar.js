@@ -3,10 +3,10 @@ import SidebarDivision from "./SidebarDivision";
 import SidebarMenu from "./SidebarMenu";
 import "../assets/css/sidebar.css";
 
-export default function Sidebar(props) {
+export default function Sidebar({ callback }) {
   return (
     <div className="sidebar" style={{ backgroundColor: "#f2f3f5" }}>
-      <SidebarDivision no={props.no} />
+      <SidebarDivision callback={callback} />
       <SidebarMenu />
     </div>
   );
