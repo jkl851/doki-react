@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import HashItem from "./HashItem";
 import axios from "axios";
 import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
+import { fontSize } from "@mui/system";
 const Wrapper = styled.div`
     position: relative;
     display: inline-block;
@@ -15,10 +16,8 @@ const HashTag = styled.div`
     z-index: 9999;
     position: absolute;
     width: 200px;
-    height: 280px;
+    height: fit-content;
     background: white;
-    fontsize: 5px;
-
     transform: translate(-30%, 8%);
     box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.16);
     cursor: default;
@@ -28,11 +27,19 @@ const HashTag = styled.div`
 `;
 
 const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
-    
     const [keyword, setKeyword] = useState("");
+    const [canMakeFlag, setCanMakeFlag] = useState(false);
+
+    const Ref = useRef();
 
     const handleKeyword = (e) => {
         setKeyword(e.target.value);
+        const filteredDatas = allHashDatas.filter(data => {
+            return data.name === e.target.value ? data : null
+        })
+        
+        // keyword가 모든 해시들을 조회해서 맞는 값이 없거나 빈 스트링이면 해시를 만들 수 있는 조건이다
+        setCanMakeFlag(filteredDatas.length === 0 && e.target.value !== '' ? true : false);
     };
 
     const handleToCreateHash = () => {
@@ -57,6 +64,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                     })
                 );
                 setKeyword("");
+                setCanMakeFlag(false);
             })
             .catch((Error) => {
                 console.log(Error);
@@ -65,7 +73,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
 
     return (
         <Wrapper>
-            <HashTag>
+            <HashTag ref={Ref}>
                 <div
                     style={{
                         width: "100%",
@@ -113,49 +121,54 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                 {/* 해시 리스트 */}
                 <div
                     style={{
-                        overflowY: "auto",
+                        overflow: "scroll",
+                        msOverflowStyle: "none",
                         width: "100%",
-                        height: "210px",
-                        borderBottom: "1px solid",
-                        
+                        height: "208px",
+                        cursor: "pointer",
+                        display: "block",
+                        outline: "none",
+                        padding: "5px 10px 3px 3px",
+                        position: "relative",
+
                     }}
                 >
-                    {
-                        (console.log("=============="),
-                        console.log(allHashDatas),
-                        console.log("=============="),
-                        allHashDatas
-                            .filter((data) => {
-                                return data.name.indexOf(keyword) !== -1;
-                            })
-                            .map((data, index) => {
-                                return (
-                                    <HashItem
-                                        key={index}
-                                        no={data.no}
-                                        name={data.name}
-                                        checked={data.checked}
-                                        allHashDatas={allHashDatas}
-                                        setAllHashDatas={setAllHashDatas}
-                                        InputEvent={InputEvent}
-                                    />
-                                );
-                            }))
-                    }
+                    {allHashDatas
+                        .filter((data) => {
+                            return data.name.indexOf(keyword) !== -1;
+                        })
+
+                        .map((data, index) => {
+                            return (
+                                <HashItem
+                                    key={index}
+                                    no={data.no}
+                                    name={data.name}
+                                    checked={data.checked}
+                                    allHashDatas={allHashDatas}
+                                    setAllHashDatas={setAllHashDatas}
+                                    InputEvent={InputEvent}
+                                />
+                            );
+                        })}
                 </div>
                 {
-                    allHashDatas.forEach(element => {
-                        element.name !== keyword ? console.log(keyword) : true
-                    })
-                
-                && (
-                    // {/* 검색의 keyword와 리스트의 해시 값의 일치 유무에 따라 display를 보였다 안보였다 토글한다*/}
+                    // 해시 검색어가 db에 없는 상태라면 만들기 버튼 활성화
+                    canMakeFlag  
+                    &&
+                    (
                     <div
                         onClick={handleToCreateHash}
                         style={{
+                            display:"flex",
+                            borderTop: "1px solid ",
                             cursor: "pointer",
+                            display : "block",
                             width: "100%",
-                            height: "25px",
+                            height: "fit-content",
+                            position: "relative",
+                            top: "-10%",
+                            paddingRight: "10px",
                         }}
                     >
                         <AddIcon
@@ -165,19 +178,30 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                                 height: "25px",
                             }}
                         />
-                        '
-                        <span
-                            style={{
-                                width: "85%",
-                                height: "25px",
-                                overflow: "hidden",
-                            }}
+                        <div 
+                            style={{width: "100%",
+                            wordBreak: "break-all",
+                            maxHeight: "75px",
+                        }}
                         >
-                            {keyword}
-                        </span>
-                        ' 만들기
+                            '
+                            <span
+                                style={{
+                                    width: "100%",
+                                    maxHeight: "100%",
+                                    fontSize:"12px",
+                                    textOverflow:"ellipsis",
+                                    wordBreak: "break-all"
+                                }}
+                            >
+                                {keyword}
+                            </span>
+                            ' 만들기
+                        </div>
+                        
                     </div>
-                )}
+                    )
+                }
             </HashTag>
         </Wrapper>
     );

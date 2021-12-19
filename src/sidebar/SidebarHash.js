@@ -52,33 +52,6 @@ export default function SidebarHash() {
         
     };
 
-
-
-
-    //외부클릭 시 화면 닫기
-    // const outsideRef = useOutSideRef(null);
-    // function useOutSideRef() {
-    //     const ref= useRef(null);
-        
-    //     useEffect(() => {
-    //         function handelClickOutside(event) {
-    //             if(ref.current && !ref.current.contains(event.target)) {
-    //                 $("#myDropdown").hide();
-    //             } else {
-    //                 $("#myDropdown").show();
-    //             }
-    //         }
-    //         document.addEventListener('click', handelClickOutside);
-            
-    //         return () => {
-    //             document.removeEventListener('click', handelClickOutside);
-    //         };
-    //     });
-        
-    //     return ref;
-    // }
-    
-
     //해쉬 검색창외에 다른 곳 클릭시 Dropdown을 닫게끔 하기
     const itemRef = useItemRef(null);
     function useItemRef() {

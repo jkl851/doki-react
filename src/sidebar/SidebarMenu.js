@@ -57,7 +57,8 @@ export default function SidebarMenu({ division }) {
             return;
         }
 
-        // 부서에 초대할 때는 해당 유저의 departmentNo는 다른 부서에도 존재할 수 있기 때문에 초대하고자 하는 부서의 번호(division)로 초대해야한다
+        // 부서에 초대할 때는 해당 유저의 departmentNo는 다른 부서에도 존재할 수 있기 때문에 
+        // 초대하고자 하는 부서의 번호(division)로 초대해야한다
         const insertData = flag
             .map((data, index) => {
                 if (data === true) {

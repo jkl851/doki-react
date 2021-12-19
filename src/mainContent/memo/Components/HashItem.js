@@ -56,10 +56,9 @@ const HashItem = ({
     return (
         <div
             style={{
-                padding: "1px 1px",
-                display: "block",
+                display: "inline-block",
                 width: "100%",
-                height: "30px",
+                height: "auto",
                 borderBottom: "1px solid #cccccc",
             }}
         >
@@ -70,15 +69,16 @@ const HashItem = ({
                 style={{
                     marginLeft: "5px",
                     float: "left",
-                    width: "10%",
-                    height: "100%",
+                    width: "18px",
+                    height: "18px",
                 }}
                 type="checkbox"
             ></input>
             <label
                 id={no}
                 style={{
-                    paddingTop: "3px",
+                    position: "relative",
+                    top: "-2px",
                     marginLeft: "5px",
                     textAlign: "left",
                     float: "left",

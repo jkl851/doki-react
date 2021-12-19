@@ -316,6 +316,8 @@ export default function CreateMemo() {
                         </Button>
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
                             <HashTagBox
+                                shouldCloseOnOverlayClick={true}
+                                onRequestClose={hashTagEvent}
                                 className="memoHashTag"
                                 name="hashtag"
                                 allHashDatas={allHashDatas}
