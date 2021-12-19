@@ -159,7 +159,12 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                             }))
                     }
                 </div>
-                {true && (
+                {
+                    allHashDatas.forEach(element => {
+                        element.name !== keyword ? console.log(keyword) : true
+                    })
+                
+                && (
                     // {/* 검색의 keyword와 리스트의 해시 값의 일치 유무에 따라 display를 보였다 안보였다 토글한다*/}
                     <div
                         onClick={handleToCreateHash}
