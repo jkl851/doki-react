@@ -47,9 +47,12 @@ export default function SidebarMenu({division}) {   // division은 부서 번호
     // [soo] 초대 모달에서 x버튼 클릭 시 해당 부서로 직원 초대
     const closeInviteModal = async() => {
         setInviteState({isOpen: false})
-
         console.log(flag);
-        // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
+        if(flag.length === 0) {
+            
+            return;
+        }
+
         const insertData = flag.map((data,index) => {
             if( data === true ) {
                 return {...allUserDatas[index], "departmentNo" : division }
@@ -137,7 +140,7 @@ export default function SidebarMenu({division}) {   // division은 부서 번호
                 {/* Invite Modal */}
                 <ReactModal 
                     isOpen={inviteState.isOpen} // modalState.isOpen
-                    onRequestClose={ () => setInviteState({isOpen: false}) }
+                    onRequestClose={ () => {setInviteState({isOpen: false}); setFlag([])}}
                     shouldCloseOnOverlayClick={true}
                     onAfterClose={() => {setAllUserKeyword('')}}
                     className={InviteStyles.Modal}>
