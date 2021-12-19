@@ -1,9 +1,9 @@
 import React, { useReducer, useEffect, useState } from "react";
 import HeaderDiv from "./header/HeaderDiv";
 import {
-  MemoContext,
-  memoReducer,
-  memoList,
+    MemoContext,
+    memoReducer,
+    memoList,
 } from "./mainContent/memo/modules/MemoReducer";
 import Sidebar from "./sidebar/Sidebar";
 
@@ -13,18 +13,22 @@ import "../src/assets/css/Doki.css";
 import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki() {
-  const [division, setDivision] = useState(1);
 
-  return (
-    <div id="whole_wrapper">
-      <HeaderDiv />
-      <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
-        <div id="main_sidebar">
-          <Sidebar no={division} />
+    // [soo] division은 부서 번호이다
+    const [division, setDivision] = useState(2);
+
+    return (
+        <div id="whole_wrapper">
+            <HeaderDiv />
+            <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
+                <div id="main_sidebar">
+                    <Sidebar 
+                          division={division}
+                           setDivision={setDivision} />
+                </div>
+                <MemoIndex />
+            </MemoContext.Provider>
+            <SideChat2 />
         </div>
-        <MemoIndex />
-      </MemoContext.Provider>
-      <SideChat2 />
-    </div>
-  );
+    );
 }

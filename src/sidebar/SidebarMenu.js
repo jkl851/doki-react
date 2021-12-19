@@ -16,7 +16,7 @@ import axios from 'axios';
 
 ReactModal.setAppElement('#root');
 
-export default function SidebarMenu() {
+export default function SidebarMenu({division}) {   // division은 부서 번호
     const [inviteState, setInviteState] = useState({isOpen : false});
     const [groupPermissionState, setGroupPermissionState] = useState({isOpen : false});
     const [deptUserDatas, setDeptUserDatas] = useState([]);
@@ -43,6 +43,8 @@ export default function SidebarMenu() {
         setGroupPermissionState({isOpen: true})
     }
 
+
+    // [soo] 초대 모달에서 x버튼 클릭 시 해당 부서로 직원 초대
     const closeInviteModal = async() => {
         setInviteState({isOpen: false})
 
@@ -50,16 +52,20 @@ export default function SidebarMenu() {
         // info : 닫았을 때 db를 먼저 때리고 response가 ok이면 sidebar deptUserDatas에 추가한다
         const insertData = flag.map((data,index) => {
             if( data === true ) {
-                return allUserDatas[index]
+                return {...allUserDatas[index], "departmentNo" : division }
             } else {
                 return null;
             }
+        }).filter(data => {
+            if(data !== null){
+                return data;
+            }
         })
 
-        console.log("insertData")
+        console.log("=====insertData=====")
         console.log(insertData)
 
-        // surl부분 /api 설정으로 하는법 알아보기
+        // url부분 /api 설정으로 하는법 알아보기
         await axios.post('http://localhost:8080/doki/user/inviteUsers',
                 // 체크된 데이터들을 담을 것
                 insertData
@@ -71,16 +77,15 @@ export default function SidebarMenu() {
                     deptUserDatas = Response.data);
                 console.log("=============================== ");
 
-                // allUserDatas에 보낸 데이터(체크된 것)을 추가할 것
 
             })
             .catch((Error) => {console.error(Error)})
     }
 
-    // 부서 모달의 x 버튼 클릭 시 권한 설정한 것을 업데이트 한다
+    // [soo] 부서 모달의 x 버튼 클릭 시 권한 설정한 것을 업데이트 한다
     const closeGroupPermissionModal = async() => {
         setGroupPermissionState({isOpen: false})
-
+        
         // url부분 /api 설정으로 하는법 알아보기
         await axios.put('http://localhost:8080/doki/user/updatePermission',
                 [...deptUserDatas]
@@ -96,7 +101,7 @@ export default function SidebarMenu() {
     // 최초 로딩 시 모든 직원의 리스트와 해당 부서의 직원을 가져온다 
     useEffect(async() => {
         await axios.all([
-            await axios.get('http://localhost:8080/doki/user/getUserList/' + '1'),   // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
+            await axios.get('http://localhost:8080/doki/user/getUserList/' + division),   // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
             await axios.get('http://localhost:8080/doki/user/getAllUserList')        // 회사 전체 직원의 리스트 검색
         ]) 
         .then(
@@ -111,7 +116,7 @@ export default function SidebarMenu() {
             })
         )
         .catch((Error) => {console.log(Error)})
-    }, [])
+    }, [division]) // division의 값이 변할 때 마다 실행 된다
 
     
     return (

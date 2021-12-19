@@ -3,11 +3,13 @@ import SidebarDivision from "./SidebarDivision";
 import SidebarMenu from "./SidebarMenu";
 import "../assets/css/sidebar.css";
 
-export default function Sidebar({ callback }) {
+export default function Sidebar({division, setDivision }) {
+  console.log("division => " + division)
+
   return (
     <div className="sidebar" style={{ backgroundColor: "#f2f3f5" }}>
-      <SidebarDivision callback={callback} />
-      <SidebarMenu />
+      <SidebarDivision setDivision={setDivision} />
+      <SidebarMenu division={division}/>
     </div>
   );
 }

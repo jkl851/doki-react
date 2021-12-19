@@ -8,7 +8,7 @@ import Server3 from "../assets/images/Server3.png";
 import Server4 from "../assets/images/Server4.png";
 import Server5 from "../assets/images/Server5.png";
 
-export default function SidebarDivision({ callback }) {
+export default function SidebarDivision({ setDivision }) {
   return (
     // 여기도 컴포넌트화 필요
 
@@ -30,7 +30,7 @@ export default function SidebarDivision({ callback }) {
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Group}
           alt="1"
-          onClick={() => callback(1)}
+          onClick={() => {setDivision(1)}}
         />
       </div>
       <br />
@@ -39,14 +39,14 @@ export default function SidebarDivision({ callback }) {
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server1}
           alt="2"
-          onClick={() => callback(2)}
+          onClick={() => setDivision(2)}
         />
       </div>
       <div>
         <img
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Server2}
-          onClick={() => callback(3)}
+          onClick={() => setDivision(3)}
         />
       </div>
       <div>
