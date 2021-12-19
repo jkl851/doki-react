@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import User from './User.js'
 
-const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, setFlag, allUserKeyword}) => {
+const EntireUserList = ({allUserDatas, deptUserDatas, isInvited, setIsInvited, setFlag, allUserKeyword}) => {
     const [checkedItems, setCheckedItems] = useState([]);
 
 
@@ -40,7 +40,7 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, setF
     useEffect(() => {
         const count = deptUserDatas.length;
         console.log('count ' + count)
-        setIsInvited(userDatas.map((element, index, array) => {
+        setIsInvited(allUserDatas.map((element, index, array) => {
             for(let i=0; i<count; i++){
                 if(deptUserDatas[i].no === element.no ) {
                     return true;
@@ -55,7 +55,7 @@ const EntireUserList = ({userDatas, deptUserDatas, isInvited, setIsInvited, setF
     
     return (
         <ul > 
-            {userDatas
+            {allUserDatas
                 .filter(userData => userData.userName.indexOf(allUserKeyword) !== -1 || userData.position.indexOf(allUserKeyword) !== -1)
                 .map((userData, index) => 
                     <User 

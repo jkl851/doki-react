@@ -35,22 +35,6 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
         setKeyword(e.target.value);
     };
 
-    const handleAddHashToMemo = () => {
-        // 어떤 데이터를 put?
-        const putDatas = Object.assign(
-            [],
-            allHashDatas.map((data) => {
-                // data.checked => true인 애들만 return
-                if (data.checked === true) {
-                    return data;
-                }
-            })
-        );
-        console.log("==== put datas ====");
-        console.log(putDatas);
-        console.log("===================");
-    };
-
     const handleToCreateHash = () => {
         console.log("[keyword] =>> " + keyword);
         if (keyword === "") {

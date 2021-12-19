@@ -37,14 +37,7 @@ const HashItem = ({
                             checked: data.checked,
                         };
                     }
-                    // no === data.no ?
-                    //     data.checked = !data.checked :
-                    //     true;
-                    // return {
-                    //     no: data.no,
-                    //     name: data.name,
-                    //     checked: data.checked
-                    // }
+                    
                 })
                 .filter((data) => {
                     return data !== undefined;
