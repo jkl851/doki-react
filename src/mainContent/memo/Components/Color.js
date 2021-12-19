@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import Tooltip from "./Tooltip";
 import styled from "styled-components";
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 
 const Wrapper = styled.div`
   position: relative;
@@ -28,17 +28,22 @@ const StyledCircle = styled.div`
 `;
 
 export default function Color({
-  color,
+  value,
   border,
   selectedColor,
   tooltip,
   onClick,
 }) {
-
   return (
-    <Wrapper onClick={onClick}>
-      <StyledCircle color={color} border={border} selectedColor={selectedColor}>
-        <CheckOutlinedIcon/>
+    <Wrapper
+      value={value}
+      name="color"
+      onClick={(e) => {
+        onClick("color", value);
+      }}
+    >
+      <StyledCircle color={value} border={border} selectedColor={selectedColor}>
+        <CheckOutlinedIcon />
       </StyledCircle>
       {!!tooltip && <Tooltip content={tooltip} />}
     </Wrapper>

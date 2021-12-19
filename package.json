@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "",
+  "proxy":"http://localhost:8080",
   "scripts": {
     "restart": "npm stop && npm start",
     "stop": "pkill -9 $npm_package_name",
@@ -74,6 +75,7 @@
     "react-modal": "^3.14.4",
     "react-popover": "^0.5.10",
     "react-popper": "^2.2.5",
+    "react-router": "^6.1.1",
     "react-router-dom": "^6.1.1",
     "react-tiny-popover": "^7.0.1",
     "react-stomp": "^5.1.0",

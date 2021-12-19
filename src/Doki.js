@@ -1,26 +1,34 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import HeaderDiv from "./header/HeaderDiv";
-import { MemoContext, memoReducer, memoInitialState} from "./mainContent/memo/modules/MemoReducer";
+import {
+    MemoContext,
+    memoReducer,
+    memoList,
+} from "./mainContent/memo/modules/MemoReducer";
 import Sidebar from "./sidebar/Sidebar";
-import SideChat from "./sidechat/SideChat";
+
 import SideChat2 from "./sidechat/SideChat2";
 import "../src/assets/css/Doki.css";
 
-import Memo from "./mainContent/memo/Index";
+import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki() {
-  return (
-    <div id="whole_wrapper">
-      <HeaderDiv />
-      <div id="main_sidebar">
-        <Sidebar />
-      </div>
 
-      <MemoContext.Provider value={ useReducer( memoReducer, memoInitialState )}>
-      <Memo />
-      </MemoContext.Provider>
+    // [soo] division은 부서 번호이다
+    const [division, setDivision] = useState(2);
 
-      <SideChat2 />
-    </div>
-  );
+    return (
+        <div id="whole_wrapper">
+            <HeaderDiv />
+            <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
+                <div id="main_sidebar">
+                    <Sidebar 
+                          division={division}
+                           setDivision={setDivision} />
+                </div>
+                <MemoIndex />
+            </MemoContext.Provider>
+            <SideChat2 />
+        </div>
+    );
 }

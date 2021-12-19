@@ -52,7 +52,6 @@ const DeptUser = ({
 
   const handleChange = (e) => {
     // e.target은 onChange 될 때의 element(<input>)이다
-    // 해당 input의 id는 string 형태이므로 Number로 바꿔준다
     console.log("deptUserNo : " + deptUserNo);
     console.log("auth : " + e.target.id);
 
@@ -60,11 +59,12 @@ const DeptUser = ({
     // 원래 데이터들(deptUserDatas)에서 각 user 데이터(data)와 현재 선택한 유저의 deptUSerNo를 비교 후
     // 값이 같으면 해당 유저 auth의 값을 변경한다
     // 값이 다르면 원래 데이터를 그대로 set하는 반복문
+    
     setDeptUserDatas(
       deptUserDatas.map((data) => {
-        return data.deptUserNo === deptUserNo
-          ? { ...data, auth: e.target.id }
-          : { ...data };
+        return ((data.deptUserNo === deptUserNo) )
+          ? { ...data, "auth": e.target.id , "changed": true}
+          : { ...data};
       })
     );
     console.log("radio 선택...");

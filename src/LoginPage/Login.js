@@ -1,10 +1,13 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../LoginPage/Login.css";
 import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
 const Login = () => {
   const refForm = useRef(null);
+
+  const navigate = useNavigate();
 
   const [ID, setID] = useState("");
   const [Password, setPassword] = useState("");
@@ -18,6 +21,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("왓냐")
     e.preventDefault();
     try {
       if (ID === "") {
@@ -28,26 +32,20 @@ const Login = () => {
         alert("비밀번호가 비어있습니다.");
         return;
       }
-      const Data = { id: ID, password: Password };
 
       await axios
-        .post("http://localhost:8080/doki/user/userCheck", Data, {
-          withCredentials: true,
-        })
+        .post(
+          "http://localhost:8080/doki/user/login",
+          `id=${ID}&password=${Password}`
+        )
         .then((Response) => {
-          console.log(Response);
-          console.log(Response.data);
-          if (Response.data.id === ID) {
-            alert("회원정보가 틀립니다.");
-          }
-          if (Response.data.result === "fail") {
-            alert("회원정보가 틀립니다.");
-          }
-          if (
-            Response.data.list.id === ID &&
-            Response.data.list.password === Password
-          ) {
-            alert("로그인 성공");
+          // 200번 반환 뒤에
+          if (Response.data === "가능") {
+            navigate("/doki");
+          } else {
+            alert("계정 정보를 확인하십시오.");
+            setID("");
+            setPassword("");
           }
         })
         .catch((Error) => {
@@ -81,11 +79,7 @@ const Login = () => {
             }}
           />
         </div>
-        <div
-          style={{ textAlign: "center", fontSize: "15px", fontWeight: "bold" }}
-        >
-          로그인
-        </div>
+
         {/* form form form form form form form form form form form form form form form form form form form form form form form form form form form form form form */}
         <form ref={refForm} onSubmit={handleSubmit}>
           {/* form form form form form form form form form form form form form form form form form form form form form form form form form form form form form form */}
@@ -93,7 +87,7 @@ const Login = () => {
             style={{
               textAlign: "left",
               fontSize: "12px",
-              marginLeft: "5px",
+              marginRight: "90%",
               marginBottom: "2px",
             }}
           >
@@ -113,7 +107,6 @@ const Login = () => {
               name={"id"}
               value={ID}
               autoComplete="off"
-              placeholder="사번"
               onChange={handleID}
             />
           </div>
@@ -121,7 +114,7 @@ const Login = () => {
             style={{
               textAlign: "left",
               fontSize: "12px",
-              marginLeft: "5px",
+              marginRight: "85%",
               marginBottom: "2px",
             }}
           >
@@ -141,7 +134,6 @@ const Login = () => {
               name="password"
               value={Password}
               autoComplete="off"
-              placeholder="비밀번호"
               onChange={handlePassword}
             />
           </div>

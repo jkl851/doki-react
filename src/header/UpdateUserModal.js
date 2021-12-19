@@ -5,12 +5,15 @@ import updateUserModalStyles from "../assets/css/userupdatemodal.module.css";
 import user from "../assets/images/user2.png";
 import logo from "../assets/images/white_black_logo.png";
 import { IoIosContact } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 Modal.setAppElement("body");
 
 export default function MemoAlarmModal() {
   let no = 2;
+
+  const navigate = useNavigate();
 
   const refForm = useRef(null);
 
@@ -32,6 +35,20 @@ export default function MemoAlarmModal() {
           passwordcheck: Response.data.list.passwordcheck,
           isOpen: true,
         });
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+  // 유저 로그 아웃
+  const logout = async () => {
+    await axios
+      .get(`http://localhost:8080/doki/user/logout`)
+      .then((Response) => {
+        if (Response.data === "세션 제거") {
+          navigate("/login");
+        }
       })
       .catch((Error) => {
         console.log(Error);
@@ -104,7 +121,7 @@ export default function MemoAlarmModal() {
       console.error(err);
     }
   };
-  
+
   return (
     <Fragment>
       <a onClick={() => updateUserInfo(no)} href="#about">
@@ -118,7 +135,7 @@ export default function MemoAlarmModal() {
         shouldCloseOnOverlayClick={true}
         className={updateUserModalStyles.Modal}
         overlayClassName={updateUserModalStyles.Overlay}
-        style={{ content: { width: 350 } }}
+        style={{ content: { width: 350, border: "1px solid #b2b3b5" } }}
       >
         <div className={updateUserModalStyles["logoBox"]}>
           <img src={logo} />
@@ -244,7 +261,18 @@ export default function MemoAlarmModal() {
           <div className={updateUserModalStyles["modal-dialog-buttons"]}>
             <button
               style={{
-                width: "250px",
+                width: "125px",
+                marginTop: "20px",
+                backgroundColor: "#fff",
+                color: "black",
+              }}
+              onClick={logout}
+            >
+              로그 아웃
+            </button>
+            <button
+              style={{
+                width: "125px",
                 marginTop: "20px",
                 backgroundColor: "#5048e5",
                 color: "white",

@@ -12,9 +12,9 @@ import "../assets/css/offcanvas2.css";
 export default function MessageList(props) {
   const [messages, setMessages] = useState([]);
   
-  useEffect(() => {
-    getMessages();
-  }, []);
+  // useEffect(() => {
+  //   getMessages();
+  // }, []);
 
   
   const userNo = 1; //현재 유저번호 1이라 가정

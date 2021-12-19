@@ -1,41 +1,40 @@
 import { createContext } from "react";
+import data from "../../../assets/data/memoMessageData.json";  //  더미 데이터
 
-export const MemoContext = createContext();
-
-export const memoInitialState = {
-    no:"",
-    title: "",
-    contents: "",
-    alarm: {
-        time: new Date(),
-        repetition: "0",
-      },
-    color: "#FFFFFF",
-    hash: {}
-  };
-
-// export const memoInitialState = [];
-
-// export const memoDefault = {
-//   no:"",
-//   title: "",
-//   contents: "",
-//   alarm: {
-//       time: new Date(),
-//       repetition: "0",
-//     },
-//   color: "#FFFFFF",
-//   hash: {}
-// }
+// export const memoList = data;
+export const memoList = [];
+export const MemoContext = createContext(memoList);
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
+    // case 'GET_ALLHASH':
+    //   return [
+        
+    //   ]
 
-    case 'MEMO_INPUT':
-      return {
+    case 'GET_MEMOLIST':
+
+      return action.memoListFromServer
+
+    case 'ADD_MEMO':
+      return [
         ...state,
-        [action.name]: action.value,
-      }
+        action.memo
+      ]
+
+    case 'EMPTY':
+      return [
+        ...state
+      ]
+
+    case 'DEL_MEMO':
+      return  state.filter((currentValue, indx) =>  indx !== action.id)
+
+    case 'MODIFY_MEMO':
+      return [
+        ...state,
+        action.memo,
+      ]
 
     case 'CHANGE_COLOR':
       return {
@@ -58,13 +57,10 @@ export const memoReducer = (state, action) => {
         hash: action.hash
       }
 
-    case 'INITIALIZE':
-    return {
-      ...memoInitialState,
-    }
+    
 
     default:
-      return state;
+      throw new Error();
   }
 };                         
 
