@@ -18,12 +18,20 @@ import "../assets/css/offcanvas2.css";
 
 
 //채팅방 유저 임의 지정
-export default function MessageList(props) {
+export default function MessageList({allinfo}) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
-  let deptNo = props.departmentNo; //현재 부서번호 1이라 가정
-  const userNo = props.userNo; //현재 유저번호 1이라 가정
-  var tempMessages = [];
+
+  const deptNo = allinfo.departmentNo;
+  const userNo = allinfo.no;
+  const userName = allinfo.userName;
+  const position = allinfo.position;
+
+  console.log(deptNo, userNo, userName);
+
+  // let deptNo = 2;
+  // const userNo = 1;
+  // const userName = '둘리';
 
   useEffect(() => {
     getChatRoom(1);
@@ -50,82 +58,6 @@ export default function MessageList(props) {
   };
     
 
-  // const client = useRef({});
-  // const connect = () => {
-  //   client.current = new StompJs.Client({
-  //     webSocketFactory: () => new SockJS('http://localhost:8080/doki/websocket'), 
-  //     // connectHeaders: {
-  //     //   "auth-token": "spring-chat-auth-token",
-  //     // },
-  //     debug: function (str) {
-  //       console.log(str);
-  //     },
-
-  //     reconnectDelay: 5000,
-  //     heartbeatIncoming: 10000,
-  //     heartbeatOutgoing: 10000,
-
-  //     onConnect: () => {
-  //       subscribe();
-  //     },
-
-  //     onStompError: (frame) => {
-  //       console.error(frame);
-  //     },
-  //   });
-  //   client.current.activate();
-  // };
-
-  // const disconnect = () => {
-  //   client.current.deactivate();
-  // };
-
-  // // 브로드캐스팅 받는 부분
-  // const subscribe = () => {
-  //   client.current.subscribe(`/talk/topic/${deptNo}`, ({msg}) => {
-  //     alert("msg : " + JSON.parse(msg).message);
-  //     const broadCastingMessage = {}
-  //     broadCastingMessage.roomId = JSON.parse(body).roomId;
-  //     broadCastingMessage.userNo = JSON.parse(body).userNo;
-  //     broadCastingMessage.name = JSON.parse(body).userName;
-  //     broadCastingMessage.message = JSON.parse(body).message;
-
-      
-  //     ////////////////////////////////////////
-  //     // setMessages([...messages, broadCastingMessage])
-  //     setMessages((prev) => {
-  //       return [...prev, broadCastingMessage]
-  //     });
-  //     ////////////////////////////////////////
-  //     alert('@@@');
-
-  //   });
-  // };
-
-  // const publish = (text) => {
-  //   if (!client.current.connected) {
-  //     return;
-  //   }
-  //   alert('text : ' + text);
-  //   client.current.publish({
-  //     destination: `/doki/talk/topic/${deptNo}`,
-  //     headers: {
-  //       "Accept": "application/json",
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       roomId: `${deptNo}`,
-  //       userNo: `${userNo}`,
-  //       name: `${userName}`,
-  //       message: text
-  //     })
-
-  //   });
-  // };
-
-
-
-
   //전송 데이터
   const getTextValue = (text) => {
     // publish(text);
@@ -144,21 +76,35 @@ export default function MessageList(props) {
         // SockJS와 stomp client를 통해 연결을 시도.
         stompClient.connect({}, function () {
           console.log('Connected: ');
-          stompClient.subscribe(`/topic/${deptNo}`, ({msg}) => {
-            alert("msg : " + JSON.parse(msg).message);
+          stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
+
+            const data = JSON.parse(msg.body);
+            console.log("data : " + JSON.stringify(data));
+            console.log("data5 : " + data.roomId);
+
             const broadCastingMessage = {}
-            broadCastingMessage.roomId = JSON.parse(body).roomId;
-            broadCastingMessage.userNo = JSON.parse(body).userNo;
-            broadCastingMessage.name = JSON.parse(body).userName;
-            broadCastingMessage.message = JSON.parse(body).message;
+            broadCastingMessage.departmentNo = data.roomId;
+            broadCastingMessage.userNo = data.userNo;
+            broadCastingMessage.userName = data.sender;
+            broadCastingMessage.message = data.message;
+            broadCastingMessage.date = data.date;
+            broadCastingMessage.position = data.position;
 
-            // setMessages([...messages, broadCastingMessage])
-            setMessages((prev) => {
-              return [...prev, broadCastingMessage]
-            });
+            // setMessages([...messages, ...broadCastingMessage])
+            // setMessages((prev) => {
+            //   return [...prev, broadCastingMessage]
+            // });
 
-            // getMessages();
-            
+
+
+            console.log('broadCastingMessage : ' + broadCastingMessage);
+            tempMessages.push(broadCastingMessage);
+        
+            setMessages([...messages, ...tempMessages]);
+
+
+            scrollToBotton();
+
           });
         });
         
@@ -185,21 +131,11 @@ export default function MessageList(props) {
             roomId: `${deptNo}`,
             userNo: `${userNo}`,
             name: `${userName}`,
-            message: text
+            message: text,
+            position: `${position}`
           }
         })
         .then((response) => {
-          //새로운 데이터 전송
-          // setMessages((prev) => {
-          //   return [...prev, response]
-          // });
-          // tempMessages.push(response);
-
-          //채팅 다시불러오기
-          // getMessages();
-
-          addMessage(response);
-
           return response;
         })
         .catch((Error) => {
@@ -211,16 +147,18 @@ export default function MessageList(props) {
       }
   };
 
-  const addMessage = (response) => {
-    // console.log('response : ' + JSON.stringify(response.data));
-    tempMessages.push(response.data);
+  var tempMessages = [];
+  // const addMessage = (response) => {
+  //   console.log('response : ' + JSON.stringify(response.data));
+  //   tempMessages.push(response.data);
 
-    setMessages([messages, ...tempMessages ]);
-    scrollToBotton();
-  }
+  //   setMessages([...messages, ...tempMessages]);
+  //   // getMessages();
+  //   scrollToBotton();
+  // }
 
   const getMessages = async() => {
-    tempMessages = [];
+    // tempMessages;
     await axios
       .get(`http://localhost:8080/doki/chat/getChatList/${deptNo}`)
       .then((Response) => {
