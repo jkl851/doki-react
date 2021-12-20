@@ -55,6 +55,8 @@ export default function HeaderDiv({ allinfo }) {
       });
   }, []);
 
+  
+
   return (
     <div id="header_div">
       <div className="topnav" id="myTopnav">

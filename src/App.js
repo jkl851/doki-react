@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Login from "../src/LoginPage/Login";
 import Transfer from "../src/LoginPage/Transfer";
 // import Change from "../src/LoginPage/changePassword";
@@ -8,8 +8,10 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 export default function App() {
-  const [allinfo, setAllinfo] = useState();
 
+  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
+  // const [allinfo, setAllinfo] = useState();
+  
   return (
     <Router>
       <Routes>
@@ -19,8 +21,7 @@ export default function App() {
           element={<Login setAllinfo={setAllinfo} />}
         />
         <Route exact path="/doki" element={<Transfer allinfo={allinfo} />} />
-        {/* <Route exact path="/change" element={<Change />} /> */}
       </Routes>
     </Router>
   );
-}
+  }
