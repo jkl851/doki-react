@@ -188,7 +188,7 @@ export default function SidebarMenu({ division }) {
         >
             <br />
             <div>DoKi</div>
-            <SidebarHash /> 
+            <SidebarHash division={division}/> 
             <div>
                 <img src={VectorImg} alt="" />
             </div>

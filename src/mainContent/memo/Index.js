@@ -14,13 +14,11 @@ export default function App({division}) {
   const [ memos, dispatch ] = useContext(MemoContext);
   // 메인 구현 후 사이드바 클릭시 불러오는거로 이동
     const groupNo = division;
+    console.log('groupNo ==> '+ groupNo)
     useEffect(() => {
       axios.get(`http://localhost:8080/doki/memo/list/${groupNo}`, {withCredentials: true})
       .then((Response) => {
-          Response.data.map(data => {
-            
-          })
-
+         
 
           dispatch({ type: 'GET_MEMOLIST', memoListFromServer : Response.data });
           console.log("===== GET MemoList =====");

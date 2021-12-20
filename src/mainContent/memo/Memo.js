@@ -192,11 +192,21 @@ export default function(memo) {
                                   )}
                    </div>
                     <div className="memo-area" onClick={expandCreateMemo}>
-                    <span className="memo-description">
-                        {memo.contents}
-                    </span>
+                      <span className="memo-description">
+                          {memo.contents}
+                      </span>
                     </div>
 
+                    {/* 메모에 해시가 추가되는 부분 */}
+                    <div className="memo-hash">
+                        {/* {allHashDatas
+                            .filter((data) => data.checked === true)
+                            .map((data, index) => {
+                                return (
+                                    <PostedHash key={index} hashName={data.hashName} />
+                                );
+                            })} */}
+                    </div>
                     <Button className="delete-button" onClick={deleteMemo}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
