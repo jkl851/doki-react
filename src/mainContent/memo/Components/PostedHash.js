@@ -1,9 +1,9 @@
 import React from "react";
 
-const PostedHash = ({ hashName }) => {
+const PostedHash = ({ hashName}) => {
     return (
         <div>
-            #<label>{hashName}</label>
+            <label>{hashName}</label>
         </div>
     );
 };

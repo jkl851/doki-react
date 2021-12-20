@@ -14,7 +14,7 @@ import HashTag from "@mui/icons-material/Tag";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PinIcon from "@mui/icons-material/PushPinOutlined";
 import PinnedIcon from "@mui/icons-material/PushPin";
-
+import PostedHash from './Components/PostedHash'
 
 // 컬러 변경 적용
 const BackgroundColor = styled.div`
@@ -25,10 +25,14 @@ const BackgroundColor = styled.div`
 `
 
 export default function(memo) {
+  console.log("[각 메모의 정보들]")
+  console.log(memo)
+
   const [ memos, dispatch ] = useContext(MemoContext);
   var id = memo.id
   var pin = memo.pin
 
+  
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -196,17 +200,23 @@ export default function(memo) {
                           {memo.contents}
                       </span>
                     </div>
-
+                    
+                  
                     {/* 메모에 해시가 추가되는 부분 */}
-                    <div className="memo-hash">
-                        {/* {allHashDatas
-                            .filter((data) => data.checked === true)
-                            .map((data, index) => {
-                                return (
-                                    <PostedHash key={index} hashName={data.hashName} />
-                                );
-                            })} */}
+                    <div style={{display: "flex"}}>
+                      { memo.hashCount > 0 &&
+                        <div className="memo-hash">
+                          <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                        </div>
+                      }
+                      { memo.hashCount > 1 && 
+                        <div className="memo-hash">
+                        <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
+                      </div>
+                      }
+
                     </div>
+                    
                     <Button className="delete-button" onClick={deleteMemo}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 

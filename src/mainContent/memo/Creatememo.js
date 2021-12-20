@@ -81,6 +81,8 @@ export default function CreateMemo() {
             return memos;
         }
 
+        console.log('[cmemo]=================')
+        console.log(cmemo)
         // addMemo를 한 후 Response가 ok(200)일 때 front에도 뿌려주고 초기화를 한다
         axios
             .post("http://localhost:8080/doki/memo/addMemo", cmemo)
@@ -226,7 +228,7 @@ export default function CreateMemo() {
                             .filter((data) => data.checked === true)
                             .map((data, index) => {
                                 return (
-                                    <PostedHash key={index} hashName={data.hashName} />
+                                    <PostedHash key={index} hashName={'#'+data.hashName} />
                                 );
                             })}
                     </div>
