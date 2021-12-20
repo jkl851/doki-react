@@ -13,7 +13,7 @@ export default function Message(props) {
     } = props;
 
     const friendlyTimestamp = moment(data.date).format('LLLL');
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     return (
       <div className={[
         'message',
