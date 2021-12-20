@@ -22,6 +22,16 @@
   justify-content: flex-end;
 }
 
+.name{
+  margin-left: 10px;
+}
+
+img{
+  width: 45px;
+  height: 45px;
+  margin-right: 10px;
+}
+
 .message.start .bubble-container .bubble {
   /* margin-top: 10px; */
   border-top-left-radius: 20px;
