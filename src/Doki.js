@@ -15,8 +15,13 @@ import axios from "axios";
 
 export default function Doki({ allinfo }) {
   // [soo] division은 부서 번호이다
+<<<<<<< HEAD
   const [division, setDivision] = useState(1);
 
+=======
+  const [division, setDivision] = useState(2);
+  
+>>>>>>> 2789185b77a0e2e33561f1b0848d048233e08d88
   return (
     <div id="whole_wrapper">
       <HeaderDiv division={division} allinfo={allinfo} />

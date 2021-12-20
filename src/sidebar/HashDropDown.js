@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import PropTypes from "prop-types";
 
 
-export default function HashDropDown({name, searchHash}) {
+export default function HashDropDown({hashName, searchHash}) {
     // const [hint, setHint] = useStat
 
     // console.log(name)
 
     return (
-        <a href="#" onClick={() => searchHash(name)}># {name}</a>
+        <a href="#" onClick={() => searchHash(hashName)}># {hashName}</a>
 
     )
 }
 
 HashDropDown.propTypes = {
-    name: PropTypes.string.isRequired
+    hashName: PropTypes.string.isRequired
   };
   
