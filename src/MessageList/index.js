@@ -18,9 +18,6 @@ import "../assets/css/offcanvas2.css";
 
 
 //채팅방 유저 임의 지정
-// let userNo = 1;
-// let userName = '둘리';
-// let deptNo = 2;
 export default function MessageList(props) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
