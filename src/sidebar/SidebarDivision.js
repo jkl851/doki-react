@@ -30,7 +30,9 @@ export default function SidebarDivision({ setDivision }) {
           style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
           src={Group}
           alt="1"
-          onClick={() => {setDivision(1)}}
+          onClick={() => {
+            setDivision(1);
+          }}
         />
       </div>
       <br />
