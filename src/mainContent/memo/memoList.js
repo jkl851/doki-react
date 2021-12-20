@@ -39,12 +39,16 @@ const Column = styled.div`
   //   );
   // })}
 const MemoList = ( {memos , cols , title}) => {
-    const memoList = memos.map( (value, index) => <Memo key={value.no} 
+    const memoList = memos.map( (value, index) => <Memo no={value.no} 
                                                         id={index}
                                                         title={value.title}
                                                         contents={value.contents}
                                                         color={value.color}
-                                                        pin={value.pin}
+                                                        pin={value.pin} 
+                                                        regDate={value.regDate}
+                                                        visible={value.visible}
+                                                        userNo={value.userNo}
+                                                        departmentNo={value.departmentNo}
                                                         hashNo={value.hashNo}
                                                         hashName={value.hashName}
                                                         hashCount={value.hashCount}
