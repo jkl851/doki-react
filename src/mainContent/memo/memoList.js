@@ -48,7 +48,11 @@ const MemoList = ( {memos , cols , title}) => {
                                                         regDate={value.regDate}
                                                         visible={value.visible}
                                                         userNo={value.userNo}
-                                                        departmentNo={value.departmentNo}/>)
+                                                        departmentNo={value.departmentNo}
+                                                        hashNo={value.hashNo}
+                                                        hashName={value.hashName}
+                                                        hashCount={value.hashCount}
+                                                        />)
     var output = []
     if (cols !== 0) {
         output = memoList.reduce((acc, child, i) => {

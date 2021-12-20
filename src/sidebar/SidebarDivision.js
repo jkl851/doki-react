@@ -100,7 +100,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales}
+              src={Human}
               alt="1"
               onClick={() => {
                 setDivision(4);
@@ -113,7 +113,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales_shadow}
+              src={Human_shadow}
               alt="1"
             />
         }
