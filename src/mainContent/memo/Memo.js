@@ -12,6 +12,8 @@ import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTag from "@mui/icons-material/Tag";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PinIcon from "@mui/icons-material/PushPinOutlined";
+import PinnedIcon from "@mui/icons-material/PushPin";
 
 
 // 컬러 변경 적용
@@ -81,22 +83,41 @@ export default function(memo) {
   const expandPaletteTable = () => {
       setExpandPalette(!expandPalette);
   };
-  
+
+
   return(
   
       <Fragment>
               { expandMemo ? (
                   <div>
-                  <form onMouseLeave={collapseCreateMemo}>
+                  <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                     <BackgroundColor className="input_wrapper" color={memo.color}>
-                        <input
-                          type="text"
-                          placeholder="제목"
-                          className="title_input"
-                          value={memo.title}
-                          name="title"
-                          onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
-                        />
+                            <Fragment>
+                                <input
+                                    type="text"
+                                    placeholder="제목"
+                                    className="title_input"
+                                    value={memo.title}
+                                    name="title"
+                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                />
+                                { pin === '1' ? (
+                                <PinnedIcon
+                                    className="pin_in_cmemo"
+                                    name="pin"
+                                    value="0"
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                />
+                                ) : (
+                                  <PinIcon
+                                    className="pin_in_cmemo"
+                                    name="pin"
+                                    value="1"
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                                />
+                                )}
+                            </Fragment>
+                        
                       <textarea
                         rows="6"
                         column="20"
@@ -105,7 +126,7 @@ export default function(memo) {
                         value={memo.contents}
                         name="content"
                         onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
-                      ></textarea>
+                        ></textarea>
             
                     
                         <div className="buttons-div" style={{ textAlign: "center" }}>
@@ -152,18 +173,33 @@ export default function(memo) {
 
               ):(
                   <BackgroundColor className="memo" color={memo.color}>
-                  <Fragment>
-                  <h2 className="memo-title" onClick={expandCreateMemo}>{memo.title}</h2>
-                  <div className="memo-area" onClick={expandCreateMemo}>
-                  <span className="memo-description">
-                      {memo.contents}
-                  </span>
-                  </div>
+                   <div style={{display:"inline-block"}}>
+                    <h4 className="memo-title" onClick={expandCreateMemo}>{memo.title}</h4>
+                    { pin === '1' ? (
+                                  <PinnedIcon
+                                      className="pin_in_memo"
+                                      name="pin"
+                                      value="0"
+                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                  />
+                                  ) : (
+                                    <PinIcon
+                                      className="pin_in_memo"
+                                      name="pin"
+                                      value="1"
+                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                  />
+                                  )}
+                   </div>
+                    <div className="memo-area" onClick={expandCreateMemo}>
+                    <span className="memo-description">
+                        {memo.contents}
+                    </span>
+                    </div>
 
-                  <Button className="delete-button" onClick={deleteMemo}>
-                      <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
-                  </Button> 
-                  </Fragment> 
+                    <Button className="delete-button" onClick={deleteMemo}>
+                        <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
+                    </Button> 
                   </BackgroundColor>
                   ) 
               }
