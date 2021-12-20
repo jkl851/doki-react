@@ -227,15 +227,10 @@ export default function MessageList(props) {
     await axios
       .get(`http://localhost:8080/doki/chat/getChatList/${deptNo}`)
       .then((Response) => {
-<<<<<<< HEAD
-        for (let i = 0; i < Response.data.length; i++) {
-          tempMessages.push(Response.data[i]);
-=======
         for(let i=0; i<Response.data.length; i++) {
           // console.log(i + ' : ' + JSON.stringify(Response.data[i]));
 
             tempMessages.push(Response.data[i]);
->>>>>>> jw
         }
       })
       .catch((Error) => {
