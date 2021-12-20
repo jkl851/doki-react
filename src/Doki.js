@@ -28,7 +28,7 @@ export default function Doki({ allinfo }) {
             allinfo={allinfo}
           />
         </div>
-        <MemoIndex />
+        <MemoIndex division={division}/>
       </MemoContext.Provider>
       <SideChat2 allinfo={allinfo} />
     </div>
