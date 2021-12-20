@@ -8,9 +8,10 @@ import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 // import chatData from '../assets/data/chatMessageData.json';
 
-export default function HeaderDiv() {
+export default function HeaderDiv({ allinfo }) {
+  console.log(allinfo.no);
   //현재 유저 no
-  let no = 3;
+  let no = JSON.stringify(allinfo.no);
 
   const [chat, setChat] = useState(false);
 
@@ -61,7 +62,7 @@ export default function HeaderDiv() {
         <div className="topnav-right" id="icons">
           <MemoAlarmPopover memoMessages={memoMessages} />
           <ChatAlarmPopover chatMessages={chatMessages} />
-          <UpdateUserModal />
+          <UpdateUserModal allinfo={allinfo} />
           <a onClick={chatControll} href="#about">
             채팅
           </a>

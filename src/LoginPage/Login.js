@@ -4,7 +4,7 @@ import "../LoginPage/Login.css";
 import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ setAllinfo }) => {
   const refForm = useRef(null);
 
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("왓냐")
+    console.log("왓냐");
     e.preventDefault();
     try {
       if (ID === "") {
@@ -39,8 +39,10 @@ const Login = () => {
           `id=${ID}&password=${Password}`
         )
         .then((Response) => {
-          // 200번 반환 뒤에
-          if (Response.data === "가능") {
+          alert(JSON.stringify(Response.data));
+
+          if (Response.data.no !== null) {
+            setAllinfo(Response.data);
             navigate("/doki");
           } else {
             alert("계정 정보를 확인하십시오.");

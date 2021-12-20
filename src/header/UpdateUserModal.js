@@ -10,8 +10,8 @@ import axios from "axios";
 
 Modal.setAppElement("body");
 
-export default function MemoAlarmModal() {
-  let no = 2;
+export default function MemoAlarmModal({ allinfo }) {
+  let no = allinfo.no;
 
   const navigate = useNavigate();
 

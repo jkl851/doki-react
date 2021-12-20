@@ -3,10 +3,10 @@ import "../assets/css/offcanvas2.css";
 
 import MessageList from "../MessageList";
 
-export default function SideChat2() {
+export default function SideChat2({ allinfo }) {
   return (
     <div id="mySidenav2" className="sidenav2" style={{}}>
-      <MessageList />
+      <MessageList allinfo={allinfo} />
     </div>
   );
 }

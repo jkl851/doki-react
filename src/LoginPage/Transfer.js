@@ -4,7 +4,7 @@ import Doki from "../Doki";
 
 import { useNavigate } from "react-router-dom";
 
-const Transfer = () => {
+const Transfer = ({ allinfo }) => {
   const [session, setSession] = useState(false);
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ const Transfer = () => {
   if (session == true) {
     return (
       <Fragment>
-        <Doki />
+        <Doki allinfo={allinfo} />
       </Fragment>
     );
   } else {

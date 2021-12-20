@@ -8,24 +8,22 @@ import axios from "axios";
 import "./MessageList.css";
 import "../assets/css/offcanvas2.css";
 
-
 export default function MessageList(props) {
   const [messages, setMessages] = useState([]);
-  
+
   // useEffect(() => {
   //   getMessages();
   // }, []);
 
-  
-  const userNo = 1; //현재 유저번호 1이라 가정
-  let departmentNo = 1; //현재 부서번호 1이라 가정
-  const getMessages = async() => {
+  const userNo = props.userNo; //현재 유저번호 1이라 가정
+  let departmentNo = props.departmentNo; //현재 부서번호 1이라 가정
+  const getMessages = async () => {
     var tempMessages = [];
     await axios
       .get(`http://localhost:8080/doki/chat/getChatList/${departmentNo}`)
       .then((Response) => {
-        for(let i=0; i<Response.data.length; i++) {
-            tempMessages.push(Response.data[i]);
+        for (let i = 0; i < Response.data.length; i++) {
+          tempMessages.push(Response.data[i]);
         }
       })
       .catch((Error) => {
@@ -39,7 +37,7 @@ export default function MessageList(props) {
     let i = 0;
     let messageCount = messages.length;
     let tempMessages = [];
-    
+
     while (i < messageCount) {
       let previous = messages[i - 1];
       let current = messages[i];
