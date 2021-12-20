@@ -106,8 +106,8 @@ export default function CreateMemo() {
                 setAllHashDatas(datas => {
                   return datas.map(data => {
                     return {
-                      no: data.no,
-                      name: data.name,
+                      hashNo: data.hashNo,
+                      hashName: data.hashName,
                       checked: false
                     }
                   })
@@ -152,8 +152,8 @@ export default function CreateMemo() {
                 setAllHashDatas(
                     Response.data.map((data) => {
                         return {
-                            no: data.no,
-                            name: data.name,
+                            hashNo: data.hashNo,
+                            hashName: data.hashName,
                             checked: false,
                         };
                     })
@@ -249,7 +249,7 @@ export default function CreateMemo() {
                             .filter((data) => data.checked === true)
                             .map((data, index) => {
                                 return (
-                                    <PostedHash key={index} name={data.name} />
+                                    <PostedHash key={index} hashName={data.hashName} />
                                 );
                             })}
                     </div>

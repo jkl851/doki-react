@@ -26,7 +26,7 @@ export default function Doki() {
                           division={division}
                            setDivision={setDivision} />
                 </div>
-                <MemoIndex />
+                <MemoIndex division={division}/>
             </MemoContext.Provider>
             <SideChat2 />
         </div>

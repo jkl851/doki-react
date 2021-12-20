@@ -11,11 +11,11 @@ const HashItem = ({
     const checkHandler = () => {
         // allHashDatas의 true false를 설정하는 부분
         const checkedDatas = allHashDatas.map((data) => {
-            no === data.no ? (data.checked = !data.checked) : true;
+            no === data.hashNo ? (data.checked = !data.checked) : true;
             return {
-                no: data.no,
-                name: data.name,
-                checked: data.checked,
+                hashNo: data.hashNo,
+                hashName: data.hashName,
+                checked: data.checked
             };
         });
 
@@ -32,8 +32,8 @@ const HashItem = ({
                     // data.checked => true인 애들만 return
                     if (data.checked) {
                         return {
-                            no: data.no,
-                            name: data.name,
+                            hashNo: data.hashNo,
+                            hashName: data.hashName,
                             checked: data.checked,
                         };
                     }
