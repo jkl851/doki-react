@@ -55,18 +55,6 @@ export default function(memo) {
     // dispatch({type: 'INITIALIZE'})
   };
 
-  // const InputEvent = (event) => {
-  //     const value = event.target.value
-  //     const name = event.target.name
-
-  //     setnote( (prevValue) => {
-  //         return{
-  //             ...prevValue,
-  //             [name]:value
-  //         }
-  //     })
-  // }
-
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
