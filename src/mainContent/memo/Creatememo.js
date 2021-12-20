@@ -138,7 +138,14 @@ export default function CreateMemo() {
     };
 
     const isPinned = () => {
+      if(pinned){
+        InputEvent("pin", "0")
         setPinned(!pinned);
+      } else {
+        InputEvent("pin", "1")
+        setPinned(!pinned);
+      }
+
     };
 
     // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
@@ -167,14 +174,11 @@ export default function CreateMemo() {
 
     return (
         <div>
-            <form
-                className="create-memo-form"
-                onMouseLeave={collapseCreateMemo}
-            >
+            <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                 <BackgroundColor className="input_wrapper" color={cmemo.color}>
                     {/* 제목 */}
                     {expandMemo ? (
-                        pinned ? (
+                       
                             <Fragment>
                                 <input
                                     type="text"
@@ -182,49 +186,24 @@ export default function CreateMemo() {
                                     className="title_input"
                                     value={cmemo.title}
                                     name="title"
-                                    onChange={(e) => {
-                                        InputEvent(
-                                            e.target.name,
-                                            e.target.value
-                                        );
-                                    }}
+                                    onChange={(e) => { InputEvent( e.target.name, e.target.value ); }}
                                 />
+                                { pinned ? (
                                 <PinnedIcon
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="0"
-                                    onClick={(e) => {
-                                        InputEvent("pin", "0");
-                                        isPinned();
-                                    }}
+                                    onClick={(e) => { isPinned() }}
                                 />
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                <input
-                                    type="text"
-                                    placeholder="제목"
-                                    className="title_input"
-                                    value={cmemo.title}
-                                    name="title"
-                                    onChange={(e) => {
-                                        InputEvent(
-                                            e.target.name,
-                                            e.target.value
-                                        );
-                                    }}
-                                />
+                                 ) : (
                                 <PinIcon
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="1"
-                                    onClick={(e) => {
-                                        InputEvent("pin", "1");
-                                        isPinned();
-                                    }}
+                                    onClick={(e) => {  isPinned() }}
                                 />
+                                 )}
                             </Fragment>
-                        )
                     ) : (
                         false
                     )}
@@ -237,9 +216,7 @@ export default function CreateMemo() {
                         className="description_input"
                         value={cmemo.contents}
                         name="contents"
-                        onChange={(e) => {
-                            InputEvent(e.target.name, e.target.value);
-                        }}
+                        onChange={(e) => { InputEvent(e.target.name, e.target.value); }}
                         onMouseEnter={expandCreateMemo}
                     ></textarea>
 

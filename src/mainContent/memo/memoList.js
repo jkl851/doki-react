@@ -39,7 +39,7 @@ const Column = styled.div`
   //   );
   // })}
 const MemoList = ( {memos , cols , title}) => {
-    const memoList = memos.map( (value, index) => <Memo key={index} 
+    const memoList = memos.map( (value, index) => <Memo key={value.no} 
                                                         id={index}
                                                         title={value.title}
                                                         contents={value.contents}
