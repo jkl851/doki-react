@@ -21,12 +21,12 @@ import "../assets/css/offcanvas2.css";
 // let userNo = 1;
 // let userName = '둘리';
 // let deptNo = 2;
-const userNo = props.userNo; //현재 유저번호 1이라 가정
-let deptNo = props.departmentNo; //현재 부서번호 1이라 가정
-var tempMessages = [];
 export default function MessageList(props) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
+  let deptNo = props.departmentNo; //현재 부서번호 1이라 가정
+  const userNo = props.userNo; //현재 유저번호 1이라 가정
+  var tempMessages = [];
 
   useEffect(() => {
     getChatRoom(1);
