@@ -31,10 +31,7 @@ export const memoReducer = (state, action) => {
       return  state.filter((currentValue, indx) =>  indx !== action.id)
 
     case 'MODIFY_MEMO':
-      return [
-        ...state,
-        action.memo,
-      ]
+      return state.concat({ no : action.no, ...action})
 
     case 'CHANGE_COLOR':
       return {
