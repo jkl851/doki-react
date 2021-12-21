@@ -12,6 +12,7 @@ const Transfer = ({ allinfo }) => {
     await axios
       .post("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
+        
         if (Response.data === "no session") {
           setSession(false);
           navigate("/login");

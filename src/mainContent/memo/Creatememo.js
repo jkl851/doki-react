@@ -31,6 +31,7 @@ const BackgroundColor = styled.div`
 const memoInitialState = {
     no: "",
     title: "",
+    image: "",
     contents: "",
     alarm: new Date(),
     checked: '0',
@@ -57,14 +58,18 @@ export default function CreateMemo() {
       reader.onloadend = () => {
         // 2. 읽기가 완료되면 아래코드가 실행됩니다.
         const base64 = reader.result;
+
         if (base64) {
           setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+          alert(base64.toString());
         }
       }
+
       if (event.target.files[0]) {
         reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
         setImgFile(event.target.files[0]); // 파일 상태 업데이트
       }
+
     }
     
     // 전역 컨텍스트
@@ -326,11 +331,12 @@ export default function CreateMemo() {
                         ? 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
+                                
                             </div>
-                        
                         : 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
+                                
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    

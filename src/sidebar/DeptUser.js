@@ -22,7 +22,9 @@ const DeptUser = ({
   //userInfoModal 정보 불러오기
   const refForm = useRef(null);
   const [userInfoModalData, setUserInfoModalData] = useState({ isOpen: false });
+
   const handleImgClick = async (deptUserNo) => {
+  
     console.log(deptUserNo + "번 유저 정보호출!");
     // img는 isSidebar일 때만 onClick시 profile 정보 modal을 띄운다
     // isSidebar && setProfileIsOpen(true);
@@ -31,6 +33,7 @@ const DeptUser = ({
     await axios
       .get(`http://localhost:8080/doki/user/findUser/${deptUserNo}`)
       .then((Response) => {
+
         setUserInfoModalData({
           no: Response.data.list.no,
           id: Response.data.list.id,
