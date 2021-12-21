@@ -14,7 +14,7 @@ import HashTag from "@mui/icons-material/Tag";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PinIcon from "@mui/icons-material/PushPinOutlined";
 import PinnedIcon from "@mui/icons-material/PushPin";
-
+import PostedHash from './Components/PostedHash'
 
 // 컬러 변경 적용
 const BackgroundColor = styled.div`
@@ -23,12 +23,14 @@ const BackgroundColor = styled.div`
     color: ${({ color }) => color};
   }
 `
-
 export default function(memo) {
+  console.log("[각 메모의 정보들]")
+  console.log(memo)
+
   const [ memos, dispatch ] = useContext(MemoContext);
-  var id = memo.id
   var pin = memo.pin
 
+  
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -36,7 +38,9 @@ export default function(memo) {
 
    // 메모삭제
   const deleteMemo = () => {
-    dispatch({ type: 'DEL_MEMO', id, pin});
+    const no = memo.no
+    // api 통신 (visible => "0")
+    dispatch({ type: 'DEL_MEMO', no, pin});
   };
 
   const photoEvent = (event) => {
@@ -54,18 +58,6 @@ export default function(memo) {
     // passMemo.passMemo(memo);
     // dispatch({type: 'INITIALIZE'})
   };
-
-  // const InputEvent = (event) => {
-  //     const value = event.target.value
-  //     const name = event.target.name
-
-  //     setnote( (prevValue) => {
-  //         return{
-  //             ...prevValue,
-  //             [name]:value
-  //         }
-  //     })
-  // }
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
@@ -94,26 +86,29 @@ export default function(memo) {
                     <BackgroundColor className="input_wrapper" color={memo.color}>
                             <Fragment>
                                 <input
+                                    no={memo.no}
                                     type="text"
                                     placeholder="제목"
                                     className="title_input"
                                     value={memo.title}
                                     name="title"
-                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value })  }
                                 />
                                 { pin === '1' ? (
                                 <PinnedIcon
+                                    no={memo.no}
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="0"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0" })  }
                                 />
                                 ) : (
                                   <PinIcon
+                                    no={memo.no}
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="1"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" }) }
                                 />
                                 )}
                             </Fragment>
@@ -124,8 +119,8 @@ export default function(memo) {
                         placeholder=">"
                         className="description_input"
                         value={memo.contents}
-                        name="content"
-                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                        name="contents"
+                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value }) }
                         ></textarea>
             
                     
@@ -177,26 +172,44 @@ export default function(memo) {
                     <h4 className="memo-title" onClick={expandCreateMemo}>{memo.title}</h4>
                     { pin === '1' ? (
                                   <PinnedIcon
+                                      no={memo.no}
                                       className="pin_in_memo"
                                       name="pin"
                                       value="0"
-                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0"  })  }
                                   />
                                   ) : (
                                     <PinIcon
+                                      no={memo.no}
                                       className="pin_in_memo"
                                       name="pin"
                                       value="1"
-                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" })  }
                                   />
                                   )}
                    </div>
                     <div className="memo-area" onClick={expandCreateMemo}>
-                    <span className="memo-description">
-                        {memo.contents}
-                    </span>
+                      <span className="memo-description">
+                          {memo.contents}
+                      </span>
                     </div>
+                    
+                  
+                    {/* 메모에 해시가 추가되는 부분 */}
+                    <div style={{display: "flex"}}>
+                      { memo.hashCount > 0 &&
+                        <div className="memo-hash">
+                          <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                        </div>
+                      }
+                      { memo.hashCount > 1 && 
+                        <div className="memo-hash">
+                        <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
+                      </div>
+                      }
 
+                    </div>
+                    
                     <Button className="delete-button" onClick={deleteMemo}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 

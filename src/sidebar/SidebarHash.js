@@ -6,19 +6,22 @@ import axios from 'axios';
 import {filterFunction, myFunction, myFunction3 } from '../assets/js/dropdown';
 // import $ from 'jquery';
 
-export default function SidebarHash() {
+export default function SidebarHash({division}) {
 
 
     //1번 부서라고 가정
-    let no = 1;
+    let no = division;
     const [hashDropDownDatas, setHashDropDownDatas] = useState([]);
 
     //해쉬 초기값 호출 (해쉬 검색 X)
     useEffect(async() => {
+        console.log(no);
         await axios.get(`http://localhost:8080/doki/hash/getHashList/${no}`)
         .then((Response) => {
+            console.log(Response.data)
             setHashDropDownDatas(
                 Response.data
+                
             );
         })
         .catch((Error) => {console.log(Error)})

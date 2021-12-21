@@ -9,7 +9,7 @@ import axios from "axios";
 // import chatData from '../assets/data/chatMessageData.json';
 
 export default function HeaderDiv({ allinfo }) {
-  console.log(allinfo.no);
+  
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
 
@@ -54,6 +54,8 @@ export default function HeaderDiv({ allinfo }) {
         console.log(Error);
       });
   }, []);
+
+  
 
   return (
     <div id="header_div">

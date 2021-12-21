@@ -29,6 +29,9 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
     const [keyword, setKeyword] = useState("");
     const [canMakeFlag, setCanMakeFlag] = useState(false);
 
+    console.log('[cmemo] =======')
+    console.log(cmemo)
+
     const Ref = useRef();
 
     const handleKeyword = (e) => {

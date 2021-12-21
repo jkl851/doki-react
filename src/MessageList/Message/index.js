@@ -1,19 +1,13 @@
 import React from "react";
-import moment from 'moment';
-import './Message.css';
-import Group from '../../assets/images/user2.png';
+import moment from "moment";
+import "./Message.css";
+import Group from "../../assets/images/user2.png";
 
 export default function Message(props) {
-    const {
-      data,
-      isMine,
-      startsSequence,
-      endsSequence,
-      showTimestamp
-    } = props;
+  const { data, isMine, startsSequence, endsSequence, showTimestamp } = props;
 
     const friendlyTimestamp = moment(data.date).format('LLLL');
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     return (
       <div className={[
         'message',
@@ -35,10 +29,10 @@ export default function Message(props) {
         
 {!isMine && <img src={Group} alt=""/>}
 
-          <div className="bubble" title={friendlyTimestamp}>
-            { data.message }
-          </div>
+        <div className="bubble" title={friendlyTimestamp}>
+          {data.message}
         </div>
       </div>
-    );
+    </div>
+  );
 }

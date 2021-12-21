@@ -10,10 +10,7 @@ import Sales_shadow from "../assets/images/영업부_shadow.png";
 import Human from "../assets/images/인사부.png";
 import Human_shadow from "../assets/images/인사부_shadow.png";
 
-export default function SidebarDivision({ setDivision }) {
-  const [develope, setdevelope] = useState("on");
-  const [sales, setSales] = useState("off");
-  const [human, setHuman] = useState("off");
+export default function SidebarDivision({ division, setDivision, allinfo }) {
 
   return (
     // 여기도 컴포넌트화 필요
@@ -43,80 +40,84 @@ export default function SidebarDivision({ setDivision }) {
       </div>
       <br />
       <div>
-        {develope === "on" ? (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Develope}
-            alt="1"
-            onClick={() => {
-              setDivision(2);
-              setdevelope("off");
-            }}
-          />
-        ) : (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Develope_shadow}
-            alt="1"
-            onClick={() => {
-              setDivision(2);
-              setdevelope("on");
-              setSales("off");
-              setHuman("off");
-            }}
-          />
-        )}
+        {allinfo.departmentNo === 2 ? 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Develope}
+              alt="1"
+              onClick={() => {
+                setDivision(2);
+                
+              }}
+            />
+           : 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Develope_shadow}
+              alt="1"
+            />
+            }
       </div>
       <div>
-        {sales === "on" ? (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Sales}
-            alt="1"
-            onClick={() => {
-              setDivision(3);
-              setSales("off");
-            }}
-          />
-        ) : (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Sales_shadow}
-            alt="1"
-            onClick={() => {
-              setDivision(3);
-              setSales("on");
-              setdevelope("off");
-              setHuman("off");
-            }}
-          />
-        )}
+      {allinfo.departmentNo === 3 ? 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Sales}
+              alt="1"
+              onClick={() => {
+                setDivision(3);
+              }}
+            />
+           : 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Sales_shadow}
+              alt="1"
+            />
+            }
       </div>
       <div>
-        {human === "on" ? (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Human}
-            alt="1"
-            onClick={() => {
-              setDivision(4);
-              setHuman("off");
-            }}
-          />
-        ) : (
-          <img
-            style={{ width: "50px", height: "50px", margin: "3px 5px 3px 5px" }}
-            src={Human_shadow}
-            alt="1"
-            onClick={() => {
-              setDivision(4);
-              setHuman("on");
-              setdevelope("off");
-              setSales("off");
-            }}
-          />
-        )}
-      </div>
+      {allinfo.departmentNo === 4 ? 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Human}
+              alt="1"
+              onClick={() => {
+                setDivision(4);
+              }}
+            />
+           : 
+            <img
+              style={{
+                width: "50px",
+                height: "50px",
+                margin: "3px 5px 3px 5px",
+              }}
+              src={Human_shadow}
+              alt="1"
+            />
+        }
+       </div>
     </div>
   );
 }

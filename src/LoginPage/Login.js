@@ -39,9 +39,10 @@ const Login = ({ setAllinfo }) => {
           `id=${ID}&password=${Password}`
         )
         .then((Response) => {
-          alert(JSON.stringify(Response.data));
-
-          if (Response.data.no !== null) {
+          if (Response.data.no !== null) {  
+            sessionStorage.setItem('User', JSON.stringify(Response.data));
+            alert(sessionStorage.getItem('User'));
+            
             setAllinfo(Response.data);
             navigate("/doki");
           } else {
