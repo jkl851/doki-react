@@ -63,6 +63,9 @@ export default function CreateMemo() {
           setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
           alert(base64.toString());
         }
+        console.log(imgBase64);
+        console.log(base64.toString());
+        
       }
 
       if (event.target.files[0]) {
