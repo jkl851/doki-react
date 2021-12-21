@@ -47,6 +47,8 @@ export default function MemoAlarmModal({ allinfo }) {
       .get(`http://localhost:8080/doki/user/logout`)
       .then((Response) => {
         if (Response.data === "세션 제거") {
+          sessionStorage.removeItem('User');
+          sessionStorage.clear();
           navigate("/login");
         }
       })

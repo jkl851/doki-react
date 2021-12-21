@@ -211,7 +211,6 @@ span.memo-description {
   height: 100%;
   overflow-y: scroll;
   cursor: pointer;
-  border: 1px solid #ff0000;
 }
 
 .memo-area::-webkit-scrollbar {
@@ -229,11 +228,28 @@ span.memo-description {
 }
 
 .memo-hash {
+  display: flex;
   height: 100%;
+  width: fit-content;
+  cursor: pointer;
+  /* border: 2px solid #00ff00; */
+  padding: 0px 10px 0px 10px;
+  line-height: 34px;
+  margin-right: 15px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid #222222;
+}
+
+.expand-memo-hash {
+  height: 100%;
+  display: flex;
   cursor: pointer;
   width: fit-content;
   height: 100%;
-  /* border: 2px solid #00ff00; */
+  border: 2px solid #00ff00;
   padding: 0px 10px 0px 10px;
   line-height: 34px;
   margin-right: 15px;

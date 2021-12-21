@@ -8,18 +8,17 @@ import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 // import chatData from '../assets/data/chatMessageData.json';
 
-export default function HeaderDiv({ allinfo }) {
-  
+export default function HeaderDiv({ allinfo, chat, setChat }) {
+  console.log(allinfo.no);
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
-
-  const [chat, setChat] = useState(false);
 
   const chatControll = () => {
     if (chat === false) {
       openNav2();
       setChat(true);
       console.log(chat);
+
     } else {
       closeNav2();
       setChat(false);
@@ -62,8 +61,8 @@ export default function HeaderDiv({ allinfo }) {
       <div className="topnav" id="myTopnav">
         <img src={logo} style={{ width: "125px", height: "100%" }} />
         <div className="topnav-right" id="icons">
-          <MemoAlarmPopover memoMessages={memoMessages} />
-          <ChatAlarmPopover chatMessages={chatMessages} />
+          <MemoAlarmPopover memoMessages={memoMessages} allinfo={allinfo} />
+          <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} />
           <UpdateUserModal allinfo={allinfo} />
           <a onClick={chatControll} href="#about">
             채팅

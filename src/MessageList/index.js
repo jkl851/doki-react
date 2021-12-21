@@ -15,6 +15,7 @@ import * as StompJs from '@stomp/stompjs';
 
 import "./MessageList.css";
 import "../assets/css/offcanvas2.css";
+import { textAlign } from "@mui/system";
 
 
 //채팅방 유저 임의 지정
@@ -26,12 +27,6 @@ export default function MessageList({allinfo}) {
   const userNo = allinfo.no;
   const userName = allinfo.userName;
   const position = allinfo.position;
-
-  console.log(deptNo, userNo, userName);
-
-  // let deptNo = 2;
-  // const userNo = 1;
-  // const userName = '둘리';
 
   useEffect(() => {
     getChatRoom(1);
@@ -60,7 +55,16 @@ export default function MessageList({allinfo}) {
 
   //전송 데이터
   const getTextValue = (text) => {
-    // publish(text);
+      // const blank_pattern = /[\s]/;
+      // if( blank_pattern.test(text) == true){
+      //     return;
+      // }
+
+
+      if(text === '') {
+        return;
+      }    
+    
     sendMessage(text);
   }
 
@@ -145,6 +149,31 @@ export default function MessageList({allinfo}) {
       } catch (err) {
         console.error(err);
       }
+
+
+      //자신을 제외한 부서에 모든 유저에게 보내는 알람
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:8080/doki/alarm/sendChatAlarm`,
+          params: {
+            deptNo: `${deptNo}`,
+            userNo: `${userNo}`,
+            message: text,
+          }
+        })
+        .then((response) => {
+          return response;
+        })
+        .catch((Error) => {
+          console.log(Error);
+        })
+
+      } catch (err) {
+        console.error(err);
+      }
+
+      
   };
 
   var tempMessages = [];

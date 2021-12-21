@@ -4,6 +4,7 @@ import React, {
     useReducer,
     useEffect,
     Fragment,
+    useRef
 } from "react";
 import { MemoContext, memoReducer } from "./modules/MemoReducer";
 import axios from "axios";
@@ -41,14 +42,41 @@ const memoInitialState = {
 };
 
 export default function CreateMemo() {
+
+    const [imgBase64, setImgBase64] = useState(""); // 파일 base64
+    const [imgFile, setImgFile] = useState(null);	//파일	
+    const [visible, setVisible] = useState(false);
+
+    const visibleHandle = () => {
+        setVisible(true);
+    }
+
+    const handleChangeFile = (event) => {
+      let reader = new FileReader();
+  
+      reader.onloadend = () => {
+        // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+        const base64 = reader.result;
+        if (base64) {
+          setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+        }
+      }
+      if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+        setImgFile(event.target.files[0]); // 파일 상태 업데이트
+      }
+    }
+    
     // 전역 컨텍스트
     const [memos, dispatch] = useContext(MemoContext);
 
     // Create Memo State
     const [cmemo, setCmemo] = useState(memoInitialState);
 
-    // Create Hash State
+     // Create Hash State
     const [allHashDatas, setAllHashDatas] = useState([]);
+
+
 
     // 메모 토글
     const [expandMemo, setExpandMemo] = useState(false);
@@ -57,10 +85,10 @@ export default function CreateMemo() {
     const [expandHashTag, setExpandHashTag] = useState(false);
     const [pinned, setPinned] = useState(false);
 
-    const photoEvent = (event) => {
-        const name = event.target.name;
-        alert(`${name} 메모의 이미지삽입 : 개발중`);
-    };
+    // const photoEvent = (event) => {
+    //     const name = event.target.name;
+    //     alert(`${name} 메모의 이미지삽입 : 개발중`);
+    // };
 
     const hashTagEvent = () => {
         setExpandHashTag(!expandHashTag);
@@ -96,22 +124,18 @@ export default function CreateMemo() {
                 let newObj = null;
                 // 길이가 0이상이면 새로운 객체로 만들어야한다
                 if(cmemo.hash.length > 0) {
-                
                     newObj = Object.assign(cmemo, {
                         'hashNo': cmemo.hash[0].hashNo,
                         'hashName': cmemo.hash[0].hashName,
                         'hashCount': cmemo.hash.length
                     })                    
-                    console.log('hihi')
                 } else {
                     newObj = Object.assign(cmemo, {
                         'hashNo': null,
                         'hashName': null,
                         'hashCount': 0
                     })
-                    console.log('hihi2')
                 }
-                
 
                 console.log('[newObj =========')
                 console.log(newObj)
@@ -136,7 +160,7 @@ export default function CreateMemo() {
                     return {
                       hashNo: data.hashNo,
                       hashName: data.hashName,
-                      checked: false
+                      checkedHash: false
                     }
                   })
                 })
@@ -176,29 +200,90 @@ export default function CreateMemo() {
 
     };
 
-    // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8080/doki/hash/getAllHashList`)
-            .then((Response) => {
-                console.log("===== Get Hash 응답받음! =====");
-                console.log(Response);
-                console.log("=============================");
-                setAllHashDatas(
-                    Response.data.map((data) => {
-                        return {
-                            hashNo: data.hashNo,
-                            hashName: data.hashName,
-                            checked: false,
-                        };
-                    })
-                );
-            })
-            .catch((Error) => {
-                console.log(Error);
-            });
-    }, []);
-    /////////////////////////////////////////////////////////////////////////
+    
+  // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
+  useEffect(() => {
+    axios
+        .get(`http://localhost:8080/doki/hash/getAllHashList`)
+        .then((Response) => {
+            console.log("===== Get Hash 응답받음! =====");
+            console.log(Response);
+            console.log("=============================");
+
+
+            setAllHashDatas(
+                Response.data.map((data) => {
+                    return {
+                        hashNo: data.hashNo,
+                        hashName: data.hashName,
+                        checkedHash: false,
+                    };
+                })
+            );
+        })
+        .catch((Error) => {
+            console.log(Error);
+        });
+  }, []);
+/////////////////////////////////////////////////////////////////////////
+
+
+
+    ////////////////////// 외부 클릭시 토글 닫기 기능 ////////////////////////
+    const alarmOutsideRef = useAlarmOutSideRef(null);
+    function useAlarmOutSideRef() {
+        const alarmRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(alarmRef.current && !alarmRef.current.contains(event.target)) {
+                    setExpandAlarm(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return alarmRef;
+    }
+
+    const paletteOutsideRef = usePaletteOutSideRef(null);
+    function usePaletteOutSideRef() {
+        const palletRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(palletRef.current && !palletRef.current.contains(event.target)) {
+                    setExpandPalette(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return palletRef;
+    }
+
+    const hashOutsideRef = useHashOutSideRef(null);
+    function useHashOutSideRef() {
+        const hashRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(hashRef.current && !hashRef.current.contains(event.target)) {
+                    setExpandHashTag(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return hashRef;
+    }
+    /////////////////////////////////////////////////////////////////
 
     return (
         <div>
@@ -235,8 +320,20 @@ export default function CreateMemo() {
                     ) : (
                         false
                     )}
-
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                     {/* 본문 */}
+                    {visible === true 
+                        ? 
+                            <div style={{textAlign:"center"}}>
+                                <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
+                            </div>
+                        
+                        : 
+                            <div style={{textAlign:"center"}}>
+                                <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
+                            </div>
+                    }
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    
                     <textarea
                         rows="6"
                         column="20"
@@ -251,7 +348,7 @@ export default function CreateMemo() {
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div className="hash_box">
                         {allHashDatas
-                            .filter((data) => data.checked === true)
+                            .filter((data) => data.checkedHash === true)
                             .map((data, index) => {
                                 return (
                                     <PostedHash key={index} hashName={'#'+data.hashName} />
@@ -267,6 +364,7 @@ export default function CreateMemo() {
                             <Button
                                 className="alarmButton"
                                 onClick={expandAlarmTable}
+                                ref={alarmOutsideRef}
                             >
                                 <AlarmAddIcon
                                     className="add-alarm"
@@ -290,6 +388,7 @@ export default function CreateMemo() {
                         <Button
                             className="paletteButton"
                             onClick={expandPaletteTable}
+                            ref={paletteOutsideRef}
                         >
                             <PaletteIcon
                                 className="add-palette"
@@ -307,23 +406,28 @@ export default function CreateMemo() {
                             false
                         )}
 
-                        {/* Photo */}
-                        <Button className="photoButton" onClick={photoEvent}>
-                            <AddPhotoIcon
-                                className="add-photo"
-                                color="action"
-                            />
+
+                        
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+                        <Button className="photoButton" component="label">
+                            
+                            <AddPhotoIcon className="add-photo" color="action"/>
+                            <input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChangeFile} onClick={visibleHandle}/>
+                            
                         </Button>
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
+
 
                         {/* HashTag */}
-                        <Button onClick={hashTagEvent}>
+                        <Button onClick={hashTagEvent}
+                            ref={hashOutsideRef}>
                             <HashTagIcon color="action" />
                         </Button>
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
                             <HashTagBox
                                 shouldCloseOnOverlayClick={true}
                                 onRequestClose={hashTagEvent}
-                                className="memoHashTag"
                                 name="hashtag"
                                 allHashDatas={allHashDatas}
                                 setAllHashDatas={setAllHashDatas}

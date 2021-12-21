@@ -7,6 +7,8 @@ export default function Compose(props) {
 
   const sendTextValue = (e) => {
     if(e.key == 'Enter') { 
+      //유효성 막기
+
       props.getTextValue(e.target.value);
 
       e.target.value = '';

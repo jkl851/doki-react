@@ -5,13 +5,17 @@ import alarmModalStyles from "../assets/css/alarmmodal.module.css";
 import { IoIosText } from "react-icons/io";
 import { Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import "../assets/css/normaltop.css";
+import Badge from '@mui/material/Badge';
+import axios from "axios";
 
-export default function ChatAlarmPopover({ chatMessages }) {
+export default function ChatAlarmPopover({ chatMessages, allinfo }) {
   //챗 알람 Modal
+  const no = JSON.stringify(allinfo.no);
   const target = useRef(null);
   const [chatAlarmPopover, setChatAlarmPopover] = useState({ isOpen: false });
 
   const chatAlarmInfo = (event) => {
+    updateAlarmCheck();
     setChatAlarmPopover({
       isOpen: true,
     });
@@ -28,6 +32,38 @@ export default function ChatAlarmPopover({ chatMessages }) {
     alert(departmentNo + "번 부서로 이동!!");
   };
 
+
+  //알람 빨간불 갯수 표시
+  const [count, setCount] = useState();
+  useEffect(() => {
+    getChatAlarmCount();
+  }, []);
+
+  const getChatAlarmCount = async() => {
+    await axios
+      .get(`http://localhost:8080/doki/alarm/getChatAlarmCount/${no}`)
+      .then((Response) => {
+
+        setCount(Response.data);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }
+
+  //읽음 표시
+  const updateAlarmCheck = async() => {
+    setCount(0);
+    await axios
+      .get(`http://localhost:8080/doki/alarm/updateAlarmCheck/${no}`)
+      .then((Response) => {
+        
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }
+  
 
   //외부클릭 시 화면 닫기
   const outsideRef = useOutSideRef(null);
@@ -56,7 +92,10 @@ export default function ChatAlarmPopover({ chatMessages }) {
         // ref={target} 
         ref={outsideRef} 
         onClick={chatAlarmInfo} href="#about">
-        <IoIosText />
+        <Badge badgeContent={count} color="error" >
+          <IoIosText />
+        </Badge>
+        
       </a>
 
       <Overlay
