@@ -6,8 +6,9 @@ import { IoIosNotifications } from "react-icons/io";
 import { Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import "../assets/css/normaltop.css";
 
-export default function MemoAlarmPopover({ memoMessages }) {
+export default function MemoAlarmPopover({ memoMessages, allinfo }) {
   //메모 알람 Modal
+  const no = JSON.stringify(allinfo.no);
   const target = useRef(null);
   const [memoAlarmPopover, setMemoAlarmPopover] = useState({ isOpen: false });
 

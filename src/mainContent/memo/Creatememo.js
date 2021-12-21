@@ -4,6 +4,7 @@ import React, {
     useReducer,
     useEffect,
     Fragment,
+    useRef
 } from "react";
 import { MemoContext, memoReducer } from "./modules/MemoReducer";
 import axios from "axios";
@@ -221,6 +222,64 @@ export default function CreateMemo() {
     }, []);
     /////////////////////////////////////////////////////////////////////////
 
+
+
+    ////////////////////// 외부 클릭시 토글 닫기 기능 ////////////////////////
+    const alarmOutsideRef = useAlarmOutSideRef(null);
+    function useAlarmOutSideRef() {
+        const alarmRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(alarmRef.current && !alarmRef.current.contains(event.target)) {
+                    setExpandAlarm(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return alarmRef;
+    }
+
+    const paletteOutsideRef = usePaletteOutSideRef(null);
+    function usePaletteOutSideRef() {
+        const palletRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(palletRef.current && !palletRef.current.contains(event.target)) {
+                    setExpandPalette(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return palletRef;
+    }
+
+    const hashOutsideRef = useHashOutSideRef(null);
+    function useHashOutSideRef() {
+        const hashRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(hashRef.current && !hashRef.current.contains(event.target)) {
+                    setExpandHashTag(false);
+                } 
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return hashRef;
+    }
+    /////////////////////////////////////////////////////////////////
+
     return (
         <div>
             <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
@@ -300,6 +359,7 @@ export default function CreateMemo() {
                             <Button
                                 className="alarmButton"
                                 onClick={expandAlarmTable}
+                                ref={alarmOutsideRef}
                             >
                                 <AlarmAddIcon
                                     className="add-alarm"
@@ -323,6 +383,7 @@ export default function CreateMemo() {
                         <Button
                             className="paletteButton"
                             onClick={expandPaletteTable}
+                            ref={paletteOutsideRef}
                         >
                             <PaletteIcon
                                 className="add-palette"
@@ -354,7 +415,8 @@ export default function CreateMemo() {
 
 
                         {/* HashTag */}
-                        <Button onClick={hashTagEvent}>
+                        <Button onClick={hashTagEvent}
+                            ref={hashOutsideRef}>
                             <HashTagIcon color="action" />
                         </Button>
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
