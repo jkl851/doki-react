@@ -199,6 +199,8 @@ export default function(memo) {
                           ) : (
                             false
                           )}
+                        </div>
+                          
           
                           <Button className="paletteButton" onClick={expandPaletteTable}>
                             <PaletteIcon className="add-palette" color="action" />
@@ -237,7 +239,7 @@ export default function(memo) {
                         ) : (
                             false
                         )}
-                      </div>
+                      
                         
                         <Button className="addButton" onClick={addEvent}>
                           <AddIcon className="add-icon" />
