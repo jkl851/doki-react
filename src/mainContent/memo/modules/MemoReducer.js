@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import data from "../../../assets/data/memoMessageData.json";  //  더미 데이터
+import update from 'react-addons-update'
 
 // export const memoList = data;
 export const memoList = [];
@@ -13,7 +13,6 @@ export const memoReducer = (state, action) => {
     //   ]
 
     case 'GET_MEMOLIST':
-
       return action.memoListFromServer
 
     case 'ADD_MEMO':
@@ -28,10 +27,18 @@ export const memoReducer = (state, action) => {
       ]
 
     case 'DEL_MEMO':
-      return  state.filter((currentValue, indx) =>  indx !== action.id)
+      return  state.filter((currentValue, indx) =>  currentValue.no !== action.no)
 
     case 'MODIFY_MEMO':
-      return state.concat({ no : action.no, ...action})
+      var newList = [];
+      state.map( (value, index) =>  {
+        if (value.no === action.no) { 
+        newList.push({...value, [action.name] : action.value}) 
+        } else {
+        newList.push(value) }
+      }) 
+      state = newList;
+      return state
 
     case 'CHANGE_COLOR':
       return {

@@ -23,10 +23,22 @@ const BackgroundColor = styled.div`
     color: ${({ color }) => color};
   }
 `
-
+// memo 프로퍼티 값들
+// no={value.no} 
+// id={index}
+// title={value.title}
+// contents={value.contents}
+// color={value.color}
+// pin={value.pin} 
+// regDate={value.regDate}
+// visible={value.visible}
+// userNo={value.userNo}
+// departmentNo={value.departmentNo}
+// hashNo={value.hashNo}
+// hashName={value.hashName}
+// hashCount={value.hashCount}
 export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
-  var id = memo.id
   var pin = memo.pin
 
   // 메모 토글 
@@ -36,7 +48,9 @@ export default function(memo) {
 
    // 메모삭제
   const deleteMemo = () => {
-    dispatch({ type: 'DEL_MEMO', id, pin});
+    const no = memo.no
+    // api 통신 (visible => "0")
+    dispatch({ type: 'DEL_MEMO', no, pin});
   };
 
   const photoEvent = (event) => {
@@ -82,26 +96,29 @@ export default function(memo) {
                     <BackgroundColor className="input_wrapper" color={memo.color}>
                             <Fragment>
                                 <input
+                                    no={memo.no}
                                     type="text"
                                     placeholder="제목"
                                     className="title_input"
                                     value={memo.title}
                                     name="title"
-                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value })  }
                                 />
                                 { pin === '1' ? (
                                 <PinnedIcon
+                                    no={memo.no}
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="0"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0" })  }
                                 />
                                 ) : (
                                   <PinIcon
+                                    no={memo.no}
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="1"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" }) }
                                 />
                                 )}
                             </Fragment>
@@ -112,8 +129,8 @@ export default function(memo) {
                         placeholder=">"
                         className="description_input"
                         value={memo.contents}
-                        name="content"
-                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                        name="contents"
+                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value }) }
                         ></textarea>
             
                     
@@ -165,17 +182,19 @@ export default function(memo) {
                     <h4 className="memo-title" onClick={expandCreateMemo}>{memo.title}</h4>
                     { pin === '1' ? (
                                   <PinnedIcon
+                                      no={memo.no}
                                       className="pin_in_memo"
                                       name="pin"
                                       value="0"
-                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0"  })  }
                                   />
                                   ) : (
                                     <PinIcon
+                                      no={memo.no}
                                       className="pin_in_memo"
                                       name="pin"
                                       value="1"
-                                      onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" })  }
                                   />
                                   )}
                    </div>

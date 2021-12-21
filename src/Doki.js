@@ -11,7 +11,7 @@ import SideChat2 from "./sidechat/SideChat2";
 import "../src/assets/css/Doki.css";
 
 import MemoIndex from "./mainContent/memo/Index";
-import axios from "axios";
+
 
 export default function Doki({ allinfo }) {
   // [soo] division은 부서 번호이다

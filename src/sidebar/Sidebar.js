@@ -4,7 +4,7 @@ import SidebarMenu from "./SidebarMenu";
 import "../assets/css/sidebar.css";
 
 export default function Sidebar({ division, setDivision, allinfo }) {
-  console.log("division => " + division);
+  //console.log("division => " + division);
 
   return (
     <div className="sidebar" style={{ backgroundColor: "#f2f3f5" }}>
