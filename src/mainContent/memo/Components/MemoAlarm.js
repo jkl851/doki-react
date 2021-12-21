@@ -23,26 +23,29 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                 />
                 </LocalizationProvider>
                
-                 { memo.checked === '0' ? 
+                 { memo.checked == '0' ? 
                  (
                     <Fragment>
-                    <Checkbox   value={memo.checked}
-                                onChange={  isPosted === true ? 
+                    <Checkbox   checked={false}
+                                inputProps={{'checked' : '1'}} 
+                                onChange={isPosted === true ? 
                                     (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '1' })
                                     :
-                                    (e)=>{ InputEvent('checked', '1') } 
-                                } />
+                                    (e)=>{ InputEvent('checked', '1')} }
+                                
+                                />
                                 <span>알람 설정</span>
                     </Fragment>
                 ) : (
                     <Fragment>
-                    <Checkbox   checked
-                                value={memo.checked}
-                                onChange={  isPosted === true ? 
+                    <Checkbox   checked={true}
+                                inputProps={{'checked' : '0'}}
+                                onChange={isPosted === true ? 
                                     (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '0' })
                                     :
-                                    (e)=>{ InputEvent('checked', '0') } 
-                                } />
+                                    (e)=>{ InputEvent('checked', '0')} }
+                                
+                                 />
                                 <span>알람 설정</span>    
                     </Fragment> 
                     )
