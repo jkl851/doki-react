@@ -19,7 +19,7 @@ import PostedHash from './Components/PostedHash'
 // 컬러 변경 적용
 const BackgroundColor = styled.div`
   background: ${({ color }) => color};
-  Button {
+  .delete-button {
     color: ${({ color }) => color};
   }
 `
@@ -131,7 +131,7 @@ export default function(memo) {
                             </Button>
                             {expandAlarm ? (
                               <div className="alarm-div-dropdown">
-                                <MemoAlarm className="memoAlarm" />
+                                <MemoAlarm isPosted={true} className="memoAlarm" memo={memo}/>
                               </div>
                             ) : (
                               false
@@ -143,8 +143,11 @@ export default function(memo) {
                           </Button>
                           {expandPalette ? (
                             <Palette
+                              memo={memo}
+                              isPosted={true}
                               className="memoPalette"
                               name="color"
+                              isPosted={true}
                             />
                           ) : (
                             false

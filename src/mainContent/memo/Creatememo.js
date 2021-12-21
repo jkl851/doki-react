@@ -31,7 +31,9 @@ const memoInitialState = {
     no: "",
     title: "",
     contents: "",
-    time: new Date(),
+    alarm: new Date(),
+    checked: '0',
+    alarmset: "0",
     color: "#FFFFFF",
     hash: [],
     pin: "0",
@@ -120,7 +122,9 @@ export default function CreateMemo() {
                     no: "",
                     title: "",
                     contents: "",
-                    time: new Date(),
+                    alarm: new Date(),
+                    checked: '0',
+                    alarmset: "0",
                     color: "#FFFFFF",
                     hash: [],
                     pin: "0",
@@ -273,7 +277,7 @@ export default function CreateMemo() {
                                 <div className="alarm-div-dropdown">
                                     <MemoAlarm
                                         className="memoAlarm"
-                                        cmemo={cmemo}
+                                        memo={cmemo}
                                         InputEvent={InputEvent}
                                     />
                                 </div>
@@ -296,7 +300,7 @@ export default function CreateMemo() {
                             <Palette
                                 className="memoPalette"
                                 name="color"
-                                cmemo={cmemo}
+                                memo={cmemo}
                                 InputEvent={InputEvent}
                             />
                         ) : (
