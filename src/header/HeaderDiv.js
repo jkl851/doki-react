@@ -18,6 +18,7 @@ export default function HeaderDiv({ allinfo, chat, setChat }) {
       openNav2();
       setChat(true);
       console.log(chat);
+
     } else {
       closeNav2();
       setChat(false);
@@ -60,8 +61,8 @@ export default function HeaderDiv({ allinfo, chat, setChat }) {
       <div className="topnav" id="myTopnav">
         <img src={logo} style={{ width: "125px", height: "100%" }} />
         <div className="topnav-right" id="icons">
-          <MemoAlarmPopover memoMessages={memoMessages} />
-          <ChatAlarmPopover chatMessages={chatMessages} />
+          <MemoAlarmPopover memoMessages={memoMessages} allinfo={allinfo} />
+          <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} />
           <UpdateUserModal allinfo={allinfo} />
           <a onClick={chatControll} href="#about">
             채팅
