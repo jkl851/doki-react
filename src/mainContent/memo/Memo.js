@@ -1,8 +1,10 @@
 import React, { useState, useContext, Fragment } from "react";
 import { MemoContext } from "./modules/MemoReducer"
+import axios from 'axios'
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
+import HashTagBox from "./Components/HashTagBox";
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
@@ -25,8 +27,6 @@ const BackgroundColor = styled.div`
 `
 
 export default function(memo) {
-  console.log("[각 메모의 정보들]")
-  console.log(memo)
 
   const [ memos, dispatch ] = useContext(MemoContext);
   var id = memo.id
@@ -37,6 +37,11 @@ export default function(memo) {
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
   const [expandPalette, setExpandPalette] = useState(false);
+  const [expandHashTag, setExpandHashTag] = useState(false);
+
+  // 해당 메모의 해시 리스트
+  const [memoHashList, setMemoHashList] = useState([]);
+  const [allHashList, setAllHashList]  = useState([]);
 
    // 메모삭제
   const deleteMemo = () => {
@@ -48,11 +53,6 @@ export default function(memo) {
       alert(`${name} 메모의 이미지삽입 : 개발중`);
   };
   
-  const hashTagEvent = (event) => {
-      const name = event.target.name;
-      alert(`${name} 메모의 해쉬태그달기 : 개발중`);
-  };
-
  //메모 수정 확인
   const addEvent = () => {
     // passMemo.passMemo(memo);
@@ -62,6 +62,9 @@ export default function(memo) {
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
+
+      // 확장 되었을 때 해당 메모의 해시 리스트를 가져온다
+      getHashListByMemo();
   };
   
   const collapseCreateMemo = () => {
@@ -76,39 +79,78 @@ export default function(memo) {
       setExpandPalette(!expandPalette);
   };
 
+  const hashTagEvent = () => {
+    expandHashTag === false ? getAllHashList() : true
+
+    setExpandHashTag(!expandHashTag);
+
+    
+  }
+
+
+  const getHashListByMemo = () => {
+    console.log('=====[확장된 memo 정보]=====');
+    console.log(memo);
+
+    axios
+      .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no)
+      .then((Response) => {
+        console.log("[GET Hash List By Memo 요청 성공!]");
+        setMemoHashList(Response.data);
+        
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }
+
+  const getAllHashList = () => {
+    axios
+      .get('http://localhost:8080/doki/hash/getAllHashList')
+      .then((Response) => {
+        console.log("[GET All Hash List in Memo.js 요청 성공!]");
+        console.log(Response);
+        setAllHashList(Response.data)
+        
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }
 
   return(
   
       <Fragment>
-              { expandMemo ? (
+              {/* expandMemo */}
+              { expandMemo ? ( 
                   <div>
                   <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                     <BackgroundColor className="input_wrapper" color={memo.color}>
-                            <Fragment>
-                                <input
-                                    type="text"
-                                    placeholder="제목"
-                                    className="title_input"
-                                    value={memo.title}
-                                    name="title"
-                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
-                                />
-                                { pin === '1' ? (
-                                <PinnedIcon
-                                    className="pin_in_cmemo"
-                                    name="pin"
-                                    value="0"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
-                                />
-                                ) : (
-                                  <PinIcon
-                                    className="pin_in_cmemo"
-                                    name="pin"
-                                    value="1"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
-                                />
-                                )}
-                            </Fragment>
+                      <Fragment>
+                          <input
+                              type="text"
+                              placeholder="제목"
+                              className="title_input"
+                              value={memo.title}
+                              name="title"
+                              onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                          />
+                          { pin === '1' ? (
+                          <PinnedIcon
+                              className="pin_in_cmemo"
+                              name="pin"
+                              value="0"
+                              onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value })  }
+                          />
+                          ) : (
+                            <PinIcon
+                              className="pin_in_cmemo"
+                              name="pin"
+                              value="1"
+                              onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
+                          />
+                          )}
+                      </Fragment>
                         
                       <textarea
                         rows="6"
@@ -120,45 +162,71 @@ export default function(memo) {
                         onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', name : e.target.name, value : e.target.value }) }
                         ></textarea>
             
-                    
-                        <div className="buttons-div" style={{ textAlign: "center" }}>
-                          <div className="alarm-div">
-                            <Button className="alarmButton" onClick={expandAlarmTable}>
-                              <AlarmAddIcon className="add-alarm" color="action" />
-                            </Button>
-                            {expandAlarm ? (
-                              <div className="alarm-div-dropdown">
-                                <MemoAlarm className="memoAlarm" />
-                              </div>
-                            ) : (
-                              false
-                            )}
-                          </div>
-            
-                          <Button className="paletteButton" onClick={expandPaletteTable}>
-                            <PaletteIcon className="add-palette" color="action" />
+                      {/* 확장된 메모에 해시가 추가되는 부분 */}
+                      <div style={{display: 'flex'}}>
+                        {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
+                        {
+                          memoHashList.map(item => {
+                            return (<div className="memo-hash">
+                              <PostedHash key={item.hashNo} hashName={'#'+item.hashName}/> 
+                            </div>)
+                         })
+                        }
+                      </div>
+
+
+                      <div className="buttons-div" style={{ textAlign: "center" }}>
+                        <div className="alarm-div">
+                          <Button className="alarmButton" onClick={expandAlarmTable}>
+                            <AlarmAddIcon className="add-alarm" color="action" />
                           </Button>
-                          {expandPalette ? (
-                            <Palette
-                              className="memoPalette"
-                              name="color"
-                            />
+                          {expandAlarm ? (
+                            <div className="alarm-div-dropdown">
+                              <MemoAlarm className="memoAlarm" />
+                            </div>
                           ) : (
                             false
                           )}
-            
-                          <Button className="photoButton" onClick={photoEvent}>
-                            <AddPhotoIcon className="add-photo" color="action" />
-                          </Button>
-            
-                          <Button onClick={hashTagEvent}>
-                            <HashTag color="action" />
-                          </Button>
-            
-                          <Button className="addButton" onClick={addEvent}>
-                            <AddIcon className="add-icon" />
-                          </Button>
-                        </div>
+          
+                        <Button className="paletteButton" onClick={expandPaletteTable}>
+                          <PaletteIcon className="add-palette" color="action" />
+                        </Button>
+                        {expandPalette ? (
+                          <Palette
+                            className="memoPalette"
+                            name="color"
+                          />
+                        ) : (
+                          false
+                        )}
+
+
+          
+                        <Button className="photoButton" onClick={photoEvent}>
+                          <AddPhotoIcon className="add-photo" color="action" />
+                        </Button>
+          
+                        <Button onClick={hashTagEvent}>
+                          <HashTag color="action" />
+                        </Button>
+
+                        {expandHashTag ? ( //false로 바꿔둠 (가리기용)
+                            <HashTagBox
+                                shouldCloseOnOverlayClick={true}
+                                onRequestClose={hashTagEvent}
+                                name="hashtag"
+                                allHashDatas={allHashList}
+                                setAllHashDatas={setAllHashList}
+                            />
+                        ) : (
+                            false
+                        )}
+                      </div>
+                        
+                        <Button className="addButton" onClick={addEvent}>
+                          <AddIcon className="add-icon" />
+                        </Button>
+                      </div>
                     </BackgroundColor>
                   </form>
                 </div>
@@ -192,11 +260,13 @@ export default function(memo) {
                   
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div style={{display: "flex"}}>
+                      {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                       { memo.hashCount > 0 &&
                         <div className="memo-hash">
                           <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
                         </div>
                       }
+                      {/* 해시가 하나 이상이면서 첫 해시를 제외한 나머지 해시 개수 표시*/}
                       { memo.hashCount > 1 && 
                         <div className="memo-hash">
                         <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 

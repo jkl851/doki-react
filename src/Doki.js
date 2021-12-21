@@ -17,6 +17,8 @@ export default function Doki({ allinfo }) {
   // [soo] division은 부서 번호이다
   const [division, setDivision] = useState(1);
 
+
+
   return (
     <div id="whole_wrapper">
       <HeaderDiv division={division} allinfo={allinfo} />
