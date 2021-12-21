@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const HashItem = ({
     no,
     name,
-    checked,
+    checkedHash,
     allHashDatas,
     setAllHashDatas,
     InputEvent,
@@ -11,11 +11,11 @@ const HashItem = ({
     const checkHandler = () => {
         // allHashDatas의 true false를 설정하는 부분
         const checkedDatas = allHashDatas.map((data) => {
-            no === data.hashNo ? (data.checked = !data.checked) : true;
+            no === data.hashNo ? (data.checkedHash = !data.checkedHash) : true;
             return {
                 hashNo: data.hashNo,
                 hashName: data.hashName,
-                checked: data.checked
+                checkedHash: data.checkedHash
             };
         });
 
@@ -30,11 +30,11 @@ const HashItem = ({
             checkedDatas
                 .map((data) => {
                     // data.checked => true인 애들만 return
-                    if (data.checked) {
+                    if (data.checkedHash) {
                         return {
                             hashNo: data.hashNo,
                             hashName: data.hashName,
-                            checked: data.checked,
+                            checkedHash: data.checkedHash,
                         };
                     }
                     
@@ -65,7 +65,7 @@ const HashItem = ({
             <input
                 onChange={checkHandler}
                 id={no}
-                checked={checked}
+                checked={checkedHash}
                 style={{
                     marginLeft: "5px",
                     float: "left",

@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useContext } from "react";
+import { MemoContext} from "../modules/MemoReducer";
 import Color from "./Color";
 import styled from "styled-components";
 
@@ -43,22 +44,39 @@ const colors = [
     { color: "#e8eaed", tooltip: "회색" },
 ];
 
-export default function ColorPalette({ cmemo, InputEvent }) {
+export default function ColorPalette({ memo, InputEvent, isPosted }) {
+    const [ memos, dispatch ] = useContext(MemoContext);
     return (
         <Wrapper>
-            <Palette>
-                {colors.map((color, idx) => (
-                    <Color
-                        key={idx}
-                        name="color"
-                        value={color.color}
-                        onClick={InputEvent}
-                        border={color.border ? color.border : color.color}
-                        selectedColor={cmemo.color}
-                        tooltip={color.tooltip}
-                    />
-                ))}
-            </Palette>
+             { isPosted === true ? 
+                <Palette>
+                    {colors.map((color, idx) => (
+                        <Color
+                            key={idx}
+                            name="color"
+                            value={color.color}
+                            onClick={ (name, value) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : name, value : value }) }
+                            border={color.border ? color.border : color.color}
+                            selectedColor={memo.color}
+                            tooltip={color.tooltip}
+                        />
+                    ))}
+                </Palette>
+                    :
+                <Palette>
+                    {colors.map((color, idx) => (
+                        <Color
+                            key={idx}
+                            name="color"
+                            value={color.color}
+                            onClick={InputEvent}
+                            border={color.border ? color.border : color.color}
+                            selectedColor={memo.color}
+                            tooltip={color.tooltip}
+                        />
+                    ))}
+                </Palette>
+            }
         </Wrapper>
     );
 }

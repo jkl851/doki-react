@@ -29,9 +29,6 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
     const [keyword, setKeyword] = useState("");
     const [canMakeFlag, setCanMakeFlag] = useState(false);
 
-    console.log('[cmemo] =======')
-    console.log(cmemo)
-
     const Ref = useRef();
 
     const handleKeyword = (e) => {
@@ -63,7 +60,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                         return {
                             hashNo: data.hashNo,
                             hashName: data.hashName,
-                            checked: false,
+                            checkedHash: false,
                         };
                     })
                 );
@@ -136,7 +133,9 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
 
                     }}
                 >
-                    {allHashDatas
+                    {
+                    
+                        allHashDatas
                         .filter((data) => {
                             return data.hashName.indexOf(keyword) !== -1;
                         })
@@ -147,7 +146,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                                     key={index}
                                     no={data.hashNo}
                                     name={data.hashName}
-                                    checked={data.checked}
+                                    checkedHash={data.checkedHash}
                                     allHashDatas={allHashDatas}
                                     setAllHashDatas={setAllHashDatas}
                                     InputEvent={InputEvent}

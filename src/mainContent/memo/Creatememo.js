@@ -33,7 +33,9 @@ const memoInitialState = {
     title: "",
     image: "",
     contents: "",
-    time: new Date(),
+    alarm: new Date(),
+    checked: '0',
+    alarmset: "0",
     color: "#FFFFFF",
     hash: [],
     pin: "0",
@@ -76,8 +78,10 @@ export default function CreateMemo() {
     // Create Memo State
     const [cmemo, setCmemo] = useState(memoInitialState);
 
-    // Create Hash State
+     // Create Hash State
     const [allHashDatas, setAllHashDatas] = useState([]);
+
+
 
     // 메모 토글
     const [expandMemo, setExpandMemo] = useState(false);
@@ -125,22 +129,18 @@ export default function CreateMemo() {
                 let newObj = null;
                 // 길이가 0이상이면 새로운 객체로 만들어야한다
                 if(cmemo.hash.length > 0) {
-                
                     newObj = Object.assign(cmemo, {
                         'hashNo': cmemo.hash[0].hashNo,
                         'hashName': cmemo.hash[0].hashName,
                         'hashCount': cmemo.hash.length
                     })                    
-                    console.log('hihi')
                 } else {
                     newObj = Object.assign(cmemo, {
                         'hashNo': null,
                         'hashName': null,
                         'hashCount': 0
                     })
-                    console.log('hihi2')
                 }
-                
 
                 console.log('[newObj =========')
                 console.log(newObj)
@@ -151,7 +151,9 @@ export default function CreateMemo() {
                     no: "",
                     title: "",
                     contents: "",
-                    time: new Date(),
+                    alarm: new Date(),
+                    checked: '0',
+                    alarmset: "0",
                     color: "#FFFFFF",
                     hash: [],
                     pin: "0",
@@ -163,7 +165,7 @@ export default function CreateMemo() {
                     return {
                       hashNo: data.hashNo,
                       hashName: data.hashName,
-                      checked: false
+                      checkedHash: false
                     }
                   })
                 })
@@ -203,29 +205,32 @@ export default function CreateMemo() {
 
     };
 
-    // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8080/doki/hash/getAllHashList`)
-            .then((Response) => {
-                console.log("===== Get Hash 응답받음! =====");
-                console.log(Response);
-                console.log("=============================");
-                setAllHashDatas(
-                    Response.data.map((data) => {
-                        return {
-                            hashNo: data.hashNo,
-                            hashName: data.hashName,
-                            checked: false,
-                        };
-                    })
-                );
-            })
-            .catch((Error) => {
-                console.log(Error);
-            });
-    }, []);
-    /////////////////////////////////////////////////////////////////////////
+    
+  // [soo] 임시로 전체 해시값 가져옴 => 나중에 allHashDatas를 전역 context로 옮겨야함
+  useEffect(() => {
+    axios
+        .get(`http://localhost:8080/doki/hash/getAllHashList`)
+        .then((Response) => {
+            console.log("===== Get Hash 응답받음! =====");
+            console.log(Response);
+            console.log("=============================");
+
+
+            setAllHashDatas(
+                Response.data.map((data) => {
+                    return {
+                        hashNo: data.hashNo,
+                        hashName: data.hashName,
+                        checkedHash: false,
+                    };
+                })
+            );
+        })
+        .catch((Error) => {
+            console.log(Error);
+        });
+  }, []);
+/////////////////////////////////////////////////////////////////////////
 
 
 
@@ -349,7 +354,7 @@ export default function CreateMemo() {
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div className="hash_box">
                         {allHashDatas
-                            .filter((data) => data.checked === true)
+                            .filter((data) => data.checkedHash === true)
                             .map((data, index) => {
                                 return (
                                     <PostedHash key={index} hashName={'#'+data.hashName} />
@@ -376,7 +381,7 @@ export default function CreateMemo() {
                                 <div className="alarm-div-dropdown">
                                     <MemoAlarm
                                         className="memoAlarm"
-                                        cmemo={cmemo}
+                                        memo={cmemo}
                                         InputEvent={InputEvent}
                                     />
                                 </div>
@@ -400,7 +405,7 @@ export default function CreateMemo() {
                             <Palette
                                 className="memoPalette"
                                 name="color"
-                                cmemo={cmemo}
+                                memo={cmemo}
                                 InputEvent={InputEvent}
                             />
                         ) : (
@@ -429,7 +434,6 @@ export default function CreateMemo() {
                             <HashTagBox
                                 shouldCloseOnOverlayClick={true}
                                 onRequestClose={hashTagEvent}
-                                className="memoHashTag"
                                 name="hashtag"
                                 allHashDatas={allHashDatas}
                                 setAllHashDatas={setAllHashDatas}
