@@ -156,7 +156,7 @@ export default function CreateMemo() {
                     return {
                       hashNo: data.hashNo,
                       hashName: data.hashName,
-                      checked: false
+                      checkedHash: false
                     }
                   })
                 })
@@ -212,7 +212,7 @@ export default function CreateMemo() {
                     return {
                         hashNo: data.hashNo,
                         hashName: data.hashName,
-                        checked: false,
+                        checkedHash: false,
                     };
                 })
             );
@@ -344,7 +344,7 @@ export default function CreateMemo() {
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div className="hash_box">
                         {allHashDatas
-                            .filter((data) => data.checked === true)
+                            .filter((data) => data.checkedHash === true)
                             .map((data, index) => {
                                 return (
                                     <PostedHash key={index} hashName={'#'+data.hashName} />

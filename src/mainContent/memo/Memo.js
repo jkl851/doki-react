@@ -63,6 +63,9 @@ export default function(memo) {
   const expandCreateMemo = () => {
       setExpandMemo(true);
 
+      // 전체 리스트도 가져온다
+      getAllHashList() 
+
       // 확장 되었을 때 해당 메모의 해시 리스트를 가져온다
       getHashListByMemo();
   };
@@ -80,11 +83,7 @@ export default function(memo) {
   };
 
   const hashTagEvent = () => {
-    expandHashTag === false ? getAllHashList() : true
-
     setExpandHashTag(!expandHashTag);
-
-    
   }
 
 
@@ -110,7 +109,16 @@ export default function(memo) {
       .then((Response) => {
         console.log("[GET All Hash List in Memo.js 요청 성공!]");
         console.log(Response);
-        setAllHashList(Response.data)
+        setAllHashList(
+          Response.data.map((data) => {
+            return  {
+                hashNo: data.hashNo,
+                hashName: data.hashName,
+                checkedHash: false,
+            }
+          })
+
+        )
         
       })
       .catch((Error) => {
@@ -169,11 +177,12 @@ export default function(memo) {
                       <div style={{display: 'flex'}}>
                         {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                         {
+                          memo.hashCount > 0 ?
                           memoHashList.map(item => {
                             return (<div className="memo-hash">
                               <PostedHash key={item.hashNo} hashName={'#'+item.hashName}/> 
                             </div>)
-                         })
+                         }) : true
                         }
                       </div>
 
@@ -213,6 +222,7 @@ export default function(memo) {
                           <HashTag color="action" />
                         </Button>
 
+                        
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
                             <HashTagBox
                                 shouldCloseOnOverlayClick={true}

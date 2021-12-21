@@ -60,7 +60,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                         return {
                             hashNo: data.hashNo,
                             hashName: data.hashName,
-                            checked: false,
+                            checkedHash: false,
                         };
                     })
                 );
@@ -144,7 +144,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                                     key={index}
                                     no={data.hashNo}
                                     name={data.hashName}
-                                    checked={data.checked}
+                                    checkedHash={data.checkedHash}
                                     allHashDatas={allHashDatas}
                                     setAllHashDatas={setAllHashDatas}
                                     InputEvent={InputEvent}
