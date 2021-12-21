@@ -26,6 +26,8 @@ const Transfer = ({ allinfo }) => {
   }, []);
 
   if (session == true) {
+    console.log('======= all info ======')
+    console.log(allinfo)
     return (
       <Fragment>
         <Doki allinfo={allinfo} />

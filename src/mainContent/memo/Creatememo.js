@@ -106,6 +106,8 @@ export default function CreateMemo() {
             return memos;
         }
 
+        console.log('[cmemo]=================')
+        console.log(cmemo)
         // addMemo를 한 후 Response가 ok(200)일 때 front에도 뿌려주고 초기화를 한다
         axios
             .post("http://localhost:8080/doki/memo/addMemo", cmemo)
@@ -114,7 +116,29 @@ export default function CreateMemo() {
                 console.log(Response);
                 console.log("=============================");
 
-                dispatch({ type: "ADD_MEMO", memo: cmemo });
+                let newObj = null;
+                // 길이가 0이상이면 새로운 객체로 만들어야한다
+                if(cmemo.hash.length > 0) {
+                
+                    newObj = Object.assign(cmemo, {
+                        'hashNo': cmemo.hash[0].hashNo,
+                        'hashName': cmemo.hash[0].hashName,
+                        'hashCount': cmemo.hash.length
+                    })                    
+                    console.log('hihi')
+                } else {
+                    newObj = Object.assign(cmemo, {
+                        'hashNo': null,
+                        'hashName': null,
+                        'hashCount': 0
+                    })
+                    console.log('hihi2')
+                }
+                
+
+                console.log('[newObj =========')
+                console.log(newObj)
+                dispatch({ type: "ADD_MEMO", memo: newObj });
 
                 // 초기화
                 setCmemo({
@@ -263,7 +287,7 @@ export default function CreateMemo() {
                             .filter((data) => data.checked === true)
                             .map((data, index) => {
                                 return (
-                                    <PostedHash key={index} hashName={data.hashName} />
+                                    <PostedHash key={index} hashName={'#'+data.hashName} />
                                 );
                             })}
                     </div>

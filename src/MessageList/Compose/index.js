@@ -1,12 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./Compose.css";
 import ToolbarButton from '../ToolbarButton';
 import 'react-ionicons';
 
-
 export default function Compose(props) {
-
 
   const sendTextValue = (e) => {
     if(e.key == 'Enter') { 
