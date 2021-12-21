@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { MemoContext } from "../modules/MemoReducer";
 
 const HashItemInPostedMemo = ({
     no,
@@ -6,7 +7,11 @@ const HashItemInPostedMemo = ({
     checkedHash,
     allHashList,
     setAllHashList,
+    memo
 }) => {
+
+    const [memos, dispatch] = useContext(MemoContext);
+
     const checkHandler = () => {
         // allHashDatas의 true false를 설정하는 부분
         const checkedDatas = allHashList.map((data) => {
@@ -19,7 +24,6 @@ const HashItemInPostedMemo = ({
         });
 
         setAllHashList(checkedDatas);
-
 
         // 위의 checkedDatas의 checked가 true인 객체만 따로 배열로 만들어서 메모 추가 버튼 Event에 세팅한다
         const postedHashDatas = Object.assign(
@@ -43,6 +47,8 @@ const HashItemInPostedMemo = ({
         console.log("==== checked datas ====");
         console.log(postedHashDatas);
         console.log("===================");
+
+
     };
     return (
         <div

@@ -38,7 +38,6 @@ export default function(memo) {
   const [expandHashTag, setExpandHashTag] = useState(false);
 
   // 해당 메모의 해시 리스트
-  const [memoHashList, setMemoHashList] = useState([]);
   const [allHashList, setAllHashList]  = useState([]);
   
 
@@ -56,14 +55,11 @@ export default function(memo) {
   
  //메모 수정 확인
   const addEvent = () => {
-
+      
   };
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
-      // 전체 리스트도 가져온다
-      getAllHashList() 
-
       setExpandMemo(true);
   };
   
@@ -84,27 +80,22 @@ export default function(memo) {
   }
 
 
-  useEffect(() => {
+  useEffect(async() => {
     console.log('=====[확장된 memo 정보]=====');
     console.log(memo);
 
     axios
       .all([
           // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
-          axios
+          await axios
             .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no), 
           // 회사 전체 직원의 리스트 검색
-          axios
+          await axios
           .get('http://localhost:8080/doki/hash/getAllHashList') 
       ])
       .then(
           axios.spread((res1, res2) => {
-            console.log("[GET Hash List By Memo 요청 성공!]");
-            console.log(res1.data)
-
-            console.log("[GET All Hash List in Memo.js 요청 성공!]");
-            console.log(res2.data)
-
+            
             const newArr = res2.data.map(data => {
               if(res1.data.length > 0 ){
                 for(let j=0; j<res1.data.length; j++){
@@ -136,8 +127,6 @@ export default function(memo) {
             setAllHashList(
               newArr
             )
-
-
           })
       )
       .catch((Error) => {
@@ -146,10 +135,6 @@ export default function(memo) {
 
     
   }, [])
-
-  const getAllHashList = () => {
-    
-  }
 
   return(
   
@@ -199,15 +184,14 @@ export default function(memo) {
                         ></textarea>
             
                       {/* 확장된 메모에 해시가 추가되는 부분 */}
-                      <div style={{display: 'flex'}}>
+                      <div className="expand-memo-hash">
+
                         {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                         {
                           allHashList.map(data => {
                             return data.checkedHash === true ?  
-                            (<div className="memo-hash">
                               <PostedHash key={data.hashNo} hashName={'#'+data.hashName}/> 
-                            </div>) 
-                            : true
+                            : null
                           })
                         }
                          
@@ -262,6 +246,7 @@ export default function(memo) {
                                 name="hashtag"
                                 allHashList={allHashList}
                                 setAllHashList={setAllHashList}
+                                memo={memo}
                             />
                         ) : (
                             false
@@ -310,16 +295,20 @@ export default function(memo) {
                     <div style={{display: "flex"}}>
                       {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                       {
-                        console.log(allHashList),
-                        allHashList.map(data => {
-                          data.checkedHash === true ?
-                          <div className="memo-hash">
-                            <PostedHash key={data.hashNo} hashName={'#'+data.hashName}/> 
-                          </div>
-                          : true
-                        })
+                        memo.hashCount > 0 ?
+                          (<div className="memo-hash">
+                            <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                          </div>)
+                        : null
                       }
-                      
+
+                      {
+                        memo.hashCount > 1 ?
+                          <div className="memo-hash">
+                            <PostedHash key={memo.hashNo} hashName={'외'+(memo.hashCount-1)+'개'}/> 
+                          </div>
+                        : null
+                      }
 
                     </div>
 

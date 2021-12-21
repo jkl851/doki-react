@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import styled from "styled-components";
 import HashItemInPostedMemo from "./HashItemInPostedMemo";
 import axios from "axios";
@@ -25,9 +25,12 @@ const HashTag = styled.div`
     align-items: center;
 `;
 
-const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList }) => {
+const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList, memo}) => {
     const [keyword, setKeyword] = useState("");
     const [canMakeFlag, setCanMakeFlag] = useState(false);
+
+
+    
 
     const Ref = useRef();
 
@@ -43,6 +46,7 @@ const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList }) => {
         );
     };
 
+    
     const handleToCreateHash = () => {
         console.log("[keyword] =>> " + keyword);
         if (keyword === "") {
@@ -149,6 +153,7 @@ const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList }) => {
                                     checkedHash={data.checkedHash}
                                     allHashList={allHashList}
                                     setAllHashList={setAllHashList}
+                                    memo={memo}
                                 />
                             );
                         })}
