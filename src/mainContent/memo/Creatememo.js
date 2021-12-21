@@ -39,6 +39,31 @@ const memoInitialState = {
 };
 
 export default function CreateMemo() {
+
+    const [imgBase64, setImgBase64] = useState(""); // 파일 base64
+    const [imgFile, setImgFile] = useState(null);	//파일	
+    const [visible, setVisible] = useState(false);
+
+    const visibleHandle = () => {
+        setVisible(true);
+    }
+
+    const handleChangeFile = (event) => {
+      let reader = new FileReader();
+  
+      reader.onloadend = () => {
+        // 2. 읽기가 완료되면 아래코드가 실행됩니다.
+        const base64 = reader.result;
+        if (base64) {
+          setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
+        }
+      }
+      if (event.target.files[0]) {
+        reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
+        setImgFile(event.target.files[0]); // 파일 상태 업데이트
+      }
+    }
+    
     // 전역 컨텍스트
     const [memos, dispatch] = useContext(MemoContext);
 
@@ -55,10 +80,10 @@ export default function CreateMemo() {
     const [expandHashTag, setExpandHashTag] = useState(false);
     const [pinned, setPinned] = useState(false);
 
-    const photoEvent = (event) => {
-        const name = event.target.name;
-        alert(`${name} 메모의 이미지삽입 : 개발중`);
-    };
+    // const photoEvent = (event) => {
+    //     const name = event.target.name;
+    //     alert(`${name} 메모의 이미지삽입 : 개발중`);
+    // };
 
     const hashTagEvent = () => {
         setExpandHashTag(!expandHashTag);
@@ -207,8 +232,20 @@ export default function CreateMemo() {
                     ) : (
                         false
                     )}
-
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                     {/* 본문 */}
+                    {visible === true 
+                        ? 
+                            <div style={{textAlign:"center"}}>
+                                <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
+                            </div>
+                        
+                        : 
+                            <div style={{textAlign:"center"}}>
+                                <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
+                            </div>
+                    }
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    
                     <textarea
                         rows="6"
                         column="20"
@@ -279,13 +316,18 @@ export default function CreateMemo() {
                             false
                         )}
 
-                        {/* Photo */}
-                        <Button className="photoButton" onClick={photoEvent}>
-                            <AddPhotoIcon
-                                className="add-photo"
-                                color="action"
-                            />
+
+                        
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+                        <Button className="photoButton" component="label">
+                            
+                            <AddPhotoIcon className="add-photo" color="action"/>
+                            <input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChangeFile} onClick={visibleHandle}/>
+                            
                         </Button>
+{/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
+
 
                         {/* HashTag */}
                         <Button onClick={hashTagEvent}>

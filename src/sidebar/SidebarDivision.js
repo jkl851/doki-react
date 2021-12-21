@@ -9,8 +9,9 @@ import Sales from "../assets/images/영업부.png";
 import Sales_shadow from "../assets/images/영업부_shadow.png";
 import Human from "../assets/images/인사부.png";
 import Human_shadow from "../assets/images/인사부_shadow.png";
+import { openNav2, closeNav2 } from "../assets/js/offcanvas";
 
-export default function SidebarDivision({ division, setDivision, allinfo }) {
+export default function SidebarDivision({ setDivision, allinfo }) {
 
   return (
     // 여기도 컴포넌트화 필요
@@ -35,6 +36,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
           alt="1"
           onClick={() => {
             setDivision(1);
+            closeNav2();
           }}
         />
       </div>
@@ -51,7 +53,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
               alt="1"
               onClick={() => {
                 setDivision(2);
-                
+                closeNav2();
               }}
             />
            : 
@@ -78,6 +80,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
               alt="1"
               onClick={() => {
                 setDivision(3);
+                closeNav2();
               }}
             />
            : 
@@ -100,10 +103,11 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales}
+              src={Human}
               alt="1"
               onClick={() => {
                 setDivision(4);
+                closeNav2();
               }}
             />
            : 
@@ -113,7 +117,7 @@ export default function SidebarDivision({ division, setDivision, allinfo }) {
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales_shadow}
+              src={Human_shadow}
               alt="1"
             />
         }

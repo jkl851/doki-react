@@ -8,12 +8,10 @@ import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 // import chatData from '../assets/data/chatMessageData.json';
 
-export default function HeaderDiv({ allinfo }) {
+export default function HeaderDiv({ allinfo, chat, setChat }) {
   console.log(allinfo.no);
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
-
-  const [chat, setChat] = useState(false);
 
   const chatControll = () => {
     if (chat === false) {
