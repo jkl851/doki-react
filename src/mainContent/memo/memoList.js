@@ -49,6 +49,7 @@ const MemoList = ( {memos , cols , title}) => {
                                                         visible={value.visible}
                                                         userNo={value.userNo}
                                                         departmentNo={value.departmentNo}
+                                                        hash={value.hash}
                                                         hashNo={value.hashNo}
                                                         hashName={value.hashName}
                                                         hashCount={value.hashCount}
