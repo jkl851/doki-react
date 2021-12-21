@@ -27,19 +27,11 @@ const Column = styled.div`
   grid-gap: 0rem;
   grid-auto-rows: max-content;
 `
- // {memos.map((value, index) => {
-  //   return (
-  //     <Memo
-  //       key={index}
-  //       id={index}
-  //       title={value.title}
-  //       contents={value.contents}
-  //       color={value.color}
-  //     />
-  //   );
-  // })}
 const MemoList = ( {memos , cols , title}) => {
-    const memoList = memos.map( (value, index) => <Memo no={value.no} 
+
+    const memoList = memos.map( (value, index) => <Memo 
+                                                        key={value.no}
+                                                        no={value.no} 
                                                         id={index}
                                                         title={value.title}
                                                         contents={value.contents}
@@ -52,7 +44,7 @@ const MemoList = ( {memos , cols , title}) => {
                                                         hash={value.hash}
                                                         hashNo={value.hashNo}
                                                         hashName={value.hashName}
-                                                        hashCount={value.hashCount}
+                                                        hashCount={value.hashCount}                                               
                                                         />)
     var output = []
     if (cols !== 0) {
