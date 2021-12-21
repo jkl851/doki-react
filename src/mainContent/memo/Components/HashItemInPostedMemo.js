@@ -47,7 +47,8 @@ const HashItemInPostedMemo = ({
         console.log("==== checked datas ====");
         console.log(postedHashDatas);
         console.log("===================");
-
+        
+        dispatch({type: 'MODIFY_MEMO', no:memo.no, name:"hash", value: postedHashDatas})
 
     };
     return (

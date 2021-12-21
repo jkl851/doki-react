@@ -40,7 +40,7 @@ export default function(memo) {
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
   
-
+  
    // 메모삭제
   const deleteMemo = () => {
     const no = memo.no
@@ -55,7 +55,18 @@ export default function(memo) {
   
  //메모 수정 확인
   const addEvent = () => {
-      
+      if(memo === null) {
+        return
+      }
+
+      axios
+        .post("http://localhost:8080/doki/memo/updateMemo", memo)
+        .then((Response) => {
+          console.log(Response.data)
+        })
+        .catch(error => 
+          console.error(error)
+          )
   };
 
   // 토글에 따른 메모 버튼 활성화
