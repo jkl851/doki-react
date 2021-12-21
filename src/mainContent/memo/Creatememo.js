@@ -60,6 +60,9 @@ export default function CreateMemo() {
         if (base64) {
           setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
         }
+        console.log(imgBase64);
+        console.log(base64.toString());
+        
       }
       if (event.target.files[0]) {
         reader.readAsDataURL(event.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다.
