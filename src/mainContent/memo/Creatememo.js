@@ -326,10 +326,12 @@ export default function CreateMemo() {
                         ? 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
+                                
                             </div>
                         : 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
+                                
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    
@@ -408,12 +410,12 @@ export default function CreateMemo() {
 
                         
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-                        {/* <Button className="photoButton" component="label">
+                        <Button className="photoButton" component="label">
                             
                             <AddPhotoIcon className="add-photo" color="action"/>
                             <input style={{ display: 'none' }} type="file" accept="image/*" onChange={handleChangeFile} onClick={visibleHandle}/>
                             
-                        </Button> */}
+                        </Button>
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
 
 
