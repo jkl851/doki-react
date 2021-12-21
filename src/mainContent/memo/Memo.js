@@ -30,6 +30,9 @@ export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin
 
+  // pmemo
+  
+
   
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -40,6 +43,7 @@ export default function(memo) {
   // 해당 메모의 해시 리스트
   const [memoHashList, setMemoHashList] = useState([]);
   const [allHashList, setAllHashList]  = useState([]);
+  
 
    // 메모삭제
   const deleteMemo = () => {
@@ -63,11 +67,11 @@ export default function(memo) {
   const expandCreateMemo = () => {
       setExpandMemo(true);
 
-      // 전체 리스트도 가져온다
-      getAllHashList() 
-
       // 확장 되었을 때 해당 메모의 해시 리스트를 가져온다
       getHashListByMemo();
+
+      // 전체 리스트도 가져온다
+      getAllHashList() 
   };
   
   const collapseCreateMemo = () => {
@@ -95,6 +99,7 @@ export default function(memo) {
       .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no)
       .then((Response) => {
         console.log("[GET Hash List By Memo 요청 성공!]");
+        console.log(Response.data)
         setMemoHashList(Response.data);
         
       })
@@ -109,6 +114,7 @@ export default function(memo) {
       .then((Response) => {
         console.log("[GET All Hash List in Memo.js 요청 성공!]");
         console.log(Response);
+        
         setAllHashList(
           Response.data.map((data) => {
             return  {
