@@ -294,8 +294,8 @@ export default function CreateMemo({allinfo}) {
                     {/* 제목 */}
                     {expandMemo ? (
                        
-                            <Fragment>
-                                <input
+                            <div>
+                                <textarea
                                     type="text"
                                     placeholder="제목"
                                     className="title_input"
@@ -318,7 +318,7 @@ export default function CreateMemo({allinfo}) {
                                     onClick={(e) => {  isPinned() }}
                                 />
                                  )}
-                            </Fragment>
+                            </div>
                     ) : (
                         false
                     )}
