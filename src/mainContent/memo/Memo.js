@@ -62,16 +62,19 @@ export default function(memo) {
       alert(`${name} 메모의 이미지삽입 : 개발중`);
   };
   
- //메모 수정 확인
+ //메모 수정 확인 버튼 클릭 시
   const addEvent = () => {
       if(memo === null) {
         return
       }
 
+      console.log('[수정할 Memo 정보]')
+      console.log(memo)
+
       axios
         .post("http://localhost:8080/doki/memo/updateMemo", memo)
         .then((Response) => {
-          console.log(Response.data)
+          console.log("[메모 Update 성공!!]")
         })
         .catch(error => 
           console.error(error)
