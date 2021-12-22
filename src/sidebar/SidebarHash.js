@@ -15,10 +15,8 @@ export default function SidebarHash({division}) {
 
     //해쉬 초기값 호출 (해쉬 검색 X)
     useEffect(async() => {
-        console.log(no);
         await axios.get(`http://localhost:8080/doki/hash/getHashList/${no}`)
         .then((Response) => {
-            console.log(Response.data)
             setHashDropDownDatas(
                 Response.data
                 
@@ -47,10 +45,7 @@ export default function SidebarHash({division}) {
     //Dropdown 클릭시 해당 데이터 입력
     const [hint, setHint] = useState([]);
     const searchHash = (name) => {
-        console.log("해쉬명 HINT1 : " + name);
         setHint({hashName: name});
-
-
         $('#myDropdown').hide;
         
     };

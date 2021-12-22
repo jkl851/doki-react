@@ -1,10 +1,10 @@
-import React, { useState, useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment, useEffect } from "react";
 import { MemoContext } from "./modules/MemoReducer"
 import axios from 'axios'
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
-import HashTagBox from "./Components/HashTagBox";
+import HashTagBoxInPostedMemo from "./Components/HashTagBoxInPostedMemo";
 
 import styled from 'styled-components';
 import {Button} from "@mui/material";
@@ -30,9 +30,6 @@ export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin
   console.log(`memo ${memo.no} 의 값들 : ${memo.checked}`);
-  // pmemo
-  
-
   
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -41,10 +38,9 @@ export default function(memo) {
   const [expandHashTag, setExpandHashTag] = useState(false);
 
   // 해당 메모의 해시 리스트
-  const [memoHashList, setMemoHashList] = useState([]);
   const [allHashList, setAllHashList]  = useState([]);
   
-
+  
    // 메모삭제
   const deleteMemo = () => {
     const no = memo.no
@@ -59,19 +55,23 @@ export default function(memo) {
   
  //메모 수정 확인
   const addEvent = () => {
-    // passMemo.passMemo(memo);
-    // dispatch({type: 'INITIALIZE'})
-  };
+      if(memo === null) {
+        return
+      }
+
+      axios
+        .post("http://localhost:8080/doki/memo/updateMemo", memo)
+        .then((Response) => {
+          console.log(Response.data)
+        })
+        .catch(error => 
+          console.error(error)
+          )
+   };
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
-
-      // 확장 되었을 때 해당 메모의 해시 리스트를 가져온다
-      getHashListByMemo();
-
-      // 전체 리스트도 가져온다
-      getAllHashList() 
   };
   
   const collapseCreateMemo = () => {
@@ -91,46 +91,59 @@ export default function(memo) {
   }
 
 
-  const getHashListByMemo = () => {
-    console.log('=====[확장된 memo 정보]=====');
-    console.log(memo);
+  useEffect(async() => {
 
     axios
-      .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no)
-      .then((Response) => {
-        console.log("[GET Hash List By Memo 요청 성공!]");
-        console.log(Response.data)
-        setMemoHashList(Response.data);
-        
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-  }
-
-  const getAllHashList = () => {
-    axios
-      .get('http://localhost:8080/doki/hash/getAllHashList')
-      .then((Response) => {
-        console.log("[GET All Hash List in Memo.js 요청 성공!]");
-        console.log(Response);
-        
-        setAllHashList(
-          Response.data.map((data) => {
-            return  {
-                hashNo: data.hashNo,
-                hashName: data.hashName,
-                checkedHash: false,
-            }
+      .all([
+          // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
+          await axios
+            .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no), 
+          // 회사 전체 직원의 리스트 검색
+          await axios
+          .get('http://localhost:8080/doki/hash/getAllHashList') 
+      ])
+      .then(
+          axios.spread((res1, res2) => {
+            
+            const newArr = res2.data.map(data => {
+              if(res1.data.length > 0 ){
+                for(let j=0; j<res1.data.length; j++){
+                  if(data.hashNo === res1.data[j].hashNo){
+                    return {
+                      hashNo: data.hashNo,
+                      hashName: data.hashName,
+                      checkedHash: true
+                    }
+                  }
+                  if(j+1 === res1.data.length){
+                    return {
+                      hashNo: data.hashNo,
+                      hashName: data.hashName,
+                      checkedHash: false
+                    }
+                  }
+                }
+              } else {
+                return {
+                  hashNo: data.hashNo,
+                  hashName: data.hashName,
+                  checkedHash: false
+                }
+              }
+              
+            })
+    
+            setAllHashList(
+              newArr
+            )
           })
-
-        )
-        
-      })
+      )
       .catch((Error) => {
-        console.log(Error);
+          console.log(Error);
       });
-  }
+
+    
+  }, [])
 
   return(
   
@@ -180,16 +193,17 @@ export default function(memo) {
                         ></textarea>
             
                       {/* 확장된 메모에 해시가 추가되는 부분 */}
-                      <div style={{display: 'flex'}}>
+                      <div className="expand-memo-hash">
+
                         {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                         {
-                          memo.hashCount > 0 ?
-                          memoHashList.map(item => {
-                            return (<div className="memo-hash">
-                              <PostedHash key={item.hashNo} hashName={'#'+item.hashName}/> 
-                            </div>)
-                         }) : true
+                          allHashList.map(data => {
+                            return data.checkedHash === true ?  
+                              <PostedHash key={data.hashNo} hashName={'#'+data.hashName}/> 
+                            : null
+                          })
                         }
+                         
                       </div>
 
 
@@ -235,12 +249,13 @@ export default function(memo) {
 
                         
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
-                            <HashTagBox
+                            <HashTagBoxInPostedMemo
                                 shouldCloseOnOverlayClick={true}
                                 onRequestClose={hashTagEvent}
                                 name="hashtag"
-                                allHashDatas={allHashList}
-                                setAllHashDatas={setAllHashList}
+                                allHashList={allHashList}
+                                setAllHashList={setAllHashList}
+                                memo={memo}
                             />
                         ) : (
                             false
@@ -277,6 +292,7 @@ export default function(memo) {
                                   />
                                   )}
                    </div>
+
                     <div className="memo-area" onClick={expandCreateMemo}>
                       <span className="memo-description">
                           {memo.contents}
@@ -287,19 +303,25 @@ export default function(memo) {
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div style={{display: "flex"}}>
                       {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
-                      { memo.hashCount > 0 &&
-                        <div className="memo-hash">
-                          <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
-                        </div>
+                      {
+                        memo.hashCount > 0 ?
+                          (<div className="memo-hash">
+                            <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                          </div>)
+                        : null
                       }
-                      {/* 해시가 하나 이상이면서 첫 해시를 제외한 나머지 해시 개수 표시*/}
-                      { memo.hashCount > 1 && 
-                        <div className="memo-hash">
-                        <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
-                      </div>
+
+                      {
+                        memo.hashCount > 1 ?
+                          <div className="memo-hash">
+                            <PostedHash key={memo.hashNo} hashName={'외'+(memo.hashCount-1)+'개'}/> 
+                          </div>
+                        : null
                       }
 
                     </div>
+
+                    
                     
                     <Button className="delete-button" onClick={deleteMemo}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>

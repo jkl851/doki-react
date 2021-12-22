@@ -8,7 +8,7 @@ import MemoListContainer from "./MemoListContainer";
 
 import "../../assets/css/main_content.css";
 
-export default function App({division}) {
+export default function App({division, allinfo}) {
   const [ memos, dispatch ] = useContext(MemoContext);
 
  
@@ -33,7 +33,7 @@ export default function App({division}) {
   return (
     <div className="main_content">
         <div className="main_note">
-            <CreateMemo/>
+            <CreateMemo allinfo={allinfo}/>
             <MemoListContainer className="memolistcontainer" title="고정됨" filter = {{pin: "1", visible: "1"} }  />
             <MemoListContainer className="memolistcontainer" title="일반" filter = {{pin: "0", visible: "1"} }  />
         </div>
