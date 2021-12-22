@@ -15,8 +15,8 @@ export const memoReducer = (state, action) => {
 
     case 'ADD_MEMO':
       return [
-        ...state,
-        action.memo
+        action.memo,
+        ...state
       ]
 
     case 'EMPTY':
