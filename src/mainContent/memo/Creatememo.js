@@ -104,7 +104,7 @@ export default function CreateMemo({allinfo}) {
 
     // 메모 value 추가 이벤트
     const InputEvent = (name, value) => {
-        console.log(`name: ${name}     value: ${value}`);
+        
         setCmemo((prevValue) => {
             return {
                 ...prevValue,

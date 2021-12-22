@@ -18,16 +18,16 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                     inputFormat={"yyyy-MM-dd hh:mm"}
                     value={memo.alarm}
                     onChange={ isPosted === true ? 
-                        (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "alarm", value : e }) 
+                        (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "alarm", value : dayjs(e).format("YYYY-MM-DD hh:mm") }) 
                         : 
                         (e)=>{ InputEvent('alarm', dayjs(e).format("YYYY-MM-DD hh:mm")) } } //Thu Dec 23 2021 11:12:45 GMT+0900 (한국 표준시)
                 />
                 </LocalizationProvider>
                
-                 { memo.checked == '0' ? 
+                 { (memo.checked === '0') || (memo.checked === null) ? 
                  (
                     <Fragment>
-                    <Checkbox   checked={false}
+                    <Checkbox   
                                 inputProps={{'checked' : '1'}}
                                 onChange={isPosted === true ? 
                                     (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '1' })
@@ -39,7 +39,7 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                     </Fragment>
                 ) : (
                     <Fragment>
-                    <Checkbox   checked={true}
+                    <Checkbox   checked
                                 inputProps={{'checked' : '0'}}
                                 onChange={isPosted === true ? 
                                     (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '0' })

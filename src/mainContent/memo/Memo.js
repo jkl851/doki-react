@@ -1,6 +1,7 @@
 import React, { useState, useContext, Fragment, useEffect } from "react";
 import { MemoContext } from "./modules/MemoReducer"
 import axios from 'axios'
+import ReactModal from "react-modal";
 
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
@@ -18,6 +19,8 @@ import PinIcon from "@mui/icons-material/PushPinOutlined";
 import PinnedIcon from "@mui/icons-material/PushPin";
 import PostedHash from './Components/PostedHash'
 
+import checkDelMemoStyle from "../../assets/css/modal/checkDelMemoStyle.module.css";
+
 // 컬러 변경 적용
 const BackgroundColor = styled.div`
   background: ${({ color }) => color};
@@ -29,7 +32,7 @@ export default function(memo) {
 
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin
-  console.log(`memo ${memo.no} 의 값들 : ${memo.checked}`);
+  // console.log(`${memo.title} 의 알람체크 값 : ${memo.checked}`);
   
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -37,14 +40,21 @@ export default function(memo) {
   const [expandPalette, setExpandPalette] = useState(false);
   const [expandHashTag, setExpandHashTag] = useState(false);
 
+  // 삭제 확인 모달
+  const [checkDelMemo, setCheckDelMemo] = useState({
+    isOpen: false,
+  });
+
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
   
   
    // 메모삭제
-  const deleteMemo = () => {
+  const deleteEvent = () => {
     const no = memo.no
     // api 통신 (visible => "0")
+
+
     dispatch({ type: 'DEL_MEMO', no, pin});
   };
 
@@ -321,14 +331,47 @@ export default function(memo) {
 
                     </div>
 
-                    
-                    
-                    <Button className="delete-button" onClick={deleteMemo}>
+                    <Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
                   </BackgroundColor>
                   ) 
               }
+               {/* Delete Memo Modal */}
+               <ReactModal
+                    isOpen={checkDelMemo.isOpen} // modalState.isOpen
+                    shouldCloseOnOverlayClick={true}
+                    onRequestClose={() =>{
+                        setCheckDelMemo({ isOpen: false }) 
+                      }}
+                    className={checkDelMemoStyle.Modal}>
+                      
+                    <div className={checkDelMemoStyle["close"]}>
+                       {memo.title}<br/>  
+                       {`메모를 정말로 삭제하시겠습니까?`}
+                    </div>
+                    <button
+                      style={{
+                        width: "80px",
+                        marginTop: "20px",
+                        backgroundColor: "#5048e5",
+                        color: "white",
+                      }}
+                      onClick={ deleteEvent } >
+                      삭제
+                    </button>
+                    <button
+                      style={{
+                        width: "80px",
+                        marginTop: "20px",
+                        backgroundColor: "#fff",
+                        color: "black",
+                      }}
+                      onClick={()=> setCheckDelMemo({ isOpen: false })}
+                    >
+                      취소
+                    </button>
+                </ReactModal>
       </Fragment>
     
     )
