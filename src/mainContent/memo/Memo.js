@@ -29,7 +29,6 @@ export default function(memo) {
 
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin
-  console.log(`memo ${memo.no} 의 값들 : ${memo.checked}`);
   
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -90,6 +89,23 @@ export default function(memo) {
     setExpandHashTag(!expandHashTag);
   }
 
+  const handlePinClick = (pin) => {
+    dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
+
+    if(memo === null) {
+      return true
+    }
+    let obj = Object.assign({}, memo, {"pin": pin})
+
+    axios
+      .post("http://localhost:8080/doki/memo/updateMemo", obj)
+      .then((Response) => {
+        console.log(Response.data)
+      })
+      .catch(error => 
+        console.error(error)
+        )
+  }
 
   useEffect(async() => {
 
@@ -169,15 +185,15 @@ export default function(memo) {
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="0"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0" })  }
+                                    onClick={ (e) => {handlePinClick("0")} }
                                 />
                                 ) : (
                                   <PinIcon
-                                    no={memo.no}
+                                    no={memo.no}  
                                     className="pin_in_cmemo"
                                     name="pin"
                                     value="1"
-                                    onClick={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" }) }
+                                    onClick={  (e) => {handlePinClick("1")}  }
                                 />
                                 )}
                             </Fragment>
@@ -280,7 +296,7 @@ export default function(memo) {
                                       className="pin_in_memo"
                                       name="pin"
                                       value="0"
-                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0"  })  }
+                                      onClick={ (e) => {handlePinClick("0")}  }
                                   />
                                   ) : (
                                     <PinIcon
@@ -288,7 +304,7 @@ export default function(memo) {
                                       className="pin_in_memo"
                                       name="pin"
                                       value="1"
-                                      onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" })  }
+                                      onClick={ (e) => {handlePinClick("1")}  }
                                   />
                                   )}
                    </div>
