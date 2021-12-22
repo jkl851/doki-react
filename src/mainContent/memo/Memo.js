@@ -190,8 +190,8 @@ export default function(memo) {
                   <div>
                   <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                     <BackgroundColor className="input_wrapper" color={memo.color}>
-                            <Fragment>
-                                <input
+                            <div>
+                                <textarea
                                     no={memo.no}
                                     type="text"
                                     placeholder="제목"
@@ -217,7 +217,7 @@ export default function(memo) {
                                     onClick={  (e) => {handlePinClick("1")}  }
                                 />
                                 )}
-                            </Fragment>
+                            </div>
                         
                       <textarea
                         rows="6"
@@ -310,7 +310,7 @@ export default function(memo) {
               ):(
                   <BackgroundColor className="memo" color={memo.color}>
                    <div style={{display:"inline-block"}}>
-                    <h4 className="memo-title" onClick={expandCreateMemo}>{memo.title}</h4>
+                    <label className="memo-title" onClick={expandCreateMemo}>{memo.title}</label>
                     { pin === '1' ? (
                                   <PinnedIcon
                                       no={memo.no}
@@ -331,9 +331,8 @@ export default function(memo) {
                    </div>
 
                     <div className="memo-area" onClick={expandCreateMemo}>
-                      <span className="memo-description">
-                          {memo.contents}
-                      </span>
+                      <textarea className="memo-description" value={memo.contents} onChange={() => {}}>
+                      </textarea>
                     </div>
                     
                   
@@ -366,7 +365,7 @@ export default function(memo) {
               }
                {/* Delete Memo Modal */}
                <ReactModal
-                    isOpen={checkDelMemo.isOpen} // modalState.isOpen
+                    isOpen={checkDelMemo.isOpen} // checkDelMemo.isOpen
                     shouldCloseOnOverlayClick={true}
                     onRequestClose={() =>{
                         setCheckDelMemo({ isOpen: false }) 
@@ -377,27 +376,34 @@ export default function(memo) {
                        {memo.title}<br/>  
                        {`메모를 정말로 삭제하시겠습니까?`}
                     </div>
-                    <button
-                      style={{
-                        width: "80px",
-                        marginTop: "20px",
-                        backgroundColor: "#5048e5",
-                        color: "white",
-                      }}
-                      onClick={ deleteEvent } >
-                      삭제
-                    </button>
-                    <button
-                      style={{
-                        width: "80px",
-                        marginTop: "20px",
-                        backgroundColor: "#fff",
-                        color: "black",
-                      }}
-                      onClick={()=> setCheckDelMemo({ isOpen: false })}
-                    >
-                      취소
-                    </button>
+                    <div>
+                      <button
+                        style={{
+                          width: "fit-content",
+                          height:'fit-content',
+                          marginTop: "10px",
+                          fontSize: "0.9em",
+                          backgroundColor: "#5048e5",
+                          color: "white",
+                        }}
+                        onClick={ deleteEvent } >
+                        삭제
+                      </button>
+                      <button
+                        style={{
+                          width: "fit-content",
+                          height:'fit-content',
+                          fontSize: "0.9em",
+                          marginTop: "10px",
+                          backgroundColor: "#fff",
+                          color: "black",
+                        }}
+                        onClick={()=> setCheckDelMemo({ isOpen: false })}
+                      >
+                        취소
+                      </button>
+                      
+                    </div>
                 </ReactModal>
       </Fragment>
     
