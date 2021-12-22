@@ -48,7 +48,11 @@ const HashItemInPostedMemo = ({
         console.log(postedHashDatas);
         console.log("===================");
         
-        dispatch({type: 'MODIFY_MEMO', no:memo.no, name:"hash", value: postedHashDatas})
+        
+        dispatch({type: 'MODIFY_MEMO', no: memo.no, name:"hash", value: postedHashDatas})
+        dispatch({type: 'MODIFY_MEMO', no: memo.no, name:"hashNo", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashNo : null})
+        dispatch({type: 'MODIFY_MEMO', no: memo.no, name:"hashName", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashName : null})
+        dispatch({type: 'MODIFY_MEMO', no: memo.no, name:"hashCount", value: postedHashDatas.length })
 
     };
     return (
