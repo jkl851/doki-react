@@ -50,9 +50,17 @@ export default function(memo) {
   
    // 메모삭제
   const deleteEvent = () => {
-    const no = memo.no
+    let no = memo.no;
+    let obj = Object.assign({}, memo, {"visible": "0"});
     // api 통신 (visible => "0")
-
+    axios
+    .post("http://localhost:8080/doki/memo/updateMemo", obj)
+    .then((Response) => {
+      console.log(Response.data)
+    })
+    .catch(error => 
+      console.error(error)
+      )
 
     dispatch({ type: 'DEL_MEMO', no, pin});
   };

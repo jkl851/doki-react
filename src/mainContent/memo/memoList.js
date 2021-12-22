@@ -27,9 +27,9 @@ const Column = styled.div`
   grid-gap: 0rem;
   grid-auto-rows: max-content;
 `
+
 const MemoList = ( {memos , cols , title}) => {
     const memoList = memos.map( (value, index) => <Memo 
-    
                                                         key={value.no}
                                                         no={value.no} 
                                                         id={index}
@@ -57,7 +57,7 @@ const MemoList = ( {memos , cols , title}) => {
         }, new Array(cols).fill([]))
     }
     if (memos.length === 0) return <Wrapper></Wrapper>
-
+    
     return (
         <Wrapper>
         <header>{title}</header>

@@ -50,6 +50,7 @@ footer {
 
 .main_note {
   padding: 0px;
+  padding-bottom: 150px;
 }
 
 form {
@@ -252,7 +253,7 @@ span.memo-description {
   width: 100%;
 }
 
-.expand-memo-hash div{
+.expand-memo-hash div {
   width: fit-content;
   height: 100%;
   /* border: 2px solid #00ff00; */

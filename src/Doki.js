@@ -11,8 +11,6 @@ export default function Doki({ allinfo }) {
   const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);
 
-
-
   return (
     <div id="whole_wrapper">
       <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat}/>
