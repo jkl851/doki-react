@@ -67,7 +67,7 @@ export default function(memo) {
         .catch(error => 
           console.error(error)
           )
-  };
+   };
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
@@ -92,8 +92,6 @@ export default function(memo) {
 
 
   useEffect(async() => {
-    console.log('=====[확장된 memo 정보]=====');
-    console.log(memo);
 
     axios
       .all([
