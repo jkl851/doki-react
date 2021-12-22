@@ -29,7 +29,7 @@ export default function(memo) {
 
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin
-
+  console.log(`memo ${memo.no} 의 값들 : ${memo.checked}`);
   // pmemo
   
 

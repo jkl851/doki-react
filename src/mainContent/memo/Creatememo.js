@@ -101,6 +101,7 @@ export default function CreateMemo() {
 
     // 메모 value 추가 이벤트
     const InputEvent = (name, value) => {
+        console.log(`name: ${name}     value: ${value}`);
         setCmemo((prevValue) => {
             return {
                 ...prevValue,
@@ -366,11 +367,10 @@ export default function CreateMemo() {
                         className="buttons-div"
                         style={{ textAlign: "center" }}
                     >
-                        <div className="alarm-div">
+                        <div className="alarm-div" ref={alarmOutsideRef}>
                             <Button
                                 className="alarmButton"
                                 onClick={expandAlarmTable}
-                                ref={alarmOutsideRef}
                             >
                                 <AlarmAddIcon
                                     className="add-alarm"

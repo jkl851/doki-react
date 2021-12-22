@@ -5,6 +5,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import dayjs from 'dayjs';
 
 export default function MemoAlarm({memo, InputEvent, isPosted}) {
     const [ memos, dispatch ] = useContext(MemoContext);
@@ -19,7 +20,7 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                     onChange={ isPosted === true ? 
                         (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "alarm", value : e }) 
                         : 
-                        (e)=>{ InputEvent('memoAlarmTime', e) } }
+                        (e)=>{ InputEvent('alarm', dayjs(e).format("YYYY-MM-DD hh:mm")) } } //Thu Dec 23 2021 11:12:45 GMT+0900 (한국 표준시)
                 />
                 </LocalizationProvider>
                
@@ -27,7 +28,7 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                  (
                     <Fragment>
                     <Checkbox   checked={false}
-                                inputProps={{'checked' : '1'}} 
+                                inputProps={{'checked' : '1'}}
                                 onChange={isPosted === true ? 
                                     (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '1' })
                                     :
