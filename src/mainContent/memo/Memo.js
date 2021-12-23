@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment, useEffect } from "react";
+import React, { useState, useContext, Fragment, useRef, useEffect } from "react";
 import { MemoContext } from "./modules/MemoReducer"
 import axios from 'axios'
 import ReactModal from "react-modal";
@@ -6,7 +6,7 @@ import ReactModal from "react-modal";
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
 import HashTagBoxInPostedMemo from "./Components/HashTagBoxInPostedMemo";
-
+ss
 import styled from 'styled-components';
 import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,6 +18,11 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PinIcon from "@mui/icons-material/PushPinOutlined";
 import PinnedIcon from "@mui/icons-material/PushPin";
 import PostedHash from './Components/PostedHash'
+import axios from "axios";
+
+//Stomp
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 import checkDelMemoStyle from "../../assets/css/modal/checkDelMemoStyle.module.css";
 
@@ -29,10 +34,134 @@ const BackgroundColor = styled.div`
   }
 `
 export default function(memo) {
+  // console.log("[각 메모의 정보들]")
+  // console.log(memo)
+
+  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
+  useEffect(() => {
+    getMemoRoom(0);
+    // opensocket();
+  }, []);
+
+
+  //메모 방(room) 생성 작업
+  const getMemoRoom = async(i) => {
+    await axios
+      .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
+      .then((Response) => {
+        // console.log(Response);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
+
+  // 소켓 열기
+  const opensocket = async() => {
+      try{
+      //소켓 열기
+      var socket = new SockJS('http://localhost:8080/doki/websocket');
+      var stompClient = Stomp.over(socket); //stomp client 구성
+      
+      // SockJS와 stomp client를 통해 연결을 시도.
+      stompClient.connect({}, function () {
+        console.log('Memo In Socket Connected: ');
+
+        stompClient.subscribe(`/topic/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          console.log('data : ' + JSON.stringify(data));
+          if(data.handling == 0) {
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!')
+          } else {
+              //사용중인 메모 알람 함수
+               alert(data.userName + '님이 현재 사용 중 입니다.');
+          }
+        });
+
+        console.log('Memo Out Socket Connected: ');
+        stompClient.subscribe(`/topicOut/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          console.log('data : ' + JSON.stringify(data));
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+        });
+
+
+
+
+      });
+        return null;
+    
+    }catch (error){
+        console.log(error);
+    }
+  }
+
+
+
+
+  //메모 사용중을 보내는 함수
+  const sendMessage = async() => {
+
+    console.log('메모 번호1 : ' + memo.no);
+    console.log('handling1 : ' + memo.handling);
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:8080/doki/talk/memo`,
+          params: {
+            handling: memo.handling,
+            roomId: 0,
+            userNo: allinfo.no,
+            userName: allinfo.userName,
+            memoNo: memo.no,
+            visible: memo.visible
+          }
+        })
+        .then((response) => {
+          return response;
+        })
+        .catch((Error) => {
+          console.log(Error);
+        })
+
+      } catch (err) {
+        console.error(err);
+      }
+  };
+
+    //메모 사용끝을 보내는 함수
+    const sendMessageOut = async() => {
+      console.log('메모 번호2 : ' + memo.no);
+      console.log('handling2 : ' + memo.handling);
+        try {
+          await axios({
+            method: "post",
+            url: `http://localhost:8080/doki/talk/memoOut`,
+            params: {
+              handling: memo.handling,
+              roomId: 0,
+              userNo: allinfo.no,
+              userName: allinfo.userName,
+              memoNo: memo.no,
+              visible: memo.visible
+            }
+          })
+          .then((response) => {
+            return response;
+          })
+          .catch((Error) => {
+            console.log(Error);
+          })
+  
+        } catch (err) {
+          console.error(err);
+        }
+    };
 
   const [ memos, dispatch ] = useContext(MemoContext);
-  var pin = memo.pin
-  
+  var pin = memo.pin;
+
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -89,13 +218,19 @@ export default function(memo) {
           )
    };
 
+
+
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
-  };
+      opensocket();
+      sendMessage();
+    };
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
+      // opensocket();
+      sendMessageOut();
   };
 
   const expandAlarmTable = () => {
@@ -183,7 +318,6 @@ export default function(memo) {
   }, [])
 
   return(
-  
       <Fragment>
               {/* expandMemo */}
               { expandMemo ? ( 
@@ -307,8 +441,61 @@ export default function(memo) {
                   </form>
                 </div>
 
-              ):(
-                  <BackgroundColor className="memo" color={memo.color}>
+              ):( (memo.handling == 1) ? 
+                (
+                <BackgroundColor className="memo" color={memo.color} style={{border: "5px solid red"}}  onClick={sendMessage} >
+                   <div style={{display:"inline-block"}} >
+                    <h4 className="memo-title" 
+                      >{memo.title}</h4>
+                    { pin === '1' ? (
+                                  <PinnedIcon
+                                      no={memo.no}
+                                      className="pin_in_memo"
+                                      name="pin"
+                                      value="0"
+                                      // onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "0"  })  }
+                                  />
+                                  ) : (
+                                    <PinIcon
+                                      no={memo.no}
+                                      className="pin_in_memo"
+                                      name="pin"
+                                      value="1"
+                                      // onClick={ (e) => dispatch({  type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : "1" })  }
+                                  />
+                                  )}
+                   </div>
+                    <div className="memo-area" 
+                      // onClick={expandCreateMemo}
+                      >
+                      <span className="memo-description">
+                          {memo.contents}
+                      </span>
+                    </div>
+                    
+                  
+                    {/* 메모에 해시가 추가되는 부분 */}
+                    <div style={{display: "flex"}}>
+                      { memo.hashCount > 0 &&
+                        <div className="memo-hash">
+                          <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                        </div>
+                      }
+                      { memo.hashCount > 1 && 
+                        <div className="memo-hash">
+                        <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
+                      </div>
+                      }
+
+                    </div>
+                    
+                    <Button className="delete-button" 
+                          >
+                        <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
+                    </Button> 
+                  </BackgroundColor>
+                ):(
+                  <BackgroundColor className="memo" color={memo.color} >
                    <div style={{display:"inline-block"}}>
                     <label className="memo-title" onClick={expandCreateMemo}>{memo.title}</label>
                     { pin === '1' ? (
@@ -362,6 +549,7 @@ export default function(memo) {
                     </Button> 
                   </BackgroundColor>
                   ) 
+                )
               }
                {/* Delete Memo Modal */}
                <ReactModal

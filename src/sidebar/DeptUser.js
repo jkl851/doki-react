@@ -31,7 +31,7 @@ const DeptUser = ({
 
     //해당 유저 정보 호출 (axios)
     await axios
-      .get(`http://localhost:8080/doki/user/findUser/${deptUserNo}`)
+      .get(`http://localhost:8080/doki/user/findUserByDeptNo/${deptUserNo}`)
       .then((Response) => {
 
         setUserInfoModalData({

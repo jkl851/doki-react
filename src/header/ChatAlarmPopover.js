@@ -8,7 +8,7 @@ import "../assets/css/normaltop.css";
 import Badge from '@mui/material/Badge';
 import axios from "axios";
 
-export default function ChatAlarmPopover({ chatMessages, allinfo }) {
+export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo }) {
   //챗 알람 Modal
   const no = JSON.stringify(allinfo.no);
   const target = useRef(null);
@@ -29,7 +29,8 @@ export default function ChatAlarmPopover({ chatMessages, allinfo }) {
   //부서번호 상위 component로 이동
   const pageMovement = (departmentNo) => {
     setChatAlarmPopover({ isOpen: false });
-    alert(departmentNo + "번 부서로 이동!!");
+    setDivision(departmentNo);
+    console.log(departmentNo + "번 부서로 이동!!");
   };
 
 

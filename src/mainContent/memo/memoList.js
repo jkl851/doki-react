@@ -47,9 +47,12 @@ const MemoList = ( {memos , cols , title}) => {
                                                         hash={value.hash}
                                                         hashNo={value.hashNo}
                                                         hashName={value.hashName}
-                                                        hashCount={value.hashCount}                                               
+                                                        hashCount={value.hashCount}
+                                                        handling={value.handling}
+                                                        // opensocket={opensocket}
                                                         />)
     var output = []
+
     if (cols !== 0) {
         output = memoList.reduce((acc, child, i) => {
         acc[i % cols] = [...acc[i % cols], child]
