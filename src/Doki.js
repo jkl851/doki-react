@@ -13,8 +13,8 @@ export default function Doki({ allinfo }) {
 
   return (
     <div id="whole_wrapper">
-      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat}/>
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
+      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat}/>
         <div id="main_sidebar">
           <Sidebar
             division={division}
@@ -23,8 +23,8 @@ export default function Doki({ allinfo }) {
           />
         </div>
         <MemoIndex division={division} allinfo={allinfo}/>
-      </MemoContext.Provider>
       <SideChat2 allinfo={allinfo} />
+      </MemoContext.Provider>
     </div>
   );
 }
