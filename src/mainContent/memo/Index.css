@@ -49,7 +49,7 @@ footer {
 }
 
 .main_note {
-  padding: 0px;
+  padding: 150px;
   padding-bottom: 150px;
 }
 
@@ -78,22 +78,24 @@ form {
   box-shadow: 0px 1px 2px 1px rgba(126, 125, 125, 0.77);
 }
 
-input.title_input {
+textarea.title_input {
   border: none;
-  width: 445px;
+  resize: none;
+  width: 93%;
+  height: fit-content;
   outline: none;
   background: none;
   font-size: 19px;
-  margin-bottom: 19px;
   font-weight: 700;
   color: rgb(19, 19, 19);
 }
 
-input.title_input::placeholder {
+textarea.title_input::placeholder {
   color: #dddddd9e;
 }
 
 textarea.description_input {
+  resize: none;
   border: none;
   outline: none;
   width: 100%;
@@ -102,26 +104,25 @@ textarea.description_input {
   font-size: 15px;
   font-weight: 500;
   color: rgb(19, 19, 19);
-  resize: none;
   margin-bottom: 10px;
+  word-break: break-all;
 }
 
-input.description_input::placeholder {
-  color: #dddddd9e;
+textarea.description_input::-webkit-scrollbar {
+  width: 8px;
 }
 
-textarea.descroption_input::-webkit-scrollbar {
-  width: 5px;
-}
 
-textarea.descroption_input::-webkit-scrollbar-thumb {
-  background: #fbbc04;
+textarea.description_input::-webkit-scrollbar-thumb {
+  background: #7c9183;
   border-radius: 50px;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
 }
+
+
 
 .hash_box {
   display: flex;
@@ -152,6 +153,33 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   /* border: 2px solid #00ff00; */
 }
 
+.hashList {
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  background: none;
+  color: #131313;
+  word-break: break-all;
+}
+
+.hashList::-webkit-scrollbar {
+  width: 5px;
+}
+
+.hashList2 {
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  background: none;
+  color: #131313;
+  word-break: break-all;
+}
+
+.hashList2::-webkit-scrollbar {
+  width: 10px;
+}
 .addButton {
   background: #fbbc04 !important;
   width: 50px;
@@ -166,6 +194,8 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
 }
 
 .pin_in_cmemo {
+  top: -40px;
+  right: -10px;
   position: relative;
   cursor: pointer;
 }
@@ -185,27 +215,47 @@ textarea.descroption_input::-webkit-scrollbar-thumb {
   box-shadow: 0px 1px 2px 1px rgba(126, 125, 125, 0.77);
 }
 
-h4.memo-title {
+label.memo-title {
   /* border: none; */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   display: inline-block;
   width: 216px;
   outline: none;
   background: none;
   font-size: 19px;
-  margin-bottom: 19px;
   font-weight: 700;
   color: rgb(19, 19, 19);
 }
 .pin_in_memo {
   /* position: relative; */
-  display: inline-block;
+  float: right;
   cursor: pointer;
 }
 
-span.memo-description {
+textarea.memo-description {
+  width: 100%;
+  border: none;
+  resize: none;
+  outline: none;
+  background: none;
   color: rgb(19, 19, 19);
   /*#dddddd9e*/
   word-break: break-all;
+}
+
+textarea.memo-description::-webkit-scrollbar {
+  width: 5px;
+}
+
+textarea.memo-description::-webkit-scrollbar-thumb {
+  background: #7c9183;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 
 .memo-area {
@@ -230,8 +280,48 @@ span.memo-description {
 
 .memo-hash {
   display: flex;
+  width: 100px;
   height: 100%;
-  width: fit-content;
+  cursor: pointer;
+  /* border: 2px solid #00ff00; */
+  padding: 0px 10px 0px 10px;
+  line-height: 34px;
+  margin-right: 15px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid #222222;
+}
+
+.memo-hashDot {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  min-width: 30px;
+  max-width: 100px;
+  height: 100%;
+  cursor: pointer;
+  /* border: 2px solid #00ff00; */
+  padding: 0px 10px 0px 10px;
+  line-height: 34px;
+  margin-right: 15px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 1px solid #222222;
+}
+
+.memo-hashEtc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  min-width: 30px;
+  max-width: 95px;
+  height: 100%;
   cursor: pointer;
   /* border: 2px solid #00ff00; */
   padding: 0px 10px 0px 10px;

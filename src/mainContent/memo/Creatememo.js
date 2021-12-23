@@ -42,7 +42,7 @@ const memoInitialState = {
     visible: "1",
 };
 
-export default function CreateMemo({allinfo}) {
+export default function CreateMemo({allinfo, division}) {
 
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
@@ -287,6 +287,16 @@ export default function CreateMemo({allinfo}) {
     }
     /////////////////////////////////////////////////////////////////
 
+    // 부서 번호가 바뀔 때 마다 cmemo의 값을 초기화 해준다
+    useEffect(() => {
+        setCmemo(memoInitialState)
+        setExpandAlarm(false);        
+        setExpandHashTag(false)
+        setExpandPalette(false)
+    }, [division])
+
+
+
     return (
         <div>
             <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
@@ -294,8 +304,8 @@ export default function CreateMemo({allinfo}) {
                     {/* 제목 */}
                     {expandMemo ? (
                        
-                            <Fragment>
-                                <input
+                            <div>
+                                <textarea
                                     type="text"
                                     placeholder="제목"
                                     className="title_input"
@@ -318,7 +328,7 @@ export default function CreateMemo({allinfo}) {
                                     onClick={(e) => {  isPinned() }}
                                 />
                                  )}
-                            </Fragment>
+                            </div>
                     ) : (
                         false
                     )}
@@ -328,12 +338,10 @@ export default function CreateMemo({allinfo}) {
                         ? 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                         : 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    

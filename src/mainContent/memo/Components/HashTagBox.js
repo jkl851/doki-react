@@ -121,8 +121,9 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                 </div>
                 {/* 해시 리스트 */}
                 <div 
+                    className="hashList2"
                     style={{
-                        overflow: "scroll",
+                        overflow: "overlay",
                         msOverflowStyle: "none",
                         width: "100%",
                         height: "208px",
@@ -130,7 +131,6 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                         outline: "none",
                         padding: "5px 10px 3px 3px",
                         position: "relative",
-
                     }}
                 >
                     {
