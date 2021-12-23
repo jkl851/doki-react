@@ -16,7 +16,7 @@ import axios from "axios";
 
 ReactModal.setAppElement("#root");
 
-export default function SidebarMenu({ division }) {
+export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
     // division은 부서 번호
     const [inviteState, setInviteState] = useState({ isOpen: false });
     const [groupPermissionState, setGroupPermissionState] = useState({
@@ -188,7 +188,7 @@ export default function SidebarMenu({ division }) {
         >
             <br />
             <div>DoKi</div>
-            <SidebarHash division={division}/> 
+            <SidebarHash division={division} hashKeyword={hashKeyword} setHashKeyword={setHashKeyword}/> 
             <div>
                 <img src={VectorImg} alt="" />
             </div>

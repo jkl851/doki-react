@@ -34,7 +34,7 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
     const handleKeyword = (e) => {
         setKeyword(e.target.value);
         const filteredDatas = allHashDatas.filter((data) => {
-            return data.name === e.target.value ? data : null;
+            return data.hashName === e.target.value ? data : null;
         });
 
         // keyword가 모든 해시들을 조회해서 맞는 값이 없거나 빈 스트링이면 해시를 만들 수 있는 조건이다
@@ -121,8 +121,9 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                 </div>
                 {/* 해시 리스트 */}
                 <div 
+                    className="hashList2"
                     style={{
-                        overflow: "scroll",
+                        overflow: "overlay",
                         msOverflowStyle: "none",
                         width: "100%",
                         height: "208px",
@@ -130,7 +131,6 @@ const HashTagBox = ({ allHashDatas, setAllHashDatas, cmemo, InputEvent }) => {
                         outline: "none",
                         padding: "5px 10px 3px 3px",
                         position: "relative",
-
                     }}
                 >
                     {

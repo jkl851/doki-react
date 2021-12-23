@@ -162,7 +162,7 @@ const DeptUser = ({
                     textOverflow: "ellipsis",
                   }}
                   type={"text"}
-                  value={userInfoModalData.position}
+                  value={userInfoModalData.position || ''}
                   autoComplete={"off"}
                   placeholder={"직책 정보가 없습니다."}
                   onChange={(e) =>
