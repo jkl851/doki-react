@@ -49,7 +49,6 @@ footer {
 }
 
 .main_note {
-  padding: 150px;
   padding-bottom: 150px;
 }
 
@@ -112,7 +111,6 @@ textarea.description_input::-webkit-scrollbar {
   width: 8px;
 }
 
-
 textarea.description_input::-webkit-scrollbar-thumb {
   background: #7c9183;
   border-radius: 50px;
@@ -121,8 +119,6 @@ textarea.description_input::-webkit-scrollbar-thumb {
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
 }
-
-
 
 .hash_box {
   display: flex;
