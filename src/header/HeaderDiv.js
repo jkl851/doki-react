@@ -28,31 +28,31 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   };
 
   useEffect(async () => {
-    opensocket(deptNo);
+    // opensocket(deptNo);
     getChatMessages();
   }, []);
 
 
-  // 소켓 열기
-  const opensocket = async(deptNo) => {
-    try{
-      //소켓 열기
-      var socket = new SockJS('http://localhost:8080/doki/websocket');
-      var stompClient = Stomp.over(socket); //stomp client 구성
+  // // 소켓 열기
+  // const opensocket = async(deptNo) => {
+  //   try{
+  //     //소켓 열기
+  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
+  //     var stompClient = Stomp.over(socket); //stomp client 구성
 
-      // SockJS와 stomp client를 통해 연결을 시도.
-      stompClient.connect({}, function () {
-        console.log('Chat Socket Connected: ');
-        stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
-          getChatMessages();
-        });
-      });
-        return null;
+  //     // SockJS와 stomp client를 통해 연결을 시도.
+  //     stompClient.connect({}, function () {
+  //       console.log('Chat Socket Connected: ');
+  //       stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
+  //         getChatMessages();
+  //       });
+  //     });
+  //       return null;
     
-    }catch (error){
-        console.log(error);
-    }
-  }
+  //   }catch (error){
+  //       console.log(error);
+  //   }
+  // }
 
   //채팅 알림 받기
   const [chatMessages, setChatMessages] = useState([]);

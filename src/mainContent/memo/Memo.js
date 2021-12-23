@@ -33,11 +33,13 @@ const BackgroundColor = styled.div`
     color: ${({ color }) => color};
   }
 `
-export default function(memo) {
-  // console.log("[각 메모의 정보들]")
-  // console.log(memo)
+export default function(props) {
+  const [ memos, dispatch ] = useContext(MemoContext);
+  var pin = props.pin;
 
+  const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
+
   useEffect(() => {
     getMemoRoom(0);
     // opensocket();
@@ -71,22 +73,29 @@ export default function(memo) {
         stompClient.subscribe(`/topic/0`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
+          // set 들어갈부분
+          setMemo({...memo, [data.name] : data.value})
+
           if(data.handling == 0) {
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!')
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
+
           } else {
               //사용중인 메모 알람 함수
                alert(data.userName + '님이 현재 사용 중 입니다.');
           }
         });
 
+
+        //
         console.log('Memo Out Socket Connected: ');
         stompClient.subscribe(`/topicOut/0`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+          // 소켓 연결 종료
+          stompClient.disconnect();
+
+          console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
         });
-
-
 
 
       });
@@ -98,13 +107,13 @@ export default function(memo) {
   }
 
 
-
+//name : e.target.name, value : e.target.value, handling: memo.handling
 
   //메모 사용중을 보내는 함수
-  const sendMessage = async() => {
+  const sendMessage = async(name, value) => {
 
     console.log('메모 번호1 : ' + memo.no);
-    console.log('handling1 : ' + memo.handling);
+  
       try {
         await axios({
           method: "post",
@@ -115,7 +124,8 @@ export default function(memo) {
             userNo: allinfo.no,
             userName: allinfo.userName,
             memoNo: memo.no,
-            visible: memo.visible
+            name: name,
+            value: value
           }
         })
         .then((response) => {
@@ -143,8 +153,7 @@ export default function(memo) {
               roomId: 0,
               userNo: allinfo.no,
               userName: allinfo.userName,
-              memoNo: memo.no,
-              visible: memo.visible
+              memoNo: memo.no
             }
           })
           .then((response) => {
@@ -158,9 +167,6 @@ export default function(memo) {
           console.error(err);
         }
     };
-
-  const [ memos, dispatch ] = useContext(MemoContext);
-  var pin = memo.pin;
 
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
@@ -224,12 +230,12 @@ export default function(memo) {
   const expandCreateMemo = () => {
       setExpandMemo(true);
       opensocket();
-      sendMessage();
+      // sendMessage();
     };
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
-      // opensocket();
+      // dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
       sendMessageOut();
   };
 
@@ -332,7 +338,10 @@ export default function(memo) {
                                     className="title_input"
                                     value={memo.title}
                                     name="title"
-                                    onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value })  }
+                                    onChange={ (e) => {
+                                      dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
+                                      sendMessage(e.target.name, e.target.value)   
+                                    } }
                                 />
                                 { pin === '1' ? (
                                 <PinnedIcon
@@ -360,7 +369,12 @@ export default function(memo) {
                         className="description_input"
                         value={memo.contents}
                         name="contents"
-                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value }) }
+                        onChange={ 
+                          (e) => { 
+                          dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
+                          sendMessage(e.target.name, e.target.value) 
+                         
+                        }}
                         ></textarea>
             
                       {/* 확장된 메모에 해시가 추가되는 부분 */}
@@ -443,7 +457,7 @@ export default function(memo) {
 
               ):( (memo.handling == 1) ? 
                 (
-                <BackgroundColor className="memo" color={memo.color} style={{border: "5px solid red"}}  onClick={sendMessage} >
+                <BackgroundColor className="memo" color={memo.color} style={{border: "5px solid red"}}>
                    <div style={{display:"inline-block"}} >
                     <h4 className="memo-title" 
                       >{memo.title}</h4>
@@ -516,8 +530,8 @@ export default function(memo) {
                                   />
                                   )}
                    </div>
-
-                    <div className="memo-area" onClick={expandCreateMemo}>
+                      {/*  메모 열리는 부분  */}
+                    <div className="memo-area" onClick={expandCreateMemo}> 
                       <textarea className="memo-description" value={memo.contents} onChange={() => {}}>
                       </textarea>
                     </div>
