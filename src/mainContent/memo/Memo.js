@@ -341,16 +341,16 @@ export default function(memo) {
                       {/* 해시가 하나 이상이면 n개의 해시 중 첫 해시명 표시*/}
                       {
                         memo.hashCount > 0 ?
-                          (<div className="memo-hash">
-                            <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
+                          (<div className="memo-hashDot">
+                            <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName} isDot={true}/> 
                           </div>)
                         : null
                       }
 
                       {
                         memo.hashCount > 1 ?
-                          <div className="memo-hash">
-                            <PostedHash key={memo.hashNo} hashName={'외'+(memo.hashCount-1)+'개'}/> 
+                          <div className="memo-hashEtc">
+                            <PostedHash key={memo.hashNo} hashName={'외 '+(memo.hashCount-1)+'개'}/> 
                           </div>
                         : null
                       }

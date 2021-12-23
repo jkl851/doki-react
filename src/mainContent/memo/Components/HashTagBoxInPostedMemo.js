@@ -125,8 +125,9 @@ const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList, memo}) => {
                 </div>
                 {/* 해시 리스트 */}
                 <div 
+                    className="hashList"
                     style={{
-                        overflow: "scroll",
+                        overflow: "overlay",
                         msOverflowStyle: "none",
                         width: "100%",
                         height: "208px",
