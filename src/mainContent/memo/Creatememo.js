@@ -331,12 +331,10 @@ export default function CreateMemo() {
                         ? 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                         : 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    

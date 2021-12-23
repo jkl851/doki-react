@@ -4,7 +4,7 @@ import "../LoginPage/Login.css";
 import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
-const Login = ({ setAllinfo }) => {
+const Login = ({ setAllinfo, setBypass }) => {
   const refForm = useRef(null);
 
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Login = ({ setAllinfo }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("왓냐");
+    
     e.preventDefault();
     try {
       if (ID === "") {
@@ -44,6 +44,7 @@ const Login = ({ setAllinfo }) => {
             sessionStorage.setItem('User', JSON.stringify(Response.data));
             
             setAllinfo(Response.data);
+            setBypass(true);
             navigate("/doki");
           } 
           else {

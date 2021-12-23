@@ -1,24 +1,45 @@
 import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import Doki from "../Doki";
-
 import { useNavigate } from "react-router-dom";
 
-const Transfer = ({ allinfo }) => {
-  const [session, setSession] = useState(false);
+const Transfer = ({ allinfo, bypass, check, setCheck}) => {
+
   const navigate = useNavigate();
 
+  // 
+  // 로그인 할때마다 세션 아이디 값을 변경해서 변경값을 ResponseEntity에 반환한 다음 
+  // if (Respons.data !== null || Response.data )
+  // 첫번째 세션 아이디값을 저장하고 그 뒤로 부터 틀린거 들어오면 걍 바로 로그인페이지로 리다이렉트
+  // 
+  // 
   useEffect(async (e) => {
     await axios
-      .post("http://localhost:8080/doki/user/checkSession")
+      .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
         
-        if (Response.data === "no session") {
-          setSession(false);
-          navigate("/login");
+        alert(Response.data.no);
+        alert(allinfo.no);
+
+        if(Response.data.no === undefined || Response.data.no === null){
+          if(bypass === true){
+            alert("1-1");
+            navigate("/login");
+          }
+          else if(bypass === false){
+            alert("1-2");
+            navigate("/login");
+          }
         }
-        if (Response.data === "has session") {
-          setSession(true);
+        else if(Response.data.no !== undefined || Response.data.no !== null){
+          if(bypass === true){
+            alert("2-1");
+            setCheck(true);
+          }
+          else if(bypass ===false){
+            alert("2-2");
+            setCheck(true);
+          }
         }
       })
       .catch((Error) => {
@@ -26,17 +47,21 @@ const Transfer = ({ allinfo }) => {
       });
   }, []);
 
-  if (session == true) {
-    console.log('======= all info ======')
-    console.log(allinfo)
-    return (
+  if(check === true){
+    return(
+      
       <Fragment>
-        <Doki allinfo={allinfo} />
+        <Doki allinfo={allinfo}/>
       </Fragment>
     );
-  } else {
-    return <Fragment></Fragment>;
   }
+  else{
+    return(
+      <Fragment>
+      </Fragment>
+    );
+  }
+    
 };
 
 export default Transfer;

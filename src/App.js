@@ -10,13 +10,16 @@ axios.defaults.withCredentials = true;
 export default function App() {
 
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
-  const [site, setSite] = useState();
-
+  const [bypass, setBypass] = useState(false);
+  const [savedID, setSavedID] = useState("");
+  const [check, setCheck] = useState(false);
+  
+  
   return (
     <Router>
       <Routes>
-        <Route exact path="/*" element={<Login setAllinfo={setAllinfo} />}/>
-        <Route exact path="/doki" element={<Transfer allinfo={allinfo} />}/>
+        <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setBypass={setBypass}/>}/>
+        <Route exact path="/doki" element={<Transfer allinfo={allinfo} bypass={bypass} savedID={savedID} setSavedID={setSavedID} check={check} setCheck={setCheck}/>}/>
       </Routes>
     </Router>
   );
