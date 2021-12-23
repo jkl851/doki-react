@@ -6,7 +6,7 @@ import ReactModal from "react-modal";
 import MemoAlarm from "./Components/MemoAlarm";
 import Palette from './Components/Palette';
 import HashTagBoxInPostedMemo from "./Components/HashTagBoxInPostedMemo";
-ss
+
 import styled from 'styled-components';
 import {Button} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,7 +18,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import PinIcon from "@mui/icons-material/PushPinOutlined";
 import PinnedIcon from "@mui/icons-material/PushPin";
 import PostedHash from './Components/PostedHash'
-import axios from "axios";
+
 
 //Stomp
 import SockJS from 'sockjs-client';

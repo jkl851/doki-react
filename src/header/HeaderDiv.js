@@ -8,12 +8,8 @@ import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 // import chatData from '../assets/data/chatMessageData.json';
 
-<<<<<<< HEAD
-export default function HeaderDiv({ allinfo, chat, setChat }) {
-=======
 export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   console.log(allinfo.no);
->>>>>>> 67fb3bbe6d37f5d5ea107861feaa78a2104220bf
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
   const deptNo = allinfo.departmentNo;

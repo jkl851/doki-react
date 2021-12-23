@@ -14,9 +14,8 @@ export default function Doki({ allinfo }) {
 
   return (
     <div id="whole_wrapper">
-      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat} setDivision={setDivision}/>
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
-      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat}/>
+      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat} setDivision={setDivision}/>
         <div id="main_sidebar">
           <Sidebar
             division={division}
