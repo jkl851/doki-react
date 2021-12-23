@@ -10,6 +10,7 @@ export default function Doki({ allinfo }) {
   // [soo] division은 부서 번호이다
   const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);
+  const [hashKeyword, setHashKeyword] = useState('');
 
   return (
     <div id="whole_wrapper">
@@ -20,9 +21,11 @@ export default function Doki({ allinfo }) {
             division={division}
             setDivision={setDivision}
             allinfo={allinfo}
+            hashKeyword={hashKeyword}
+            setHashKeyword={setHashKeyword}
           />
         </div>
-        <MemoIndex division={division} allinfo={allinfo}/>
+        <MemoIndex division={division} allinfo={allinfo} hashKeyword={hashKeyword}/>
       </MemoContext.Provider>
       <SideChat2 allinfo={allinfo} />
     </div>

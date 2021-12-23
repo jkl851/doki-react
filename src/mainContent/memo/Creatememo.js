@@ -42,7 +42,7 @@ const memoInitialState = {
     visible: "1",
 };
 
-export default function CreateMemo({allinfo}) {
+export default function CreateMemo({allinfo, division}) {
 
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
@@ -286,6 +286,16 @@ export default function CreateMemo({allinfo}) {
         return hashRef;
     }
     /////////////////////////////////////////////////////////////////
+
+    // 부서 번호가 바뀔 때 마다 cmemo의 값을 초기화 해준다
+    useEffect(() => {
+        setCmemo(memoInitialState)
+        setExpandAlarm(false);        
+        setExpandHashTag(false)
+        setExpandPalette(false)
+    }, [division])
+
+
 
     return (
         <div>

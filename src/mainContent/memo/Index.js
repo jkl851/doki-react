@@ -8,7 +8,7 @@ import MemoListContainer from "./MemoListContainer";
 
 import "../../assets/css/main_content.css";
 
-export default function App({division, allinfo}) {
+export default function App({division, allinfo, hashKeyword}) {
   const [ memos, dispatch ] = useContext(MemoContext);
 
  
@@ -16,10 +16,13 @@ export default function App({division, allinfo}) {
     const groupNo = division;
     // console.log('groupNo ==> '+ groupNo)
     useEffect(() => {
-      axios.get(`http://localhost:8080/doki/memo/list/${groupNo}`, {withCredentials: true})
+      
+      console.log(hashKeyword);
+      const url = 'http://localhost:8080/doki/memo/list/'+ groupNo + (hashKeyword !== undefined ? ('/'+ hashKeyword) : '' );
+      console.log(url)
+      axios.get(url, {withCredentials: true})
       .then((Response) => {
          
-
           dispatch({ type: 'GET_MEMOLIST', memoListFromServer : Response.data });
           console.log("===== GET MemoList =====");
           console.log(Response.data);
@@ -27,13 +30,13 @@ export default function App({division, allinfo}) {
 
       })
       .catch((Error) => {console.log(Error)})
-  }, [division])
+  }, [division, hashKeyword])
 
 
   return (
     <div className="main_content">
         <div className="main_note">
-            <CreateMemo allinfo={allinfo}/>
+            <CreateMemo allinfo={allinfo} division={division}/>
             <MemoListContainer className="memolistcontainer" title="고정됨" filter = {{pin: "1", visible: "1"} }  />
             <MemoListContainer className="memolistcontainer" title="일반" filter = {{pin: "0", visible: "1"} }  />
         </div>
