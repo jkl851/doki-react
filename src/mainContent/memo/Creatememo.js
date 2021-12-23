@@ -278,12 +278,33 @@ export default function CreateMemo() {
         });
         return hashRef;
     }
+
+    const createMemoOutsideRef = useCreateMemoOutSideRef(null);
+    function useCreateMemoOutSideRef() {
+        const createMemoRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(createMemoRef.current && !createMemoRef.current.contains(event.target)) {
+                    collapseCreateMemo();
+                } else {
+                    expandCreateMemo();
+                }
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return createMemoRef;
+    }
     /////////////////////////////////////////////////////////////////
 
     return (
         <div>
-            <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
-                <BackgroundColor className="input_wrapper" color={cmemo.color}>
+            <form className="create-memo-form">
+                {/* onMouseLeave={collapseCreateMemo}> */}
+                <BackgroundColor className="input_wrapper" color={cmemo.color} ref={createMemoOutsideRef} >
                     {/* 제목 */}
                     {expandMemo ? (
                        
@@ -337,7 +358,7 @@ export default function CreateMemo() {
                         value={cmemo.contents}
                         name="contents"
                         onChange={(e) => { InputEvent(e.target.name, e.target.value); }}
-                        onMouseEnter={expandCreateMemo}
+                        // onMouseEnter={expandCreateMemo}
                     ></textarea>
 
                     {/* 메모에 해시가 추가되는 부분 */}

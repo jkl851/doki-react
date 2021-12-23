@@ -8,12 +8,12 @@ import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki({ allinfo }) {
   // [soo] division은 부서 번호이다
-  const [division, setDivision] = useState(1);
+  const [division, setDivision] = useState(2);
   const [chat, setChat] = useState(false);
 
   return (
     <div id="whole_wrapper">
-      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat}/>
+      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat} setDivision={setDivision}/>
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
         <div id="main_sidebar">
           <Sidebar
@@ -22,7 +22,7 @@ export default function Doki({ allinfo }) {
             allinfo={allinfo}
           />
         </div>
-        <MemoIndex division={division}/>
+        <MemoIndex division={division} allinfo={allinfo}/>
       </MemoContext.Provider>
       <SideChat2 allinfo={allinfo} />
     </div>

@@ -7,8 +7,8 @@ export default function memoList ({filter, title}) {
     // 전역 컨텍스트
     const [ memos, dispatch ] = useContext(MemoContext); 
 
-    console.log('[memos]===============')
-    console.log(memos);
+    // console.log('[memos]===============')
+    // console.log(memos);
 
     // 배열용
     const ref = useRef()

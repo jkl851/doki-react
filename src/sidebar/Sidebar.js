@@ -8,7 +8,7 @@ export default function Sidebar({ division, setDivision, allinfo }) {
 
   return (
     <div className="sidebar" style={{ backgroundColor: "#f2f3f5" }}>
-      <SidebarDivision division={division} setDivision={setDivision} allinfo={allinfo}/>
+      <SidebarDivision division={division} allinfo={allinfo} setDivision={setDivision}/>
       <SidebarMenu division={division} />
     </div>
   );
