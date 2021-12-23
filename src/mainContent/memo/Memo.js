@@ -71,6 +71,8 @@ export default function(memo) {
         stompClient.subscribe(`/topic/0`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
+
+          
           if(data.handling == 0) {
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!')
           } else {

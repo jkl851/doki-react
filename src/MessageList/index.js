@@ -25,7 +25,6 @@ export default function MessageList({allinfo}) {
   const position = allinfo.position;
 
   useEffect(() => {
-    getMemoRoom(0);
     getChatRoom(1);
     getChatRoom(2);
     getChatRoom(3);
@@ -35,17 +34,7 @@ export default function MessageList({allinfo}) {
     opensocket(deptNo);
     // connect();
   }, []);
-    //메모 방(room) 생성 작업
-    const getMemoRoom = async(i) => {
-      await axios
-        .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
-        .then((Response) => {
-          // console.log(Response);
-        })
-        .catch((Error) => {
-          console.log(Error);
-        });
-    };
+
     
   //부서별 채팅방(room) 생성 작업
   const getChatRoom = async(i) => {

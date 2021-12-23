@@ -6,7 +6,10 @@ import ChatAlarmPopover from "./ChatAlarmPopover";
 import MemoAlarmPopover from "./MemoAlarmPopover";
 import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
-// import chatData from '../assets/data/chatMessageData.json';
+
+//Stomp
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   console.log(allinfo.no);
@@ -42,9 +45,22 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
 
       // SockJS와 stomp client를 통해 연결을 시도.
       stompClient.connect({}, function () {
-        console.log('Chat Socket Connected: ');
+        console.log('Chat Alarm Socket Connected: ');
         stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
-          getChatMessages();
+          const data = JSON.parse(msg.body);
+          console.log('HeaderDiv socket sub : ' + JSON.stringify(data));
+          const broadCastingMessage = {}
+          broadCastingMessage.departmentNo = data.roomId;
+          broadCastingMessage.userNo = data.userNo;
+          broadCastingMessage.userName = data.sender;
+          broadCastingMessage.message = data.message;
+          broadCastingMessage.date = data.date;
+          broadCastingMessage.position = data.position;
+
+          
+          console.log('broadCastingMessage : ' + broadCastingMessage);
+          tempMessages.push(broadCastingMessage);
+          setChatMessages([...chatMessages, ...tempMessages]);
         });
       });
         return null;
@@ -54,6 +70,7 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
     }
   }
 
+  var tempMessages = [];
   //채팅 알림 받기
   const [chatMessages, setChatMessages] = useState([]);
   const getChatMessages = async() => {
@@ -61,15 +78,15 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
       .get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
       .then((Response) => {
         // console.log(no + "번 유저 채팅 알림 요청!")
-        // for(let i=0; i<Response.data.length; i++) {
-        //     tempMessages.push(Response.data[i]);
-        // }
-        setChatMessages(Response.data);
+        for(let i=0; i<Response.data.length; i++) {
+            tempMessages.push(Response.data[i]);
+        }
+        // setChatMessages(Response.data);
       })
       .catch((Error) => {
         console.log(Error);
       });
-      // setChatMessages(chatMessages, ...tempMessages);
+      setChatMessages(chatMessages, tempMessages);
   }
 
 
