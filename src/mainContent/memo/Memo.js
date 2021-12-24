@@ -189,7 +189,10 @@ export default function(props) {
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
-      setExpandMemo(true);
+      // 권한이 read only면 확장 x
+      if(props.deptAuth !== '0'){
+        setExpandMemo(true);
+      }
       opensocket();
       // sendMessage();
     };
@@ -213,6 +216,9 @@ export default function(props) {
   }
 
   const handlePinClick = (pin) => {
+    if (props.deptAuth !== '2') {
+      return
+    }
     dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
 
     if(memo === null) {
@@ -227,7 +233,9 @@ export default function(props) {
       })
       .catch(error => 
         console.error(error)
-        )
+      )
+
+        
   }
 
   useEffect(async() => {
@@ -519,7 +527,7 @@ export default function(props) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
+                    <Button className="delete-button" onClick={()=> {props.deptAuth !== '0' ? setCheckDelMemo({ isOpen: true }) : true}}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
                   </BackgroundColor>
