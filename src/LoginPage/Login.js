@@ -4,11 +4,10 @@ import "../LoginPage/Login.css";
 import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
-const Login = ({ setAllinfo, setBypass }) => {
+const Login = ({ setAllinfo, setChecked, checked }) => {
+
   const refForm = useRef(null);
-
   const navigate = useNavigate();
-
   const [ID, setID] = useState("");
   const [Password, setPassword] = useState("");
 
@@ -20,6 +19,16 @@ const Login = ({ setAllinfo, setBypass }) => {
     setPassword(e.target.value);
   };
 
+  // 세션 유지 or 유지 안함
+  const handleChecked = () => {
+    if (checked === true){
+      setChecked(false);
+    }
+    else if (checked === false){
+      setChecked(true);
+    }
+  }
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -39,12 +48,12 @@ const Login = ({ setAllinfo, setBypass }) => {
         )
         .then((Response) => {
           
+          // alert(JSON.stringify(Response.data));
+          
           if (Response.data !== "") {  
             
-            sessionStorage.setItem('User', JSON.stringify(Response.data));
-            
+            localStorage.setItem('User', JSON.stringify(Response.data));
             setAllinfo(Response.data);
-            setBypass(true);
             navigate("/doki");
           } 
           else {
@@ -141,6 +150,13 @@ const Login = ({ setAllinfo, setBypass }) => {
               autoComplete="off"
               onChange={handlePassword}
             />
+          </div>
+          <div style={{display:"inline-block"}}>
+              <input type="checkbox" onClick={handleChecked}/>
+              &nbsp;
+              <span>
+                로그인 유지하기
+              </span>
           </div>
           <div style={{ display: "inline-block", marginBottom: "8vh" }}>
           </div>

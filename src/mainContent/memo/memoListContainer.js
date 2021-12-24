@@ -8,7 +8,7 @@ import { Stomp } from '@stomp/stompjs';
 
 import MemoList from "./MemoList";
 
-export default function memoList ({filter, title}) {
+export default function memoList ({filter, title, deptAuth}) {
     // 전역 컨텍스트
     const [ memos, dispatch ] = useContext(MemoContext); 
     // 세션 유저정보
@@ -130,7 +130,7 @@ export default function memoList ({filter, title}) {
 
     return (
         <div className="memo_list" ref={ref}>
-            <MemoList memos={filteredMemos} cols={cols} title={title} />
+            <MemoList memos={filteredMemos} cols={cols} title={title} deptAuth={deptAuth}/>
         </div>
     );
 };

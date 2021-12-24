@@ -36,7 +36,7 @@ const BackgroundColor = styled.div`
 export default function(memo) {
   // console.log("[각 메모의 정보들]")
   // console.log(memo)
-  // const [memo, setMemo] = useState(props);
+  // const [memo, setMemo] = useState(memo);
   
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin;
@@ -231,8 +231,9 @@ export default function(memo) {
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
+      // 권한이 read only면 확장 x
+
       setExpandMemo(true);
-      //opensocket();
       // sendMessage();
     };
   
@@ -256,7 +257,10 @@ export default function(memo) {
   }
 
   const handlePinClick = (pin) => {
-    dispatch({ type: 'MODIFY_PIN', no: memo.no, name : "pin", value : pin })
+    if (memo.deptAuth === '0') {
+      return
+    }
+    dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
 
     if(memo === null) {
       return true
@@ -270,7 +274,9 @@ export default function(memo) {
       })
       .catch(error => 
         console.error(error)
-        )
+      )
+
+        
   }
 
   useEffect(async() => {
@@ -390,6 +396,7 @@ export default function(memo) {
                       </div>
 
 
+                    { memo.deptAuth !== '0' &&
                     <div className="buttons-div" style={{ textAlign: "center" }}>
                         <div className="alarm-div">
                           <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -448,7 +455,7 @@ export default function(memo) {
                         <Button className="addButton" onClick={addEvent}>
                           <AddIcon className="add-icon" />
                         </Button>
-                      </div>
+                      </div>}
                     </BackgroundColor>
                   </form>
                 </div>
@@ -501,10 +508,13 @@ export default function(memo) {
 
                     </div>
                     
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {memo.deptAuth === '2' &&
                     <Button className="delete-button" 
                           >
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
+                    }
                   </BackgroundColor>
              
                 ):(
@@ -557,9 +567,12 @@ export default function(memo) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
+
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {memo.deptAuth === '2' &&
+                    (<Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
-                    </Button> 
+                    </Button> )}
                   </BackgroundColor>
                   ) 
                 )

@@ -18,7 +18,6 @@ ReactModal.setAppElement("#root");
 
 export default function SidebarMenu({ division , hashKeyword, setHashKeyword, allinfo, setAllinfo, deptAuth, setDeptAuth}) {
 
-    console.log(allinfo)
 
 
     // 부서가 바뀔 때나 그룹 권한이 바뀌었을 때(allinfo의 deptInfo) deptAuth를 바꿔준다(각 부서별 권한만 설정)
@@ -154,7 +153,6 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
             data.no === allinfo.no ? changedAuth = data.auth : true
         })
 
-
         if(changedAuth !== null){
             console.log(changedAuth)
 
@@ -186,9 +184,12 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
                     })
                 })
 
-                
-                const newObj = (Object.assign({}, allinfo, {"deptInfo" : updateAllinfoArr}))
-                setAllinfo(newObj)
+                if(updateAllinfoArr !== null){
+
+                    const newObj = (Object.assign({}, allinfo, {"deptInfo" : updateAllinfoArr}))
+                    console.log(newObj)
+                    setAllinfo(newObj);
+                }
 
             })
             .catch((Error) => {
