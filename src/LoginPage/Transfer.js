@@ -3,7 +3,7 @@ import axios from "axios";
 import Doki from "../Doki";
 import { useNavigate } from "react-router-dom";
 
-const Transfer = ({ allinfo, bypass, check, setCheck}) => {
+const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => {
 
   const navigate = useNavigate();
 
@@ -18,29 +18,52 @@ const Transfer = ({ allinfo, bypass, check, setCheck}) => {
       .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
         
+        alert(Response.data.no)
         if(Response.data.no === undefined || Response.data.no === null){
           if(bypass === true){
-   
+            alert('1')
             navigate("/login");
           }
           else if(bypass === false){
-   
+            alert('2')
             navigate("/login");
           }
         }
         else if(Response.data.no !== undefined || Response.data.no !== null){
           if(bypass === true){
-  
+            alert('3')
             setCheck(true);
           }
           else if(bypass ===false){
-          
+            alert('4')
             setCheck(true);
           }
         }
       })
       .catch((Error) => {
         console.log(Error);
+      });
+
+
+      // 로그인 한 유저의 부서정보와 권한정보를 가져온다
+      await axios
+      .get(
+          "http://localhost:8080/doki/user/getDepartmentUserPermission/" + allinfo.no)
+      .then((Response) => {
+
+        const deptInfo = Response.data.map(data => {
+          return {
+            "departmentNo" : data.departmentNo,
+            "auth" : data.auth
+          }
+        })
+        
+        const newObj = Object.assign({}, allinfo, {"deptInfo" : deptInfo});
+        console.log(newObj)
+        setAllinfo(newObj)
+      })
+      .catch((Error) => {
+          console.log(Error);
       });
   }, []);
 
@@ -55,6 +78,7 @@ const Transfer = ({ allinfo, bypass, check, setCheck}) => {
   else{
     return(
       <Fragment>
+        <Doki allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} />
       </Fragment>
     );
   }

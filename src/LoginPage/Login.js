@@ -21,7 +21,6 @@ const Login = ({ setAllinfo, setBypass }) => {
   };
 
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     try {
       if (ID === "") {
@@ -41,6 +40,7 @@ const Login = ({ setAllinfo, setBypass }) => {
         .then((Response) => {
           
           if (Response.data !== "") {  
+            
             sessionStorage.setItem('User', JSON.stringify(Response.data));
             
             setAllinfo(Response.data);

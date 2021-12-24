@@ -145,7 +145,7 @@ export default function MessageList({allinfo}) {
       scrollToBotton();
   };
 
-  //스크롤 맨밑으로내리기
+  // 스크롤 맨밑으로내리기
   const scrollToBotton = () => {
     scrollRef.current.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
   };
