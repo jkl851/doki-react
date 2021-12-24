@@ -31,7 +31,6 @@ const [checked, setChecked] = useState(false);
 
   else if(checked === false){
 
-    
     const [allinfo, setAllinfo] = useState(JSON.parse(localStorage.getItem('User')));
     sessionStorage.setItem('User', localStorage.getItem('User'));
     localStorage.removeItem('User');
