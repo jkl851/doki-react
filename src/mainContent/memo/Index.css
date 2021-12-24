@@ -226,6 +226,21 @@ label.memo-title {
   font-weight: 700;
   color: rgb(19, 19, 19);
 }
+
+h4.memo-title {
+    /* border: none; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 216px;
+    outline: none;
+    background: none;
+    font-size: 19px;
+    font-weight: 700;
+    color: rgb(19, 19, 19);
+}
+
 .pin_in_memo {
   /* position: relative; */
   float: right;
@@ -234,6 +249,7 @@ label.memo-title {
 
 textarea.memo-description {
   width: 100%;
+  height: fit-content;
   border: none;
   resize: none;
   outline: none;

@@ -189,10 +189,7 @@ export default function(props) {
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
-      // 권한이 read only면 확장 x
-      if(props.deptAuth !== '0'){
-        setExpandMemo(true);
-      }
+      setExpandMemo(true);
       opensocket();
       // sendMessage();
     };
@@ -216,7 +213,7 @@ export default function(props) {
   }
 
   const handlePinClick = (pin) => {
-    if (props.deptAuth !== '2') {
+    if (props.deptAuth === '0') {
       return
     }
     dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
@@ -361,6 +358,7 @@ export default function(props) {
                       </div>
 
 
+                    { props.deptAuth !== '0' &&
                     <div className="buttons-div" style={{ textAlign: "center" }}>
                         <div className="alarm-div">
                           <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -419,7 +417,7 @@ export default function(props) {
                         <Button className="addButton" onClick={addEvent}>
                           <AddIcon className="add-icon" />
                         </Button>
-                      </div>
+                      </div>}
                     </BackgroundColor>
                   </form>
                 </div>
@@ -472,10 +470,13 @@ export default function(props) {
 
                     </div>
                     
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {props.deptAuth === '2' &&
                     <Button className="delete-button" 
                           >
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
+                    }
                   </BackgroundColor>
                 ):(
                   <BackgroundColor className="memo" color={memo.color} >
@@ -527,9 +528,12 @@ export default function(props) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> {props.deptAuth !== '0' ? setCheckDelMemo({ isOpen: true }) : true}}>
+
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {props.deptAuth === '2' &&
+                    (<Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
-                    </Button> 
+                    </Button> )}
                   </BackgroundColor>
                   ) 
                 )
