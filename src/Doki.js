@@ -6,9 +6,9 @@ import SideChat2 from "./sidechat/SideChat2";
 import "../src/assets/css/Doki.css";
 import MemoIndex from "./mainContent/memo/Index";
 
-export default function Doki({ allinfo, setAllinfo, deptInfo }) {
+export default function Doki({ allinfo, setAllinfo }) {
   // [soo] division은 부서 번호이다
-  const [division, setDivision] = useState(2);
+  const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);
   const [hashKeyword, setHashKeyword] = useState('');
   const [deptAuth, setDeptAuth] = useState("0");
@@ -27,7 +27,6 @@ export default function Doki({ allinfo, setAllinfo, deptInfo }) {
             setAllinfo={setAllinfo}
             hashKeyword={hashKeyword}
             setHashKeyword={setHashKeyword}
-            deptInfo={deptInfo}
             deptAuth={deptAuth}
             setDeptAuth={setDeptAuth}
           />

@@ -1,28 +1,49 @@
 import React, { useEffect, useState } from "react";
 import Login from "../src/LoginPage/Login";
 import Transfer from "../src/LoginPage/Transfer";
-// import Change from "../src/LoginPage/changePassword";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import axios from "axios";
 
 
 axios.defaults.withCredentials = true;
+
 export default function App() {
+//
+//  세션 유지로 로그인을 했는데, 새 페이지에서는 세션 유지 안됨. useState값은 넘어가지 않는다. checked 된 값은 해당 탭에서만 존재.
+//
+const [checked, setChecked] = useState(false);
 
-  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
-  const [bypass, setBypass] = useState(false);
-  const [savedID, setSavedID] = useState("");
-  const [check, setCheck] = useState(false);
-  const [site, setSite] = useState();
-  const [deptInfo, setDeptInfo] = useState([]);
+  if(checked === true){
 
-  return (
-    <Router>
-      <Routes>
-        <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setBypass={setBypass}/>}/>
-        <Route exact path="/doki" element={<Transfer allinfo={allinfo} bypass={bypass} savedID={savedID} setSavedID={setSavedID} check={check} setCheck={setCheck} setAllinfo={setAllinfo} deptInfo={deptInfo} setDeptInfo={setDeptInfo}/>}/>
-      </Routes>
-    </Router>
-  );
+    const [allinfo, setAllinfo] = useState(JSON.parse(localStorage.getItem('User')));
+    
+    return (
+      <Router>
+        <Routes>
+          <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setChecked={setChecked} checked={checked}/>}/>
+          <Route exact path="/doki" element={<Transfer allinfo={allinfo}/>}/>
+        </Routes>
+      </Router>
+    );
+
   }
+
+  else if(checked === false){
+
+    
+    const [allinfo, setAllinfo] = useState(JSON.parse(localStorage.getItem('User')));
+    sessionStorage.setItem('User', localStorage.getItem('User'));
+    localStorage.removeItem('User');
+
+    return (
+      <Router>
+        <Routes>
+          <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setChecked={setChecked} checked={checked}/>}/>
+          <Route exact path="/doki" element={<Transfer allinfo={allinfo} setAllinfo={setAllinfo}/>}/>
+        </Routes>
+      </Router>
+    );
+  }
+  
+}
