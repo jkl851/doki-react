@@ -257,7 +257,7 @@ export default function(memo) {
   }
 
   const handlePinClick = (pin) => {
-    if (memo.deptAuth !== '2') {
+    if (memo.deptAuth === '0') {
       return
     }
     dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
@@ -396,6 +396,7 @@ export default function(memo) {
                       </div>
 
 
+                    { props.deptAuth !== '0' &&
                     <div className="buttons-div" style={{ textAlign: "center" }}>
                         <div className="alarm-div">
                           <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -454,7 +455,7 @@ export default function(memo) {
                         <Button className="addButton" onClick={addEvent}>
                           <AddIcon className="add-icon" />
                         </Button>
-                      </div>
+                      </div>}
                     </BackgroundColor>
                   </form>
                 </div>
@@ -507,10 +508,13 @@ export default function(memo) {
 
                     </div>
                     
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {props.deptAuth === '2' &&
                     <Button className="delete-button" 
                           >
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
+                    }
                   </BackgroundColor>
              
                 ):(
@@ -563,9 +567,12 @@ export default function(memo) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> {memo.deptAuth !== '0' ? setCheckDelMemo({ isOpen: true }) : true}}>
+
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {memo.deptAuth === '2' &&
+                    (<Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
-                    </Button> 
+                    </Button> )}
                   </BackgroundColor>
                   ) 
                 )

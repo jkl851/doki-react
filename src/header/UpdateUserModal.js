@@ -78,7 +78,7 @@ export default function MemoAlarmModal({ allinfo }) {
 
       //유저 정보 수정 axios
       await axios({
-        method: "put",
+        method: "post",
         url: `http://localhost:8080/doki/user/update/${no}`,
         //axios 자동으로 json 변환?
         data: {
