@@ -69,6 +69,8 @@ import axios from 'axios'
 
   //메모 사용끝을 보내는 함수
   export const sendMessageOut = async(props) => {
+    console.log('allinfo 넘버어어어어어')
+    console.log(props.allinfo)
     console.log('메모 번호2 : ' + props.no);
       try {
         await axios({

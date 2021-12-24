@@ -16,7 +16,10 @@ const DeptUser = ({
   isSidebar,
   deptUserDatas,
   setDeptUserDatas,
+  allinfo
 }) => {
+
+  const UserImg2= "https://randomuser.me/api/portraits/men/" + (deptUserNo) + ".jpg"
   
   //정우 작업
   //userInfoModal 정보 불러오기
@@ -30,21 +33,21 @@ const DeptUser = ({
     // isSidebar && setProfileIsOpen(true);
 
     //해당 유저 정보 호출 (axios)
+
     await axios
       .get(`http://localhost:8080/doki/user/findUserByDeptNo/${deptUserNo}`)
       .then((Response) => {
-
         setUserInfoModalData({
-          no: Response.data.list.no,
-          id: Response.data.list.id,
-          name: Response.data.list.userName,
-          position: Response.data.list.position,
-          iamge: Response.data.list.image,
-          email: Response.data.list.email,
-          comment: Response.data.list.comment,
+          no: Response.data.no,
+          id: Response.data.id,
+          name: Response.data.userName,
+          position: Response.data.position,
+          iamge: UserImg2,
+          email: Response.data.email,
+          comment: Response.data.comment,
           isOpen: true,
         });
-        console.log(Response.data.list);
+        console.log(Response.data);
       });
   };
 
@@ -77,7 +80,12 @@ const DeptUser = ({
     <Fragment>
       <div>
         {/* src에 image 변수를 이용하여 db 데이터로 적용 시킬 것!! */}
-        <img src={UserImg} alt=""  onClick={() => handleImgClick(deptUserNo)} />
+        {isSidebar ? 
+          <img style={{borderRadius: "100px",width: "64px", height:"64px"}} src={UserImg2} alt=""  onClick={() => handleImgClick(deptUserNo)} />
+          :
+          <img style={{borderRadius: "100px",width: "40px", height:"40px"}} src={UserImg2} alt=""  onClick={() => handleImgClick(deptUserNo)} />
+        }
+        
         <label>{name}</label>
         {/* 
                     radio의name 속성은 각 user별로 동작해야하기 때문에 name을 고유하게 줘야한다
@@ -132,7 +140,7 @@ const DeptUser = ({
         </div>
 
         <div className={userInfoModalStyles["mid"]}>
-          <img src={user} alt="profile" />
+          <img style={{borderRadius:"100px", width:"64px", height:"64px"}} src={UserImg2} alt="profile" />
           <div>{userInfoModalData.name}</div>
         </div>
 
