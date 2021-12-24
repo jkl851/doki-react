@@ -6,10 +6,8 @@ import ChatAlarmPopover from "./ChatAlarmPopover";
 import MemoAlarmPopover from "./MemoAlarmPopover";
 import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
-// import chatData from '../assets/data/chatMessageData.json';
 
 export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
-  console.log(allinfo.no);
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
   const deptNo = allinfo.departmentNo;
@@ -28,31 +26,11 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   };
 
   useEffect(async () => {
-    // opensocket(deptNo);
     getChatMessages();
   }, []);
 
 
-  // // 소켓 열기
-  // const opensocket = async(deptNo) => {
-  //   try{
-  //     //소켓 열기
-  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
-  //     var stompClient = Stomp.over(socket); //stomp client 구성
 
-  //     // SockJS와 stomp client를 통해 연결을 시도.
-  //     stompClient.connect({}, function () {
-  //       console.log('Chat Socket Connected: ');
-  //       stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
-  //         getChatMessages();
-  //       });
-  //     });
-  //       return null;
-    
-  //   }catch (error){
-  //       console.log(error);
-  //   }
-  // }
 
   //채팅 알림 받기
   const [chatMessages, setChatMessages] = useState([]);
@@ -62,6 +40,7 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
       .then((Response) => {
         // console.log(no + "번 유저 채팅 알림 요청!")
         // for(let i=0; i<Response.data.length; i++) {
+        //   console.log(Response.data[i]);
         //     tempMessages.push(Response.data[i]);
         // }
         setChatMessages(Response.data);
@@ -69,7 +48,8 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
       .catch((Error) => {
         console.log(Error);
       });
-      // setChatMessages(chatMessages, ...tempMessages);
+
+      // setChatMessages([...chatMessages, tempMessages]);
   }
 
 

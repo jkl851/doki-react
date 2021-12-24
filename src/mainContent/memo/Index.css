@@ -120,6 +120,8 @@ textarea.description_input::-webkit-scrollbar-thumb {
   -o-border-radius: 50px;
 }
 
+
+
 .hash_box {
   display: flex;
   height: fit-content;

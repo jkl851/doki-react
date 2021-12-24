@@ -9,10 +9,21 @@ import Sales from "../assets/images/영업부.png";
 import Sales_shadow from "../assets/images/영업부_shadow.png";
 import Human from "../assets/images/인사부.png";
 import Human_shadow from "../assets/images/인사부_shadow.png";
-import { openNav2, closeNav2 } from "../assets/js/offcanvas";
+import {  closeNav2 } from "../assets/js/offcanvas";
 
-export default function SidebarDivision({ setDivision, allinfo }) {
 
+export default function SidebarDivision({ setDivision, allinfo}) {
+
+  
+  // 로그인한 유저의 부서 정보들을 담는다
+  var departmentNoArr = [];
+  if(allinfo.deptInfo !== undefined) {
+    departmentNoArr = allinfo.deptInfo.map(data => {
+      return data.departmentNo;
+     })
+  }
+
+  
   return (
     // 여기도 컴포넌트화 필요
 
@@ -42,7 +53,9 @@ export default function SidebarDivision({ setDivision, allinfo }) {
       </div>
       <br />
       <div>
-        {allinfo.departmentNo === 2 ? 
+        { 
+          allinfo.deptInfo === undefined ? 
+            allinfo.departmentNo === 2  ? 
             <img
               style={{
                 width: "50px",
@@ -66,61 +79,149 @@ export default function SidebarDivision({ setDivision, allinfo }) {
               src={Develope_shadow}
               alt="1"
             />
-            }
-      </div>
-      <div>
-      {allinfo.departmentNo === 3 ? 
+            :
+            
+            departmentNoArr.includes(2) ? 
             <img
               style={{
                 width: "50px",
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales}
+              src={Develope}
               alt="1"
               onClick={() => {
-                setDivision(3);
+                setDivision(2);
                 closeNav2();
               }}
             />
            : 
+           (
             <img
               style={{
                 width: "50px",
                 height: "50px",
                 margin: "3px 5px 3px 5px",
               }}
-              src={Sales_shadow}
+              src={Develope_shadow}
               alt="1"
-            />
-            }
+            />)
+            
+      }
+            
       </div>
       <div>
-      {allinfo.departmentNo === 4 ? 
-            <img
-              style={{
-                width: "50px",
-                height: "50px",
-                margin: "3px 5px 3px 5px",
-              }}
-              src={Human}
-              alt="1"
-              onClick={() => {
-                setDivision(4);
-                closeNav2();
-              }}
-            />
-           : 
-            <img
-              style={{
-                width: "50px",
-                height: "50px",
-                margin: "3px 5px 3px 5px",
-              }}
-              src={Human_shadow}
-              alt="1"
-            />
-        }
+      {
+        allinfo.deptInfo === undefined ? 
+        allinfo.departmentNo === 3  ? 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Sales}
+          alt="1"
+          onClick={() => {
+            setDivision(3);
+            closeNav2();
+          }}
+        />
+       : 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Sales_shadow}
+          alt="1"
+        />
+        :
+        
+        departmentNoArr.includes(3) ? 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Sales}
+          alt="1"
+          onClick={() => {
+            setDivision(3);
+            closeNav2();
+          }}
+        />
+       : 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Sales_shadow}
+          alt="1"
+        />
+      }
+      </div>
+      <div>
+      {
+        allinfo.deptInfo === undefined ? 
+        allinfo.departmentNo === 4  ? 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Human}
+          alt="1"
+          onClick={() => {
+            setDivision(4);
+            closeNav2();
+          }}
+        />
+       : 
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Human_shadow}
+          alt="1"
+        />
+        :
+        
+        departmentNoArr.includes(4) ? 
+        (
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Human}
+          alt="1"
+          onClick={() => {
+            setDivision(4);
+            closeNav2();
+          }}
+        />)
+       : 
+        (
+        <img
+          style={{
+            width: "50px",
+            height: "50px",
+            margin: "3px 5px 3px 5px",
+          }}
+          src={Human_shadow}
+          alt="1"
+        />)
+
+      }
        </div>
     </div>
   );

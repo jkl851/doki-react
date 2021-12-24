@@ -25,7 +25,6 @@ export default function MessageList({allinfo}) {
   const position = allinfo.position;
 
   useEffect(() => {
-    getMemoRoom(0);
     getChatRoom(1);
     getChatRoom(2);
     getChatRoom(3);
@@ -35,17 +34,7 @@ export default function MessageList({allinfo}) {
     opensocket(deptNo);
     // connect();
   }, []);
-    //메모 방(room) 생성 작업
-    const getMemoRoom = async(i) => {
-      await axios
-        .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
-        .then((Response) => {
-          // console.log(Response);
-        })
-        .catch((Error) => {
-          console.log(Error);
-        });
-    };
+
     
   //부서별 채팅방(room) 생성 작업
   const getChatRoom = async(i) => {
@@ -93,28 +82,6 @@ export default function MessageList({allinfo}) {
             console.log('broadCastingMessage : ' + broadCastingMessage);
             tempMessages.push(broadCastingMessage);
         
-            //자신을 제외한 부서에 모든 유저에게 보내는 알람
-            // try {
-            //   axios({
-            //     method: "post",
-            //     url: `http://localhost:8080/doki/alarm/sendChatAlarm`,
-            //     params: {
-            //       deptNo: data.roomId,
-            //       userNo: data.userNo,
-            //       message: data.message,
-            //       sender: data.sender
-            //     }
-            //   })
-            //   .then((response) => {
-            //     return response;
-            //   })
-            //   .catch((Error) => {
-            //     console.log(Error);
-            //   })
-
-            // } catch (err) {
-            //   console.error(err);
-            // }
             setMessages([...messages, ...tempMessages]);
             scrollToBotton();
 
@@ -178,7 +145,7 @@ export default function MessageList({allinfo}) {
       scrollToBotton();
   };
 
-  //스크롤 맨밑으로내리기
+  // 스크롤 맨밑으로내리기
   const scrollToBotton = () => {
     scrollRef.current.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
   };
