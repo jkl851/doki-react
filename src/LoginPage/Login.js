@@ -27,18 +27,6 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
       setChecked(true);
     }
   }
-
-
-  // 세션 유지 or 유지 안함
-  const handleChecked = () => {
-    if (checked === true){
-      setChecked(false);
-    }
-    else if (checked === false){
-      setChecked(true);
-    }
-  }
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
