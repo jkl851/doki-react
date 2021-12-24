@@ -24,8 +24,6 @@ import PostedHash from './Components/PostedHash'
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
-import { sendMessage, sendMessageOut } from "./modules/useSocket";
-
 import checkDelMemoStyle from "../../assets/css/modal/checkDelMemoStyle.module.css";
 
 // 컬러 변경 적용
@@ -35,94 +33,141 @@ const BackgroundColor = styled.div`
     color: ${({ color }) => color};
   }
 `
-export default function(props) {
+export default function(memo) {
+  // console.log("[각 메모의 정보들]")
+  // console.log(memo)
+  // const [memo, setMemo] = useState(memo);
+  
   const [ memos, dispatch ] = useContext(MemoContext);
-  var pin = props.pin;
-
-  // console.log(props.deptAuth)
-
-
-  const [memo, setMemo] = useState(props);
+  var pin = memo.pin;
+  
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
-  useEffect(() => {
-    getMemoRoom(0);
-    //opensocket();
-  }, []);
+  // useEffect(() => {
+  //   getMemoRoom(0);
+  //   // opensocket();
+  // }, []);
 
 
-  //메모 방(room) 생성 작업
-  const getMemoRoom = async(i) => {
-    await axios
-      .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
-      .then((Response) => {
-        // console.log(Response);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
-  };
+  // //메모 방(room) 생성 작업
+  // const getMemoRoom = async(i) => {
+  //   await axios
+  //     .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
+  //     .then((Response) => {
+  //       // console.log(Response);
+  //     })
+  //     .catch((Error) => {
+  //       console.log(Error);
+  //     });
+  // };
 
 
-  // 소켓 열기
-  const opensocket = async() => {
-      try{
-      //소켓 열기
-      var socket = new SockJS('http://localhost:8080/doki/websocket');
-      var stompClient = Stomp.over(socket); //stomp client 구성
+  // // 소켓 열기
+  // const opensocket = async() => {
+  //     try{
+  //     //소켓 열기
+  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
+  //     var stompClient = Stomp.over(socket); //stomp client 구성
       
-      // SockJS와 stomp client를 통해 연결을 시도.
-      stompClient.connect({}, function () {
-        console.log('Memo In Socket Connected: ');
+  //     // SockJS와 stomp client를 통해 연결을 시도.
+  //     stompClient.connect({}, function () {
+  //       console.log('Memo In Socket Connected: ');
 
-        stompClient.subscribe(`/topic/0`, (msg) => {
-          const data = JSON.parse(msg.body);
-          // console.log('data : ' + JSON.stringify(data));
-          //console.log('allinfo : ' + JSON.stringify(allinfo));
-          if(data.userNo == allinfo.no ) {
-      
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
-            console.log(' name :' + data.name + 'value :' + data.value + 'userNo : ' + data.userNo );
+  //       stompClient.subscribe(`/topic/0`, (msg) => {
+  //         const data = JSON.parse(msg.body);
+  //         console.log('data : ' + JSON.stringify(data));
+  //         if(data.handling == 0) {
+  //           console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
 
-          } else {
-            setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
-              //사용중인 메모 알람 함수
-               //alert(data.userName + '님이 현재 사용 중 입니다.');
-          }
-        });
+  //         } else {
+  //             //사용중인 메모 알람 함수
+  //              alert(data.userName + '님이 현재 사용 중 입니다.');
+  //         }
+  //       });
 
-
-        //
-        console.log('Memo Out Socket Connected: ');
-        stompClient.subscribe(`/topicOut/0`, (msg) => {
-          const data = JSON.parse(msg.body);
-          console.log('data : ' + JSON.stringify(data));
-          if(data.userNo == allinfo.no ) {
-              // 소켓 연결 종료
-           
-            //stompClient.disconnect();
-
-          } else {
-            // 소켓 연결 종료
-            setMemo({...memo, ["handling"]: "0" })
-            //stompClient.disconnect();
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
-          }
-        });
+  //       console.log('Memo Out Socket Connected: ');
+  //       stompClient.subscribe(`/topicOut/0`, (msg) => {
+  //         const data = JSON.parse(msg.body);
+  //         console.log('data : ' + JSON.stringify(data));
 
 
-      });
-        return null;
+
+  //         console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+  //       });
+
+
+
+
+  //     });
+  //       return null;
     
-    }catch (error){
-        console.log(error);
-    }
-  }
+  //   }catch (error){
+  //       console.log(error);
+  //   }
+  // }
 
 
 //name : e.target.name, value : e.target.value, handling: memo.handling
 
- 
+  // //메모 사용중을 보내는 함수
+  // const sendMessage = async(e) => {
+
+  //   console.log('메모 번호1 : ' + memo.no);
+  
+  //     try {
+  //       await axios({
+  //         method: "post",
+  //         url: `http://localhost:8080/doki/talk/memo`,
+  //         params: {
+  //           handling: memo.handling,
+  //           roomId: 0,
+  //           userNo: allinfo.no,
+  //           userName: allinfo.userName,
+  //           memoNo: memo.no
+  //         }
+  //       })
+  //       .then((response) => {
+  //         return response;
+  //       })
+  //       .catch((Error) => {
+  //         console.log(Error);
+  //       })
+
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  // };
+
+  //   //메모 사용끝을 보내는 함수
+  //   const sendMessageOut = async() => {
+  //     console.log('메모 번호2 : ' + memo.no);
+  //     console.log('handling2 : ' + memo.handling);
+  //       try {
+  //         await axios({
+  //           method: "post",
+  //           url: `http://localhost:8080/doki/talk/memoOut`,
+  //           params: {
+  //             handling: memo.handling,
+  //             roomId: 0,
+  //             userNo: allinfo.no,
+  //             userName: allinfo.userName,
+  //             memoNo: memo.no,
+  //             visible: memo.visible
+  //           }
+  //         })
+  //         .then((response) => {
+  //           return response;
+  //         })
+  //         .catch((Error) => {
+  //           console.log(Error);
+  //         })
+  
+  //       } catch (err) {
+  //         console.error(err);
+  //       }
+  //   };
+
+
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -137,13 +182,7 @@ export default function(props) {
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
   
-  // 메모수정
-  const syncEvent = (e) => {
-    setMemo({...memo, [e.target.name]: e.target.value})
-    sendMessage({no: memo.no, name: e.target.name, value: e.target.value, allinfo: allinfo}) 
-  }
-
-
+  
    // 메모삭제
   const deleteEvent = () => {
     let no = memo.no;
@@ -174,6 +213,9 @@ export default function(props) {
 
       console.log('[수정할 Memo 정보]')
       console.log(memo)
+      
+      // 메모 제출 dispatch for 공동편집
+      dispatch({ type: 'MODIFY_MEMO_SEND', no: memo.no, name: 'contents', value: memo.contents, allinfo: allinfo})
 
       axios
         .post("http://localhost:8080/doki/memo/updateMemo", memo)
@@ -189,15 +231,17 @@ export default function(props) {
 
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
+      // 권한이 read only면 확장 x
+
       setExpandMemo(true);
-      opensocket();
       // sendMessage();
     };
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
-      //dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
-      sendMessageOut({no: memo.no, allinfo: allinfo});
+      // opensocket();
+      dispatch({ type: 'USER_LEAVE_MEMO_SELF', no: memo.no, handling : memo.handling , allinfo: allinfo})
+      // sendMessageOut();
   };
 
   const expandAlarmTable = () => {
@@ -213,6 +257,9 @@ export default function(props) {
   }
 
   const handlePinClick = (pin) => {
+    if (memo.deptAuth === '0') {
+      return
+    }
     dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
 
     if(memo === null) {
@@ -227,7 +274,9 @@ export default function(props) {
       })
       .catch(error => 
         console.error(error)
-        )
+      )
+
+        
   }
 
   useEffect(async() => {
@@ -300,8 +349,7 @@ export default function(props) {
                                     value={memo.title}
                                     name="title"
                                     onChange={ (e) => {
-                                      syncEvent(e)
-                                    /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
+                                      dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
                                     } }
                                 />
                                 { pin === '1' ? (
@@ -330,12 +378,7 @@ export default function(props) {
                         className="description_input"
                         value={memo.contents}
                         name="contents"
-                        onChange={ 
-                          (e) => { 
-                            syncEvent(e)
-                          /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
-                         
-                        }}
+                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo}) }
                         ></textarea>
             
                       {/* 확장된 메모에 해시가 추가되는 부분 */}
@@ -353,6 +396,7 @@ export default function(props) {
                       </div>
 
 
+                    { memo.deptAuth !== '0' &&
                     <div className="buttons-div" style={{ textAlign: "center" }}>
                         <div className="alarm-div">
                           <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -411,7 +455,7 @@ export default function(props) {
                         <Button className="addButton" onClick={addEvent}>
                           <AddIcon className="add-icon" />
                         </Button>
-                      </div>
+                      </div>}
                     </BackgroundColor>
                   </form>
                 </div>
@@ -464,11 +508,15 @@ export default function(props) {
 
                     </div>
                     
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {memo.deptAuth === '2' &&
                     <Button className="delete-button" 
                           >
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
+                    }
                   </BackgroundColor>
+             
                 ):(
                   <BackgroundColor className="memo" color={memo.color} >
                    <div style={{display:"inline-block"}}>
@@ -491,8 +539,8 @@ export default function(props) {
                                   />
                                   )}
                    </div>
-                      {/*  메모 열리는 부분  */}
-                    <div className="memo-area" onClick={expandCreateMemo}> 
+
+                    <div className="memo-area" onClick={expandCreateMemo}>
                       <textarea className="memo-description" value={memo.contents} onChange={() => {}}>
                       </textarea>
                     </div>
@@ -519,9 +567,12 @@ export default function(props) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
+
+                    {/* 관리자만 삭제 버튼 활성화 */}
+                    {memo.deptAuth === '2' &&
+                    (<Button className="delete-button" onClick={()=> setCheckDelMemo({ isOpen: true })}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
-                    </Button> 
+                    </Button> )}
                   </BackgroundColor>
                   ) 
                 )

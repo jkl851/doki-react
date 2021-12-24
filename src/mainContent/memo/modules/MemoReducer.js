@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import update from 'react-addons-update'
-import {sendMessage, sendMessageOut} from './useSocket';
+import {sendMessage, sendMessageOut, sendMemo} from './useSocket';
 
 // export const memoList = data;
 export const memoList = [];
@@ -41,28 +41,47 @@ export const memoReducer = (state, action) => {
       state = newList;
       return state
 
+    case 'MODIFY_MEMO_SEND':
+      sendMemo(action)
+      return state
+
     case 'MODIFY_MEMO_SELF':
-      //sendMessage(action)
+      sendMessage(action)
       var newList = [];
       state.map( (value, index) =>  {
         if (value.no === action.no) { 
         newList.push({...value, [action.name] : action.value}) 
         } else {
         newList.push(value) }
-      }) 
+      })
+      state = newList;
+      return state
+
+    case 'MODIFY_PIN':
+      var newList = [];
+      state.map( (value, index) =>  {
+        if (value.no === action.no) { 
+        newList.push({...value, [action.name] : action.value}) 
+        } else {
+        newList.push(value) }
+      })
+      state = newList;
+      return state
+
+    case 'SHOOT_MEMO':
+      sendMemo(action.memo)
+      var newList = [];
+      state.map( (value, index) =>  {
+        if (value.no === action.memo.no) { 
+        newList.push(action.memo) 
+        } else {
+        newList.push(value) }
+      })
       state = newList;
       return state
 
     case 'USER_LEAVE_MEMO_SELF':
-      //sendMessageOut(action);
-      var newList = [];
-      state.map( (value, index) =>  {
-        if (value.no === action.no) { 
-        newList.push({...value, ["handling"]: "0"}) 
-        } else {
-        newList.push(value) }
-      }) 
-      state = newList;
+      sendMessageOut(action);
       return state
 
     case 'USER_LEAVE_MEMO':
