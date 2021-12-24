@@ -49,7 +49,7 @@ export default function memoList ({filter, title}) {
         console.log('data : ' + JSON.stringify(data));
         console.log(allinfo);
         if( data.userNo == allinfo.no ) {
-          console.log(data.name + ' : ' + data.value );
+
 
           // set 들어갈부분
 
