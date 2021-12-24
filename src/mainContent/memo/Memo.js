@@ -35,82 +35,86 @@ const BackgroundColor = styled.div`
     color: ${({ color }) => color};
   }
 `
-export default function(memo) {
+export default function(props) {
   const [ memos, dispatch ] = useContext(MemoContext);
-  var pin = memo.pin;
-  // const [memo, setMemo] = useState(props);
+  var pin = props.pin;
+
+  const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
-  // useEffect(() => {
-  //   getMemoRoom(0);
-  //   // opensocket();
-  // }, []);
+  useEffect(() => {
+    getMemoRoom(0);
+    //opensocket();
+  }, []);
 
 
-  // //메모 방(room) 생성 작업
-  // const getMemoRoom = async(i) => {
-  //   await axios
-  //     .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
-  //     .then((Response) => {
-  //       // console.log(Response);
-  //     })
-  //     .catch((Error) => {
-  //       console.log(Error);
-  //     });
-  // };
+  //메모 방(room) 생성 작업
+  const getMemoRoom = async(i) => {
+    await axios
+      .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
+      .then((Response) => {
+        // console.log(Response);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
 
 
-  // // 소켓 열기
-  // const opensocket = async() => {
-  //     try{
-  //     //소켓 열기
-  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
-  //     var stompClient = Stomp.over(socket); //stomp client 구성
+  // 소켓 열기
+  const opensocket = async() => {
+      try{
+      //소켓 열기
+      var socket = new SockJS('http://localhost:8080/doki/websocket');
+      var stompClient = Stomp.over(socket); //stomp client 구성
       
-  //     // SockJS와 stomp client를 통해 연결을 시도.
-  //     stompClient.connect({}, function () {
-  //       console.log('Memo In Socket Connected: ');
+      // SockJS와 stomp client를 통해 연결을 시도.
+      stompClient.connect({}, function () {
+        console.log('Memo In Socket Connected: ');
 
-  //       stompClient.subscribe(`/topic/0`, (msg) => {
-  //         const data = JSON.parse(msg.body);
-  //         console.log('data : ' + JSON.stringify(data));
-  //         console.log(allinfo);
-  //         if(data.handling == 0 && data.userNo == allinfo.no ) {
-  //           console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
-  //           // set 들어갈부분
-  //           setMemo({...memo, [data.name] : data.value })
+        stompClient.subscribe(`/topic/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          // console.log('data : ' + JSON.stringify(data));
+          //console.log('allinfo : ' + JSON.stringify(allinfo));
+          if(data.userNo == allinfo.no ) {
+      
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
+            console.log(' name :' + data.name + 'value :' + data.value + 'userNo : ' + data.userNo );
 
-  //         } else {
-  //           setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
-  //             //사용중인 메모 알람 함수
-  //              //alert(data.userName + '님이 현재 사용 중 입니다.');
-  //         }
-  //       });
-
-
-  //       //
-  //       console.log('Memo Out Socket Connected: ');
-  //       stompClient.subscribe(`/topicOut/0`, (msg) => {
-  //         const data = JSON.parse(msg.body);
-  //         console.log('data : ' + JSON.stringify(data));
-  //         if(data.userNo == allinfo.no ) {
-  //           setTimeout(() => {
-  //               // 소켓 연결 종료
-  //             setMemo({...memo, ["handling"]: "0" })
-  //             stompClient.disconnect();
-  //           }, 500);
-  //           console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
-  //         }
-  //       });
+          } else {
+            setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
+              //사용중인 메모 알람 함수
+               //alert(data.userName + '님이 현재 사용 중 입니다.');
+          }
+        });
 
 
-  //     });
-  //       return null;
+        //
+        console.log('Memo Out Socket Connected: ');
+        stompClient.subscribe(`/topicOut/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          console.log('data : ' + JSON.stringify(data));
+          if(data.userNo == allinfo.no ) {
+              // 소켓 연결 종료
+           
+            stompClient.disconnect();
+
+          } else {
+            // 소켓 연결 종료
+            setMemo({...memo, ["handling"]: "0" })
+            stompClient.disconnect();
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+          }
+        });
+
+
+      });
+        return null;
     
-  //   }catch (error){
-  //       console.log(error);
-  //   }
-  // }
+    }catch (error){
+        console.log(error);
+    }
+  }
 
 
 //name : e.target.name, value : e.target.value, handling: memo.handling
@@ -130,7 +134,13 @@ export default function(memo) {
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
   
-  
+  // 메모수정
+  const syncEvent = (e) => {
+    setMemo({...memo, [e.target.name]: e.target.value})
+    sendMessage({no: memo.no, name: e.target.name, value: e.target.value, allinfo: allinfo}) 
+  }
+
+
    // 메모삭제
   const deleteEvent = () => {
     let no = memo.no;
@@ -177,14 +187,14 @@ export default function(memo) {
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
-      // opensocket();
+      opensocket();
       // sendMessage();
     };
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
-      dispatch({ type: 'USER_LEAVE_MEMO_SELF', no: memo.no, handling : memo.handling , allinfo: allinfo})
-      //sendMessageOut();
+      //dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
+      sendMessageOut({no: memo.no, allinfo: allinfo});
   };
 
   const expandAlarmTable = () => {
@@ -287,8 +297,8 @@ export default function(memo) {
                                     value={memo.title}
                                     name="title"
                                     onChange={ (e) => {
-                                  
-                                      dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
+                                      syncEvent(e)
+                                    /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                                     } }
                                 />
                                 { pin === '1' ? (
@@ -319,8 +329,8 @@ export default function(memo) {
                         name="contents"
                         onChange={ 
                           (e) => { 
-                          // sendMessage( {no: memo.no, name : e.target.name, value : e.target.value,  allinfo: allinfo} ) 
-                          dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
+                            syncEvent(e)
+                          /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                          
                         }}
                         ></textarea>

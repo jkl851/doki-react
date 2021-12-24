@@ -14,13 +14,14 @@ export default function App() {
   const [bypass, setBypass] = useState(false);
   const [savedID, setSavedID] = useState("");
   const [check, setCheck] = useState(false);
-
+  const [site, setSite] = useState();
+  const [deptInfo, setDeptInfo] = useState([]);
 
   return (
     <Router>
       <Routes>
         <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setBypass={setBypass}/>}/>
-        <Route exact path="/doki" element={<Transfer allinfo={allinfo} bypass={bypass} savedID={savedID} setSavedID={setSavedID} check={check} setCheck={setCheck}/>}/>
+        <Route exact path="/doki" element={<Transfer allinfo={allinfo} bypass={bypass} savedID={savedID} setSavedID={setSavedID} check={check} setCheck={setCheck} setAllinfo={setAllinfo} deptInfo={deptInfo} setDeptInfo={setDeptInfo}/>}/>
       </Routes>
     </Router>
   );
