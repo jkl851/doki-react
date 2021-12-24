@@ -54,7 +54,6 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
             
             localStorage.setItem('User', JSON.stringify(Response.data));
             setAllinfo(Response.data);
-            setBypass(true);
             navigate("/doki");
           } 
           else {

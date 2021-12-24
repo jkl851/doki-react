@@ -39,18 +39,12 @@ export default function(props) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = props.pin;
 
-<<<<<<< HEAD
-  const [memo, setMemo] = useState(props);
-  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
-
-=======
   // console.log(props.deptAuth)
 
 
   const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
->>>>>>> 3fed88fbd2d577f4b3eda3e80b8ff2b496fdcec4
   useEffect(() => {
     getMemoRoom(0);
     //opensocket();
@@ -106,20 +100,12 @@ export default function(props) {
           if(data.userNo == allinfo.no ) {
               // 소켓 연결 종료
            
-<<<<<<< HEAD
-            stompClient.disconnect();
-=======
             //stompClient.disconnect();
->>>>>>> 3fed88fbd2d577f4b3eda3e80b8ff2b496fdcec4
 
           } else {
             // 소켓 연결 종료
             setMemo({...memo, ["handling"]: "0" })
-<<<<<<< HEAD
-            stompClient.disconnect();
-=======
             //stompClient.disconnect();
->>>>>>> 3fed88fbd2d577f4b3eda3e80b8ff2b496fdcec4
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
           }
         });

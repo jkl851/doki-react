@@ -18,7 +18,7 @@ const Transfer = ({ allinfo, setAllinfo}) => {
     await axios
       .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
-
+        
         if(Response.data.no === undefined || Response.data.no === null){
             navigate("/login");
         }
@@ -34,7 +34,7 @@ const Transfer = ({ allinfo, setAllinfo}) => {
       });
     }, []);
 
-    if(allinfo.no !== null){
+    if(allinfo !== null){
       useEffect(()=> {
         axios
         .get(
