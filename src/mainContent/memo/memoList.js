@@ -29,6 +29,7 @@ const Column = styled.div`
 `
 
 const MemoList = ( {memos , cols , title}) => {
+    
     const memoList = memos.map( (value, index) => <Memo 
                                                         key={value.no}
                                                         no={value.no} 
@@ -49,7 +50,7 @@ const MemoList = ( {memos , cols , title}) => {
                                                         hashName={value.hashName}
                                                         hashCount={value.hashCount}
                                                         handling={value.handling}
-                                                        // opensocket={opensocket}
+                                                        
                                                         />)
     var output = []
 
