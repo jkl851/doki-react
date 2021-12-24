@@ -132,7 +132,7 @@ export default function memoList ({filter, title, deptAuth}) {
 
     return (
         <div className="memo_list" ref={ref}>
-            <MemoList memos={filteredMemos} cols={cols} title={title}/>
+            <MemoList memos={filteredMemos} cols={cols} title={title} deptAuth={deptAuth}/>
         </div>
     );
 };

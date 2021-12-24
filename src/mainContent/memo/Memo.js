@@ -39,6 +39,9 @@ export default function(props) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = props.pin;
 
+  // console.log(props.deptAuth)
+
+
   const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 

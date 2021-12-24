@@ -38,45 +38,51 @@ const Transfer = ({ allinfo, bypass, check, setCheck, setAllinfo}) => {
       .catch((Error) => {
         console.log(Error);
       });
+    }, []);
 
-
-      // 로그인 한 유저의 부서정보와 권한정보를 가져온다
-      await axios
-      .get(
-          "http://localhost:8080/doki/user/getDepartmentUserPermission/" + allinfo.no)
-      .then((Response) => {
-
-        const deptInfo = Response.data.map(data => {
-          return {
-            "departmentNo" : data.departmentNo,
-            "auth" : data.auth
-          }
+    if(allinfo.no !== null){
+      useEffect(()=> {
+        axios
+        .get(
+            "http://localhost:8080/doki/user/getDepartmentUserPermission/" + allinfo.no)
+        .then((Response) => {
+    
+          const deptInfo = Response.data.map(data => {
+            return {
+              "departmentNo" : data.departmentNo,
+              "auth" : data.auth
+            }
+          })
+          
+          const newObj = Object.assign({}, allinfo, {"deptInfo" : deptInfo});
+          console.log(newObj)
+          setAllinfo(newObj)
         })
-        
-        const newObj = Object.assign({}, allinfo, {"deptInfo" : deptInfo});
-        console.log(newObj)
-        setAllinfo(newObj)
-      })
-      .catch((Error) => {
-          console.log(Error);
-      });
-  }, []);
-
-  if(check === true){
-    return(
+        .catch((Error) => {
+            console.log(Error);
+        });
+      }, [])
       
-      <Fragment>
-        <Doki allinfo={allinfo} setAllinfo={setAllinfo}/>
-      </Fragment>
-    );
-  }
-  else{
-    return(
-      <Fragment>
-        <Doki allinfo={allinfo} setAllinfo={setAllinfo} />
-      </Fragment>
-    );
-  }
+
+    }
+    
+    if(check === true){
+      return(
+        
+        <Fragment>
+          <Doki allinfo={allinfo} setAllinfo={setAllinfo}/>
+        </Fragment>
+      );
+    }
+    else{
+      return(
+        <Fragment>
+          <Doki allinfo={allinfo} setAllinfo={setAllinfo} />
+        </Fragment>
+      );
+    }
+  
+  
     
 };
 

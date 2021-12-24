@@ -16,8 +16,9 @@ export default function SidebarDivision({ setDivision, allinfo}) {
 
   
   // 로그인한 유저의 부서 정보들을 담는다
+  console.log(allinfo)
   var departmentNoArr = [];
-  if(allinfo.deptInfo !== undefined) {
+  if(allinfo.deptInfo !== undefined  ) {
     departmentNoArr = allinfo.deptInfo.map(data => {
       return data.departmentNo;
      })
