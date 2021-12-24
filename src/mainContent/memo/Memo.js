@@ -396,7 +396,7 @@ export default function(memo) {
                       </div>
 
 
-                    { props.deptAuth !== '0' &&
+                    { memo.deptAuth !== '0' &&
                     <div className="buttons-div" style={{ textAlign: "center" }}>
                         <div className="alarm-div">
                           <Button className="alarmButton" onClick={expandAlarmTable}>
@@ -509,7 +509,7 @@ export default function(memo) {
                     </div>
                     
                     {/* 관리자만 삭제 버튼 활성화 */}
-                    {props.deptAuth === '2' &&
+                    {memo.deptAuth === '2' &&
                     <Button className="delete-button" 
                           >
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
