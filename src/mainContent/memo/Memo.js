@@ -36,7 +36,7 @@ const BackgroundColor = styled.div`
 export default function(memo) {
   // console.log("[각 메모의 정보들]")
   // console.log(memo)
-  // const [memo, setMemo] = useState(props);
+  // const [memo, setMemo] = useState(memo);
   
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin;
@@ -232,10 +232,8 @@ export default function(memo) {
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       // 권한이 read only면 확장 x
-      if(props.deptAuth !== '0'){
-        setExpandMemo(true);
-      }
-      opensocket();
+
+      setExpandMemo(true);
       // sendMessage();
     };
   
@@ -259,7 +257,7 @@ export default function(memo) {
   }
 
   const handlePinClick = (pin) => {
-    if (props.deptAuth !== '2') {
+    if (memo.deptAuth !== '2') {
       return
     }
     dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
@@ -565,7 +563,7 @@ export default function(memo) {
 
                     </div>
 
-                    <Button className="delete-button" onClick={()=> {props.deptAuth !== '0' ? setCheckDelMemo({ isOpen: true }) : true}}>
+                    <Button className="delete-button" onClick={()=> {memo.deptAuth !== '0' ? setCheckDelMemo({ isOpen: true }) : true}}>
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
                   </BackgroundColor>
