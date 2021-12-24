@@ -97,12 +97,12 @@ export default function(props) {
           if(data.userNo == allinfo.no ) {
               // 소켓 연결 종료
            
-            stompClient.disconnect();
+            //stompClient.disconnect();
 
           } else {
             // 소켓 연결 종료
             setMemo({...memo, ["handling"]: "0" })
-            stompClient.disconnect();
+            //stompClient.disconnect();
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
           }
         });
