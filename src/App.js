@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Routes, Route } from "react-router";
 import axios from "axios";
 
+
 axios.defaults.withCredentials = true;
 
 export default function App() {
@@ -42,7 +43,7 @@ const [checked, setChecked] = useState(false);
       <Router>
         <Routes>
           <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setChecked={setChecked} checked={checked}/>}/>
-          <Route exact path="/doki" element={<Transfer allinfo={allinfo}/>}/>
+          <Route exact path="/doki" element={<Transfer allinfo={allinfo} setAllinfo={setAllinfo}/>}/>
         </Routes>
       </Router>
     );

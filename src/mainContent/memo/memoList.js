@@ -28,7 +28,11 @@ const Column = styled.div`
   grid-auto-rows: max-content;
 `
 
+<<<<<<< HEAD
 const MemoList = ( {memos , cols , title}) => {
+=======
+const MemoList = ( {memos , cols , title, deptAuth}) => {
+>>>>>>> 3fed88fbd2d577f4b3eda3e80b8ff2b496fdcec4
     
     const memoList = memos.map( (value, index) => <Memo 
                                                         key={value.no}
@@ -50,7 +54,11 @@ const MemoList = ( {memos , cols , title}) => {
                                                         hashName={value.hashName}
                                                         hashCount={value.hashCount}
                                                         handling={value.handling}
+<<<<<<< HEAD
                                                         
+=======
+                                                        deptAuth={deptAuth}
+>>>>>>> 3fed88fbd2d577f4b3eda3e80b8ff2b496fdcec4
                                                         />)
     var output = []
 
