@@ -1,9 +1,13 @@
 import { createContext } from "react";
 import update from 'react-addons-update'
+import {opensocket, sendMessage, sendMessageOut} from './useSocket';
 
 // export const memoList = data;
 export const memoList = [];
 export const MemoContext = createContext(memoList);
+
+
+opensocket();
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
@@ -29,6 +33,7 @@ export const memoReducer = (state, action) => {
       return  state.filter((currentValue, indx) =>  currentValue.no !== action.no)
 
     case 'MODIFY_MEMO':
+      // sendMessage(action.no, action.handling, action.allinfo)
       var newList = [];
       state.map( (value, index) =>  {
         if (value.no === action.no) { 
@@ -38,6 +43,12 @@ export const memoReducer = (state, action) => {
       }) 
       state = newList;
       return state
+
+    case 'USER_LEAVE_MEMO':
+      // sendMessageOut(action.no, action.handling, action.allinfo);
+      return [
+        ...state
+      ]
 
     case 'CHANGE_COLOR':
       return {

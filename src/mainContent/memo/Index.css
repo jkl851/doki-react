@@ -49,7 +49,6 @@ footer {
 }
 
 .main_note {
-  padding: 150px;
   padding-bottom: 150px;
 }
 
@@ -111,7 +110,6 @@ textarea.description_input {
 textarea.description_input::-webkit-scrollbar {
   width: 8px;
 }
-
 
 textarea.description_input::-webkit-scrollbar-thumb {
   background: #7c9183;

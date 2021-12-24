@@ -285,6 +285,26 @@ export default function CreateMemo({allinfo, division}) {
         });
         return hashRef;
     }
+
+    const createMemoOutsideRef = useCreateMemoOutSideRef(null);
+    function useCreateMemoOutSideRef() {
+        const createMemoRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(createMemoRef.current && !createMemoRef.current.contains(event.target)) {
+                    collapseCreateMemo();
+                } else {
+                    expandCreateMemo();
+                }
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return createMemoRef;
+    }
     /////////////////////////////////////////////////////////////////
 
     // 부서 번호가 바뀔 때 마다 cmemo의 값을 초기화 해준다
@@ -299,8 +319,9 @@ export default function CreateMemo({allinfo, division}) {
 
     return (
         <div>
-            <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
-                <BackgroundColor className="input_wrapper" color={cmemo.color}>
+            <form className="create-memo-form">
+                {/* onMouseLeave={collapseCreateMemo}> */}
+                <BackgroundColor className="input_wrapper" color={cmemo.color} ref={createMemoOutsideRef} >
                     {/* 제목 */}
                     {expandMemo ? (
                        
@@ -353,7 +374,7 @@ export default function CreateMemo({allinfo, division}) {
                         value={cmemo.contents}
                         name="contents"
                         onChange={(e) => { InputEvent(e.target.name, e.target.value); }}
-                        onMouseEnter={expandCreateMemo}
+                        // onMouseEnter={expandCreateMemo}
                     ></textarea>
 
                     {/* 메모에 해시가 추가되는 부분 */}
