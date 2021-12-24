@@ -8,7 +8,7 @@ import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki({ allinfo, setAllinfo, deptInfo }) {
   // [soo] division은 부서 번호이다
-  const [division, setDivision] = useState(2);
+  const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);
   const [hashKeyword, setHashKeyword] = useState('');
   const [deptAuth, setDeptAuth] = useState("0");
