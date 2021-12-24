@@ -3,7 +3,7 @@ import axios from "axios";
 import Doki from "../Doki";
 import { useNavigate } from "react-router-dom";
 
-const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => {
+const Transfer = ({ allinfo, bypass, check, setCheck, setAllinfo}) => {
 
   const navigate = useNavigate();
 
@@ -66,14 +66,14 @@ const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => 
     return(
       
       <Fragment>
-        <Doki allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} />
+        <Doki allinfo={allinfo} setAllinfo={setAllinfo}/>
       </Fragment>
     );
   }
   else{
     return(
       <Fragment>
-        <Doki allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} />
+        <Doki allinfo={allinfo} setAllinfo={setAllinfo} />
       </Fragment>
     );
   }

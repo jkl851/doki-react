@@ -186,6 +186,7 @@ export default function(props) {
   // 토글에 따른 메모 버튼 활성화
   const expandCreateMemo = () => {
       setExpandMemo(true);
+      getMemoRoom(memo.no);
       opensocket();
       // sendMessage();
     };

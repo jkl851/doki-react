@@ -188,7 +188,7 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
 
                 
                 const newObj = (Object.assign({}, allinfo, {"deptInfo" : updateAllinfoArr}))
-                setAllinfo(newObj)
+                setAllinfo(newObj);
 
             })
             .catch((Error) => {
