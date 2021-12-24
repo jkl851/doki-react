@@ -36,7 +36,6 @@ const BackgroundColor = styled.div`
 export default function(props) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = props.pin;
-
   const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
@@ -73,15 +72,16 @@ export default function(props) {
         stompClient.subscribe(`/topic/0`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
-          // set 들어갈부분
-          setMemo({...memo, [data.name] : data.value})
-
-          if(data.handling == 0) {
+          console.log(allinfo);
+          if(data.handling == 0 && data.userNo == allinfo.no ) {
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
+            // set 들어갈부분
+            setMemo({...memo, [data.name] : data.value })
 
           } else {
+            setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
               //사용중인 메모 알람 함수
-               alert(data.userName + '님이 현재 사용 중 입니다.');
+               //alert(data.userName + '님이 현재 사용 중 입니다.');
           }
         });
 
@@ -91,10 +91,14 @@ export default function(props) {
         stompClient.subscribe(`/topicOut/0`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
-          // 소켓 연결 종료
-          stompClient.disconnect();
-
-          console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+          if(data.userNo == allinfo.no ) {
+            setTimeout(() => {
+                // 소켓 연결 종료
+              setMemo({...memo, ["handling"]: "0" })
+              stompClient.disconnect();
+            }, 500);
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+          }
         });
 
 
@@ -113,7 +117,7 @@ export default function(props) {
   const sendMessage = async(name, value) => {
 
     console.log('메모 번호1 : ' + memo.no);
-  
+    console.log(name + "  =====   " + value);
       try {
         await axios({
           method: "post",
@@ -339,8 +343,8 @@ export default function(props) {
                                     value={memo.title}
                                     name="title"
                                     onChange={ (e) => {
-                                      dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
                                       sendMessage(e.target.name, e.target.value)   
+                                      /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                                     } }
                                 />
                                 { pin === '1' ? (
@@ -371,8 +375,8 @@ export default function(props) {
                         name="contents"
                         onChange={ 
                           (e) => { 
-                          dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
                           sendMessage(e.target.name, e.target.value) 
+                          /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                          
                         }}
                         ></textarea>

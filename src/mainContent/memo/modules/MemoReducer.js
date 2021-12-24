@@ -33,7 +33,7 @@ export const memoReducer = (state, action) => {
       return  state.filter((currentValue, indx) =>  currentValue.no !== action.no)
 
     case 'MODIFY_MEMO':
-      sendMessage(action.no, action.handling, action.allinfo)
+      // sendMessage(action.no, action.handling, action.allinfo)
       var newList = [];
       state.map( (value, index) =>  {
         if (value.no === action.no) { 
@@ -45,7 +45,7 @@ export const memoReducer = (state, action) => {
       return state
 
     case 'USER_LEAVE_MEMO':
-      sendMessageOut(action.no, action.handling, action.allinfo);
+      // sendMessageOut(action.no, action.handling, action.allinfo);
       return [
         ...state
       ]

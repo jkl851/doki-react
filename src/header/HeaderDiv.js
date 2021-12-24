@@ -7,12 +7,7 @@ import MemoAlarmPopover from "./MemoAlarmPopover";
 import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 
-//Stomp
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
-
 export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
-  console.log(allinfo.no);
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
   const deptNo = allinfo.departmentNo;
@@ -31,46 +26,12 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   };
 
   useEffect(async () => {
-    // opensocket(deptNo);
     getChatMessages();
   }, []);
 
 
-  // // 소켓 열기
-  // const opensocket = async(deptNo) => {
-  //   try{
-  //     //소켓 열기
-  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
-  //     var stompClient = Stomp.over(socket); //stomp client 구성
 
-      // SockJS와 stomp client를 통해 연결을 시도.
-      stompClient.connect({}, function () {
-        console.log('Chat Alarm Socket Connected: ');
-        stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
-          const data = JSON.parse(msg.body);
-          console.log('HeaderDiv socket sub : ' + JSON.stringify(data));
-          const broadCastingMessage = {}
-          broadCastingMessage.departmentNo = data.roomId;
-          broadCastingMessage.userNo = data.userNo;
-          broadCastingMessage.userName = data.sender;
-          broadCastingMessage.message = data.message;
-          broadCastingMessage.date = data.date;
-          broadCastingMessage.position = data.position;
 
-          
-          console.log('broadCastingMessage : ' + broadCastingMessage);
-          tempMessages.push(broadCastingMessage);
-          setChatMessages([...chatMessages, ...tempMessages]);
-        });
-      });
-        return null;
-    
-  //   }catch (error){
-  //       console.log(error);
-  //   }
-  // }
-
-  var tempMessages = [];
   //채팅 알림 받기
   const [chatMessages, setChatMessages] = useState([]);
   const getChatMessages = async() => {
@@ -78,15 +39,17 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
       .get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
       .then((Response) => {
         // console.log(no + "번 유저 채팅 알림 요청!")
-        for(let i=0; i<Response.data.length; i++) {
-            tempMessages.push(Response.data[i]);
-        }
-        // setChatMessages(Response.data);
+        // for(let i=0; i<Response.data.length; i++) {
+        //   console.log(Response.data[i]);
+        //     tempMessages.push(Response.data[i]);
+        // }
+        setChatMessages(Response.data);
       })
       .catch((Error) => {
         console.log(Error);
       });
-      setChatMessages(chatMessages, tempMessages);
+
+      // setChatMessages([...chatMessages, tempMessages]);
   }
 
 

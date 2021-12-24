@@ -82,28 +82,6 @@ export default function MessageList({allinfo}) {
             console.log('broadCastingMessage : ' + broadCastingMessage);
             tempMessages.push(broadCastingMessage);
         
-            //자신을 제외한 부서에 모든 유저에게 보내는 알람
-            // try {
-            //   axios({
-            //     method: "post",
-            //     url: `http://localhost:8080/doki/alarm/sendChatAlarm`,
-            //     params: {
-            //       deptNo: data.roomId,
-            //       userNo: data.userNo,
-            //       message: data.message,
-            //       sender: data.sender
-            //     }
-            //   })
-            //   .then((response) => {
-            //     return response;
-            //   })
-            //   .catch((Error) => {
-            //     console.log(Error);
-            //   })
-
-            // } catch (err) {
-            //   console.error(err);
-            // }
             setMessages([...messages, ...tempMessages]);
             scrollToBotton();
 
