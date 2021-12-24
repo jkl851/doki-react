@@ -42,7 +42,7 @@ export const memoReducer = (state, action) => {
       return state
 
     case 'MODIFY_MEMO_SEND':
-      sendMessage(action)
+      sendMemo(action)
       return state
 
     case 'MODIFY_MEMO_SELF':

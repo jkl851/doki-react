@@ -49,7 +49,7 @@ const MemoList = ( {memos , cols , title}) => {
                                                         hashName={value.hashName}
                                                         hashCount={value.hashCount}
                                                         handling={value.handling}
-                                                        
+                                                        handleUser={value.handleUser}
                                                         />)
     var output = []
 

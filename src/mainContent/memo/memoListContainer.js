@@ -67,7 +67,7 @@ export default function memoList ({filter, title}) {
       console.log('Memo Out Socket Connected: ');
       stompClient.subscribe(`/topicOut/0`, (msg) => {
         const data = JSON.parse(msg.body);
-        console.log('data : ' + JSON.stringify(data));
+        // console.log('data : ' + JSON.stringify(data));
         if(data.userNo == allinfo.no ) {
 
             // 소켓 연결 종료
@@ -130,7 +130,7 @@ export default function memoList ({filter, title}) {
 
     return (
         <div className="memo_list" ref={ref}>
-            <MemoList memos={filteredMemos} cols={cols} title={title}/>
+            <MemoList memos={filteredMemos} cols={cols} title={title} />
         </div>
     );
 };

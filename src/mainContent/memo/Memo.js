@@ -37,7 +37,7 @@ export default function(memo) {
   // console.log("[각 메모의 정보들]")
   // console.log(memo)
   // const [memo, setMemo] = useState(props);
-
+  
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin;
   
@@ -506,6 +506,7 @@ export default function(memo) {
                         <DeleteOutlineIcon className="delete-icon" color={memo.color}/>
                     </Button> 
                   </BackgroundColor>
+             
                 ):(
                   <BackgroundColor className="memo" color={memo.color} >
                    <div style={{display:"inline-block"}}>
