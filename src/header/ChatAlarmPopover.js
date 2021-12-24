@@ -15,7 +15,7 @@ import { Stomp } from '@stomp/stompjs';
 export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo }) {
   //챗 알람 Modal
   const no = JSON.stringify(allinfo.no);
-  const deptNo = allinfo.departmentNo;
+  const deptNo = allinfo.departmentNo * 10;
 
   const target = useRef(null);
   const [chatAlarmPopover, setChatAlarmPopover] = useState({ isOpen: false });
@@ -41,9 +41,28 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
 
   //알람 빨간불 갯수 표시
   useEffect(() => {
+    getChatRoom(10);
+    getChatRoom(20);
+    getChatRoom(30);
+    getChatRoom(40);
+    getChatRoom(50);
     opensocket(deptNo);
     getAlarmCount();
   }, []);
+
+
+    //부서별 채팅알람방(room) 생성 작업
+    const getChatRoom = async(i) => {
+      await axios
+        .post(`http://localhost:8080/doki/talk/topic/${i}`)
+        .then((Response) => {
+          // console.log(Response);
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    };
+
 
   // 소켓 열기
   const opensocket = async(deptNo) => {

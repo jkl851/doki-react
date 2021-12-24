@@ -16,6 +16,7 @@ import { Stomp } from '@stomp/stompjs';
 export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo }) {
   //메모 알람 Modal
   const no = JSON.stringify(allinfo.no);
+  const deptNo = allinfo.departmentNo * 100;
   const target = useRef(null);
   const [memoAlarmPopover, setMemoAlarmPopover] = useState({ isOpen: false });
 
@@ -26,16 +27,30 @@ export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo })
     });
   };
 
-
-
-//알람 빨간불 갯수 표시
 useEffect(() => {
-  opensocket();
+  getMemoAlarmRoom(100);
+  getMemoAlarmRoom(200);
+  getMemoAlarmRoom(300);
+  getMemoAlarmRoom(400);
+  getMemoAlarmRoom(500);
+  opensocket(deptNo);
   getAlarmCount();
 }, []);
 
+  //부서별 메모방(room) 생성 작업
+  const getMemoAlarmRoom = async(i) => {
+    await axios
+      .post(`http://localhost:8080/doki/talk/memoAlarmRoom/${i}`)
+      .then((Response) => {
+        // console.log(Response);
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  };
+
 // 소켓 열기
-const opensocket = async() => {
+const opensocket = async(deptNo) => {
   try{
     //소켓 열기
     var socket = new SockJS('http://localhost:8080/doki/websocket');
@@ -43,8 +58,8 @@ const opensocket = async() => {
 
     // SockJS와 stomp client를 통해 연결을 시도.
     stompClient.connect({}, function () {
-      console.log('Memo Alarm Socket Connected: ');
-      stompClient.subscribe(`/topicOut/0`, (msg) => {
+      console.log('Memo Alarm Socket Connected: ' + `${deptNo}`);
+      stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
         const data = JSON.parse(msg.body);
         console.log('memoPopOver socket sub : ' + JSON.stringify(data));
         setCount(+1);

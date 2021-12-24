@@ -128,7 +128,61 @@ export default function(props) {
   // 삭제 확인 모달
   const [checkDelMemo, setCheckDelMemo] = useState({
     isOpen: false,
+
   });
+
+
+
+  //MemoAlarm Pub 작업
+  const sendDeleteAlarm = async() => {
+      try {
+        await axios({
+            method: "post",
+            url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+            params: {
+            roomId: allinfo.departmentNo * 100,
+            memoNo: memo.no,
+            title: memo.title,
+            senderNo: allinfo.no,
+            messageType: 'delete'
+            }
+        })
+        .then((response) => {
+            return response;
+        })
+        .catch((Error) => {
+            console.log(Error);
+        })
+
+    } catch (err) {
+    console.error(err);
+    }
+  }
+
+  const sendUpdateAlarm = async() => {
+    try {
+      await axios({
+          method: "post",
+          url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+          params: {
+          roomId: allinfo.departmentNo * 100,
+          memoNo: memo.no,
+          title: memo.title,
+          senderNo: allinfo.no,
+          messageType: 'update'
+          }
+      })
+      .then((response) => {
+          return response;
+      })
+      .catch((Error) => {
+          console.log(Error);
+      })
+
+  } catch (err) {
+  console.error(err);
+  }
+}
 
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
@@ -153,6 +207,9 @@ export default function(props) {
     .catch(error => 
       console.error(error)
       )
+
+    //삭제 메세지 발송
+    sendDeleteAlarm();
 
     dispatch({ type: 'DEL_MEMO', no, pin});
   };
@@ -179,6 +236,7 @@ export default function(props) {
         .catch(error => 
           console.error(error)
           )
+        sendUpdateAlarm();
    };
 
 
