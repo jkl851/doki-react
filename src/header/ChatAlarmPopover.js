@@ -39,19 +39,11 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
     console.log(departmentNo + "번 부서로 이동!!");
   };
 
-
   //알람 빨간불 갯수 표시
   useEffect(() => {
     opensocket(deptNo);
-    getChatAlarmCount();
+    getAlarmCount();
   }, []);
-
-
-
-
-
-
-
 
   // 소켓 열기
   const opensocket = async(deptNo) => {
@@ -67,7 +59,7 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
           const data = JSON.parse(msg.body);
           console.log('chatPopOver socket sub : ' + JSON.stringify(data));
           setCount(+1);
-          getChatAlarmCount();
+          getAlarmCount();
 
         });
       });
@@ -82,9 +74,9 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
   // var tempMessages = [];
   const [count, setCount] = useState();
   //채팅 알람 수
-  const getChatAlarmCount = async() => {
+  const getAlarmCount = async() => {
     await axios
-      .get(`http://localhost:8080/doki/alarm/getChatAlarmCount/${no}`)
+      .get(`http://localhost:8080/doki/alarm/getAlarmCount/${no}/0`)
       .then((Response) => {
         // console.log('씨발!');
         // for(let i=0; i<Response.data.length; i++) {
@@ -104,7 +96,7 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
   const updateAlarmCheck = async() => {
     setCount(0);
     await axios
-      .get(`http://localhost:8080/doki/alarm/updateAlarmCheck/${no}`)
+      .get(`http://localhost:8080/doki/alarm/updateAlarmCheck/${no}/0`)
       .then((Response) => {
         
       })

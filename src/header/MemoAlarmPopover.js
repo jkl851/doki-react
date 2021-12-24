@@ -5,6 +5,13 @@ import alarmModalStyles from "../assets/css/alarmmodal.module.css";
 import { IoIosNotifications } from "react-icons/io";
 import { Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import "../assets/css/normaltop.css";
+import Badge from '@mui/material/Badge';
+import axios from "axios";
+
+
+//Stomp
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo }) {
   //메모 알람 Modal
@@ -13,20 +20,83 @@ export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo })
   const [memoAlarmPopover, setMemoAlarmPopover] = useState({ isOpen: false });
 
   const memoAlarmInfo = (no) => {
+    updateAlarmCheck();
     setMemoAlarmPopover({
       isOpen: true,
     });
   };
 
+
+
+//알람 빨간불 갯수 표시
+useEffect(() => {
+  opensocket();
+  getAlarmCount();
+}, []);
+
+// 소켓 열기
+const opensocket = async() => {
+  try{
+    //소켓 열기
+    var socket = new SockJS('http://localhost:8080/doki/websocket');
+    var stompClient = Stomp.over(socket); //stomp client 구성
+
+    // SockJS와 stomp client를 통해 연결을 시도.
+    stompClient.connect({}, function () {
+      console.log('Memo Alarm Socket Connected: ');
+      stompClient.subscribe(`/topicOut/0`, (msg) => {
+        const data = JSON.parse(msg.body);
+        console.log('memoPopOver socket sub : ' + JSON.stringify(data));
+        setCount(+1);
+        getAlarmCount();
+
+      });
+    });
+      return null;
+  
+  }catch (error){
+      console.log(error);
+  }
+}
+
+
+// var tempMessages = [];
+const [count, setCount] = useState();
+//채팅 알람 수
+const getAlarmCount = async() => {
+  await axios
+    .get(`http://localhost:8080/doki/alarm/getAlarmCount/${no}/1`)
+    .then((Response) => {
+      setCount(Response.data);
+    })
+    .catch((Error) => {
+      console.log(Error);
+    });
+}
+
+//읽음 표시
+const updateAlarmCheck = async() => {
+  setCount(0);
+  await axios
+    .get(`http://localhost:8080/doki/alarm/updateAlarmCheck/${no}/1`)
+    .then((Response) => {
+      
+    })
+    .catch((Error) => {
+      console.log(Error);
+    });
+}
+
+  //부서번호 상위 component로 이동
+  const pageMovement = (departmentNo) => {
+    setChatAlarmPopover({ isOpen: false });
+    setDivision(departmentNo);
+    console.log(departmentNo + "번 부서로 이동!!");
+  };
+
   //버튼을 다시 누르면 popover 종료
   const togglePopover2 = () => {
     setMemoAlarmPopover({ isOpen: !memoAlarmPopover.isOpen });
-  };
-
-  const pageMovement = (departmentNo) => {
-    setMemoAlarmPopover({ isOpen: false });
-    setDivision(departmentNo);
-    console.log(departmentNo + "번 부서로 이동!!");
   };
 
   //외부클릭 시 화면 닫기
@@ -54,7 +124,9 @@ export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo })
   return (
     <Fragment>
       <a id="mypopover2" ref={outsideRef} onClick={memoAlarmInfo} href="#about">
+      <Badge badgeContent={count} color="error" >
         <IoIosNotifications />
+      </Badge>
       </a>
 
       <Overlay

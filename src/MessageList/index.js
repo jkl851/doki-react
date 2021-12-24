@@ -147,7 +147,7 @@ export default function MessageList({allinfo}) {
 
   //스크롤 맨밑으로내리기
   const scrollToBotton = () => {
-    scrollRef.current.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
+    scrollRef.current.scrollIntoView({behavior: 'auto', block: 'end', inline: 'nearest'});
   };
 
 
