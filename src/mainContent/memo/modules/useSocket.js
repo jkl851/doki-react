@@ -20,6 +20,36 @@ import axios from 'axios'
             userNo: props.allinfo.no,
             userName: props.allinfo.userName,
             memoNo: props.no, 
+            // name: props.name,
+            // value: props.value
+          }
+        })
+        .then((response) => {
+          return response;
+        })
+        .catch((Error) => {
+          console.log(Error);
+        })
+
+      } catch (err) {
+        console.error(err);
+      }
+  };
+
+  // 메모 추가
+  export const sendMemo = async(props) => {
+
+    console.log('메모 번호1 : ' + props.no);
+      try {
+        await axios({
+          method: "post",
+          url: `http://localhost:8080/doki/talk/memoadd`,
+          params: {
+            handling: '1',
+            roomId: 0,
+            userNo: props.allinfo.no,
+            userName: props.allinfo.userName,
+            memoNo: props.no, 
             name: props.name,
             value: props.value
           }

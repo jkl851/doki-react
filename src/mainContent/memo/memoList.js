@@ -29,7 +29,6 @@ const Column = styled.div`
 `
 
 const MemoList = ( {memos , cols , title}) => {
-    
     const memoList = memos.map( (value, index) => <Memo 
                                                         key={value.no}
                                                         no={value.no} 
