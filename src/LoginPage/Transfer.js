@@ -18,7 +18,6 @@ const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => 
       .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
         
-        alert(Response.data.no)
         if(Response.data.no === undefined || Response.data.no === null){
           if(bypass === true){
             navigate("/login");
