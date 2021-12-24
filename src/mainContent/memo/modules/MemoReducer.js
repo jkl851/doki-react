@@ -53,17 +53,28 @@ export const memoReducer = (state, action) => {
       state = newList;
       return state
 
-    case 'USER_LEAVE_MEMO':
+    case 'USER_LEAVE_MEMO_SELF':
       sendMessageOut(action);
       var newList = [];
       state.map( (value, index) =>  {
         if (value.no === action.no) { 
-        newList.push({...value, [action.name] : action.value, ["handling"]: "0"}) 
+        newList.push({...value, ["handling"]: "0"}) 
         } else {
         newList.push(value) }
       }) 
       state = newList;
       return state
+
+    case 'USER_LEAVE_MEMO':
+    var newList = [];
+    state.map( (value, index) =>  {
+      if (value.no === action.no) { 
+      newList.push({...value, ["handling"]: "0"}) 
+      } else {
+      newList.push(value) }
+    }) 
+    state = newList;
+    return state
 
     case 'CHANGE_COLOR':
       return {

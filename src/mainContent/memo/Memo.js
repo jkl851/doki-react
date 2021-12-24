@@ -183,7 +183,7 @@ export default function(memo) {
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
-      dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
+      dispatch({ type: 'USER_LEAVE_MEMO_SELF', no: memo.no, handling : memo.handling , allinfo: allinfo})
       //sendMessageOut();
   };
 

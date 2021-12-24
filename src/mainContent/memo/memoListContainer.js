@@ -75,15 +75,12 @@ export default function memoList ({filter, title}) {
             // 소켓 연결 종료
             //setMemo({...memo, ["handling"]: "0" })
             // dispatch({ type: 'USER_LEAVE_MEMO', no: data.no, handling : data.handling , allinfo: allinfo})
-            stompClient.disconnect();
-            console.log("소켓 disconnected!!!!!");
+    
         } else {
-            setTimeout(() => {
-                // 소켓 연결 종료
-                //setMemo({...memo, ["handling"]: "0" })
-                dispatch({ type: 'USER_LEAVE_MEMO', no: data.no,  handling: "0", allinfo: allinfo})
-                stompClient.disconnect();
-            }, 500);
+            // 소켓 연결 종료
+            //setMemo({...memo, ["handling"]: "0" })
+            dispatch({ type: 'USER_LEAVE_MEMO', no: data.memoNo,  handling: "0", allinfo: allinfo})
+             
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
         }
       });
@@ -139,4 +136,3 @@ export default function memoList ({filter, title}) {
         </div>
     );
 };
-
