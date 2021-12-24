@@ -66,7 +66,7 @@ const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => 
     return(
       
       <Fragment>
-        <Doki allinfo={allinfo}/>
+        <Doki allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} />
       </Fragment>
     );
   }
