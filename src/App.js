@@ -11,12 +11,13 @@ export default function App() {
 
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
   const [site, setSite] = useState();
+  const [deptInfo, setDeptInfo] = useState([]);
 
   return (
     <Router>
       <Routes>
         <Route exact path="/*" element={<Login setAllinfo={setAllinfo} />}/>
-        <Route exact path="/doki" element={<Transfer allinfo={allinfo} />}/>
+        <Route exact path="/doki" element={<Transfer allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} setDeptInfo={setDeptInfo} />}/>
       </Routes>
     </Router>
   );

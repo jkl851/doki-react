@@ -21,7 +21,6 @@ const Login = ({ setAllinfo }) => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("왓냐");
     e.preventDefault();
     try {
       if (ID === "") {
@@ -41,6 +40,7 @@ const Login = ({ setAllinfo }) => {
         .then((Response) => {
           
           if (Response.data !== "") {  
+            
             sessionStorage.setItem('User', JSON.stringify(Response.data));
             
             setAllinfo(Response.data);

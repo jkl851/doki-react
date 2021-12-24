@@ -4,7 +4,7 @@ import Doki from "../Doki";
 
 import { useNavigate } from "react-router-dom";
 
-const Transfer = ({ allinfo }) => {
+const Transfer = ({ allinfo , deptInfo, setAllinfo}) => {
   const [session, setSession] = useState(false);
   const navigate = useNavigate();
 
@@ -24,6 +24,28 @@ const Transfer = ({ allinfo }) => {
       .catch((Error) => {
         console.log(Error);
       });
+
+
+      // 로그인 한 유저의 부서정보와 권한정보를 가져온다
+      await axios
+      .get(
+          "http://localhost:8080/doki/user/getDepartmentUserPermission/" + allinfo.no)
+      .then((Response) => {
+
+        const deptInfo = Response.data.map(data => {
+          return {
+            "departmentNo" : data.departmentNo,
+            "auth" : data.auth
+          }
+        })
+        
+        const newObj = Object.assign({}, allinfo, {"deptInfo" : deptInfo});
+        console.log(newObj)
+        setAllinfo(newObj)
+      })
+      .catch((Error) => {
+          console.log(Error);
+      });
   }, []);
 
   if (session == true) {
@@ -31,7 +53,7 @@ const Transfer = ({ allinfo }) => {
     console.log(allinfo)
     return (
       <Fragment>
-        <Doki allinfo={allinfo} />
+        <Doki allinfo={allinfo} setAllinfo={setAllinfo} deptInfo={deptInfo} />
       </Fragment>
     );
   } else {

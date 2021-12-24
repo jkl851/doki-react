@@ -42,8 +42,9 @@ const memoInitialState = {
     visible: "1",
 };
 
-export default function CreateMemo({allinfo, division}) {
+export default function CreateMemo({allinfo, division, deptAuth}) {
 
+    console.log("내 부서 권한(createMemo) "+deptAuth)
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
     const [visible, setVisible] = useState(false);
@@ -120,7 +121,7 @@ export default function CreateMemo({allinfo, division}) {
         }
 
         // cmemo에 userNo, departmentNo를 추가하여 전송한다
-        Object.assign(cmemo, {"userNo": allinfo.no, "departmentNo": allinfo.departmentNo} );
+        Object.assign(cmemo, {"userNo": allinfo.no, "departmentNo": division} );
         
         console.log('[cmemo]=================')
         console.log(cmemo)
@@ -180,7 +181,14 @@ export default function CreateMemo({allinfo, division}) {
 
     // 토글에 따른 메모 버튼 활성화
     const expandCreateMemo = () => {
-        setExpandMemo(true);
+        if(division === 1){
+            deptAuth === 2 ? setExpandMemo(true) : true
+        } else {
+            deptAuth !== '0' ? 
+            setExpandMemo(true)
+            : true
+        }
+        
     };
 
     const collapseCreateMemo = () => {
@@ -298,12 +306,12 @@ export default function CreateMemo({allinfo, division}) {
 
 
     return (
+        deptAuth !== '0' &&
         <div>
             <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                 <BackgroundColor className="input_wrapper" color={cmemo.color}>
                     {/* 제목 */}
                     {expandMemo ? (
-                       
                             <div>
                                 <textarea
                                     type="text"
@@ -347,6 +355,7 @@ export default function CreateMemo({allinfo, division}) {
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    
+                    
                     <textarea
                         rows="6"
                         column="20"
@@ -356,7 +365,9 @@ export default function CreateMemo({allinfo, division}) {
                         name="contents"
                         onChange={(e) => { InputEvent(e.target.name, e.target.value); }}
                         onMouseEnter={expandCreateMemo}
-                    ></textarea>
+                    />
+                    
+                    
 
                     {/* 메모에 해시가 추가되는 부분 */}
                     <div className="hash_box">
@@ -457,5 +468,6 @@ export default function CreateMemo({allinfo, division}) {
                 </BackgroundColor>
             </form>
         </div>
+        
     );
 }
