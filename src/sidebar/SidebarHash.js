@@ -6,8 +6,8 @@ import axios from 'axios';
 import {filterFunction, myFunction, myFunction3 } from '../assets/js/dropdown';
 // import $ from 'jquery';
 
-export default function SidebarHash({division}) {
-
+export default function SidebarHash({division, hashKeyword, setHashKeyword}) {
+    const [hint, setHint] = useState([]);
 
     //1번 부서라고 가정
     let no = division;
@@ -15,17 +15,15 @@ export default function SidebarHash({division}) {
 
     //해쉬 초기값 호출 (해쉬 검색 X)
     useEffect(async() => {
-        console.log(no);
         await axios.get(`http://localhost:8080/doki/hash/getHashList/${no}`)
         .then((Response) => {
-            console.log(Response.data)
             setHashDropDownDatas(
                 Response.data
                 
             );
         })
         .catch((Error) => {console.log(Error)})
-    }, [])
+    }, [division])
 
 
     //검색을 입력하고 땠을때 이벤트 발생 (검색 키워드 적용)
@@ -43,16 +41,17 @@ export default function SidebarHash({division}) {
         .catch((Error) => {console.log(Error)})
     }
 
+    useEffect(() => {
+        setHint({hashName: ''})
+        setHashKeyword('')
+    }, [division])
+
 
     //Dropdown 클릭시 해당 데이터 입력
-    const [hint, setHint] = useState([]);
     const searchHash = (name) => {
-        console.log("해쉬명 HINT1 : " + name);
         setHint({hashName: name});
-
-
         $('#myDropdown').hide;
-        
+        setHashKeyword(name)
     };
 
     //해쉬 검색창외에 다른 곳 클릭시 Dropdown을 닫게끔 하기
@@ -81,6 +80,10 @@ export default function SidebarHash({division}) {
     //Input 값을 변경하려면 state를 이용해야함
     function handleChange(e) {
         setHint(e.target.value);
+
+        if(e.target.value === ''){
+            setHashKeyword('');
+        }
     }
 
     
@@ -92,6 +95,7 @@ export default function SidebarHash({division}) {
                 placeholder="#Hash Tag" 
                 id="myInput"
                 value={hint.hashName}
+                
                 onKeyUp={filterFunction} 
                 onMouseUp={myFunction} 
                 onMouseDown={myFunction3}

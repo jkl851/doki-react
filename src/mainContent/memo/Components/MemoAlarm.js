@@ -5,9 +5,32 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import dayjs from 'dayjs';
 
 export default function MemoAlarm({memo, InputEvent, isPosted}) {
     const [ memos, dispatch ] = useContext(MemoContext);
+
+    const changAlarmHandler = (e) => {
+        isPosted === true ? 
+            dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "alarm", value : dayjs(e).format("YYYY-MM-DD hh:mm") }) 
+            : 
+            InputEvent('alarm', dayjs(e).format("YYYY-MM-DD hh:mm"))
+    } 
+
+    const changCheckHandler = (e) => {
+        if( (memo.checked === '0') || (memo.checked === null) ) {
+            isPosted === true ? 
+                    dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '1' })
+                    :
+                    InputEvent('checked', '1') 
+        } else {
+            isPosted === true ? 
+                    dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '0' })
+                    :
+                    InputEvent('checked', '0') 
+        }
+    }
+
     return (
         <Fragment>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -16,37 +39,20 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
                     label="알람"
                     inputFormat={"yyyy-MM-dd hh:mm"}
                     value={memo.alarm}
-                    onChange={ isPosted === true ? 
-                        (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "alarm", value : e }) 
-                        : 
-                        (e)=>{ InputEvent('memoAlarmTime', e) } }
+                    onChange={ changAlarmHandler }
                 />
                 </LocalizationProvider>
                
-                 { memo.checked === '0' ? 
-                 (
-                    <Fragment>
-                    <Checkbox   value={memo.checked}
-                                onChange={  isPosted === true ? 
-                                    (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '1' })
-                                    :
-                                    (e)=>{ InputEvent('checked', '1') } 
-                                } />
-                                <span>알람 설정</span>
-                    </Fragment>
-                ) : (
-                    <Fragment>
-                    <Checkbox   checked
-                                value={memo.checked}
-                                onChange={  isPosted === true ? 
-                                    (e) => dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "checked", value : '0' })
-                                    :
-                                    (e)=>{ InputEvent('checked', '0') } 
-                                } />
-                                <span>알람 설정</span>    
-                    </Fragment> 
-                    )
-                 } 
+            
+                <Fragment>
+                <Checkbox   checked={memo.checked === '0'|| false }
+                            inputProps={{'checked' : '0'}}
+                            onChange={changCheckHandler}
+                            
+                                />
+                            <span>알람 설정</span>    
+                </Fragment>
+                 
             </Fragment>
     );
 };

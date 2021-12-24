@@ -42,7 +42,7 @@ const memoInitialState = {
     visible: "1",
 };
 
-export default function CreateMemo() {
+export default function CreateMemo({allinfo, division}) {
 
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
@@ -63,6 +63,9 @@ export default function CreateMemo() {
           setImgBase64(base64.toString()); // 파일 base64 상태 업데이트
           alert(base64.toString());
         }
+        console.log(imgBase64);
+        console.log(base64.toString());
+        
       }
 
       if (event.target.files[0]) {
@@ -116,18 +119,18 @@ export default function CreateMemo() {
             return memos;
         }
 
+        // cmemo에 userNo, departmentNo를 추가하여 전송한다
+        Object.assign(cmemo, {"userNo": allinfo.no, "departmentNo": allinfo.departmentNo} );
+        
         console.log('[cmemo]=================')
         console.log(cmemo)
         // addMemo를 한 후 Response가 ok(200)일 때 front에도 뿌려주고 초기화를 한다
         axios
             .post("http://localhost:8080/doki/memo/addMemo", cmemo)
             .then((Response) => {
-                console.log("===== Add Memo 응답받음! =====");
-                console.log(Response);
-                console.log("=============================");
 
                 let newObj = null;
-                // 길이가 0이상이면 새로운 객체로 만들어야한다
+                // 해시 길이가 0이상이면 새로운 객체로 만들어야한다
                 if(cmemo.hash.length > 0) {
                     newObj = Object.assign(cmemo, {
                         'hashNo': cmemo.hash[0].hashNo,
@@ -142,8 +145,6 @@ export default function CreateMemo() {
                     })
                 }
 
-                console.log('[newObj =========')
-                console.log(newObj)
                 dispatch({ type: "ADD_MEMO", memo: newObj });
 
                 // 초기화
@@ -211,10 +212,6 @@ export default function CreateMemo() {
     axios
         .get(`http://localhost:8080/doki/hash/getAllHashList`)
         .then((Response) => {
-            console.log("===== Get Hash 응답받음! =====");
-            console.log(Response);
-            console.log("=============================");
-
 
             setAllHashDatas(
                 Response.data.map((data) => {
@@ -288,17 +285,48 @@ export default function CreateMemo() {
         });
         return hashRef;
     }
+
+    const createMemoOutsideRef = useCreateMemoOutSideRef(null);
+    function useCreateMemoOutSideRef() {
+        const createMemoRef= useRef(null);
+        useEffect(() => {
+            function handelClickOutside(event) {
+                if(createMemoRef.current && !createMemoRef.current.contains(event.target)) {
+                    collapseCreateMemo();
+                } else {
+                    expandCreateMemo();
+                }
+            }
+            document.addEventListener('click', handelClickOutside);
+
+            return () => {
+                document.removeEventListener('click', handelClickOutside);
+            };
+        });
+        return createMemoRef;
+    }
     /////////////////////////////////////////////////////////////////
+
+    // 부서 번호가 바뀔 때 마다 cmemo의 값을 초기화 해준다
+    useEffect(() => {
+        setCmemo(memoInitialState)
+        setExpandAlarm(false);        
+        setExpandHashTag(false)
+        setExpandPalette(false)
+    }, [division])
+
+
 
     return (
         <div>
-            <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
-                <BackgroundColor className="input_wrapper" color={cmemo.color}>
+            <form className="create-memo-form">
+                {/* onMouseLeave={collapseCreateMemo}> */}
+                <BackgroundColor className="input_wrapper" color={cmemo.color} ref={createMemoOutsideRef} >
                     {/* 제목 */}
                     {expandMemo ? (
                        
-                            <Fragment>
-                                <input
+                            <div>
+                                <textarea
                                     type="text"
                                     placeholder="제목"
                                     className="title_input"
@@ -321,7 +349,7 @@ export default function CreateMemo() {
                                     onClick={(e) => {  isPinned() }}
                                 />
                                  )}
-                            </Fragment>
+                            </div>
                     ) : (
                         false
                     )}
@@ -331,12 +359,10 @@ export default function CreateMemo() {
                         ? 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                         : 
                             <div style={{textAlign:"center"}}>
                                 <input type="image" src={imgBase64} style={{ display:"none", margin:'auto', width:'100%', height:'100%'}}/>
-                                
                             </div>
                     }
 {/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}                    
@@ -348,7 +374,7 @@ export default function CreateMemo() {
                         value={cmemo.contents}
                         name="contents"
                         onChange={(e) => { InputEvent(e.target.name, e.target.value); }}
-                        onMouseEnter={expandCreateMemo}
+                        // onMouseEnter={expandCreateMemo}
                     ></textarea>
 
                     {/* 메모에 해시가 추가되는 부분 */}
@@ -366,11 +392,10 @@ export default function CreateMemo() {
                         className="buttons-div"
                         style={{ textAlign: "center" }}
                     >
-                        <div className="alarm-div">
+                        <div className="alarm-div" ref={alarmOutsideRef}>
                             <Button
                                 className="alarmButton"
                                 onClick={expandAlarmTable}
-                                ref={alarmOutsideRef}
                             >
                                 <AlarmAddIcon
                                     className="add-alarm"

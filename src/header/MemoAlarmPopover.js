@@ -6,7 +6,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import "../assets/css/normaltop.css";
 
-export default function MemoAlarmPopover({ memoMessages, allinfo }) {
+export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo }) {
   //메모 알람 Modal
   const no = JSON.stringify(allinfo.no);
   const target = useRef(null);
@@ -25,7 +25,8 @@ export default function MemoAlarmPopover({ memoMessages, allinfo }) {
 
   const pageMovement = (departmentNo) => {
     setMemoAlarmPopover({ isOpen: false });
-    alert(departmentNo + "번 부서로 이동!!");
+    setDivision(departmentNo);
+    console.log(departmentNo + "번 부서로 이동!!");
   };
 
   //외부클릭 시 화면 닫기

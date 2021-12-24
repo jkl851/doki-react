@@ -1,21 +1,17 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Compose from "./Compose/index";
-import Toolbar from './Toolbar';
 import ToolbarButton from "./ToolbarButton/index";
 import Message from "./Message/index";
 import moment from "moment";
 import axios from "axios";
-import Ionicon from 'react-ionicons';
-
 
 //Stomp
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import * as StompJs from '@stomp/stompjs';
 
+//css
 import "./MessageList.css";
 import "../assets/css/offcanvas2.css";
-import { textAlign } from "@mui/system";
 
 
 //채팅방 유저 임의 지정
@@ -53,18 +49,12 @@ export default function MessageList({allinfo}) {
   };
     
 
+
   //전송 데이터
   const getTextValue = (text) => {
-      // const blank_pattern = /[\s]/;
-      // if( blank_pattern.test(text) == true){
-      //     return;
-      // }
-
-
       if(text === '') {
         return;
       }    
-    
     sendMessage(text);
   }
 
@@ -73,19 +63,14 @@ export default function MessageList({allinfo}) {
       try{
         //소켓 열기
         var socket = new SockJS('http://localhost:8080/doki/websocket');
-        console.log('socket : ' + JSON.stringify(socket));
-  
         var stompClient = Stomp.over(socket); //stomp client 구성
   
         // SockJS와 stomp client를 통해 연결을 시도.
         stompClient.connect({}, function () {
-          console.log('Connected: ');
+          console.log('Chat Socket Connected: ');
           stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
 
             const data = JSON.parse(msg.body);
-            console.log("data : " + JSON.stringify(data));
-            console.log("data5 : " + data.roomId);
-
             const broadCastingMessage = {}
             broadCastingMessage.departmentNo = data.roomId;
             broadCastingMessage.userNo = data.userNo;
@@ -94,25 +79,14 @@ export default function MessageList({allinfo}) {
             broadCastingMessage.date = data.date;
             broadCastingMessage.position = data.position;
 
-            // setMessages([...messages, ...broadCastingMessage])
-            // setMessages((prev) => {
-            //   return [...prev, broadCastingMessage]
-            // });
-
-
-
             console.log('broadCastingMessage : ' + broadCastingMessage);
             tempMessages.push(broadCastingMessage);
         
             setMessages([...messages, ...tempMessages]);
-
-
             scrollToBotton();
 
           });
         });
-        
-          // console.log("msg : " + msg);
           return null;
       
       }catch (error){
@@ -149,43 +123,9 @@ export default function MessageList({allinfo}) {
       } catch (err) {
         console.error(err);
       }
-
-
-      //자신을 제외한 부서에 모든 유저에게 보내는 알람
-      try {
-        await axios({
-          method: "post",
-          url: `http://localhost:8080/doki/alarm/sendChatAlarm`,
-          params: {
-            deptNo: `${deptNo}`,
-            userNo: `${userNo}`,
-            message: text,
-          }
-        })
-        .then((response) => {
-          return response;
-        })
-        .catch((Error) => {
-          console.log(Error);
-        })
-
-      } catch (err) {
-        console.error(err);
-      }
-
-      
   };
 
   var tempMessages = [];
-  // const addMessage = (response) => {
-  //   console.log('response : ' + JSON.stringify(response.data));
-  //   tempMessages.push(response.data);
-
-  //   setMessages([...messages, ...tempMessages]);
-  //   // getMessages();
-  //   scrollToBotton();
-  // }
-
   const getMessages = async() => {
     // tempMessages;
     await axios

@@ -27,8 +27,8 @@ const Column = styled.div`
   grid-gap: 0rem;
   grid-auto-rows: max-content;
 `
-const MemoList = ( {memos , cols , title}) => {
 
+const MemoList = ( {memos , cols , title}) => {
     const memoList = memos.map( (value, index) => <Memo 
                                                         key={value.no}
                                                         no={value.no} 
@@ -43,13 +43,16 @@ const MemoList = ( {memos , cols , title}) => {
                                                         userNo={value.userNo}
                                                         departmentNo={value.departmentNo}
                                                         checked={value.checked}
-
+                                                        imgae={value.image}
                                                         hash={value.hash}
                                                         hashNo={value.hashNo}
                                                         hashName={value.hashName}
-                                                        hashCount={value.hashCount}                                               
+                                                        hashCount={value.hashCount}
+                                                        handling={value.handling}
+                                                        // opensocket={opensocket}
                                                         />)
     var output = []
+
     if (cols !== 0) {
         output = memoList.reduce((acc, child, i) => {
         acc[i % cols] = [...acc[i % cols], child]
@@ -57,7 +60,7 @@ const MemoList = ( {memos , cols , title}) => {
         }, new Array(cols).fill([]))
     }
     if (memos.length === 0) return <Wrapper></Wrapper>
-
+    
     return (
         <Wrapper>
         <header>{title}</header>

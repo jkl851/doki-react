@@ -31,7 +31,7 @@ const DeptUser = ({
 
     //해당 유저 정보 호출 (axios)
     await axios
-      .get(`http://localhost:8080/doki/user/findUser/${deptUserNo}`)
+      .get(`http://localhost:8080/doki/user/findUserByDeptNo/${deptUserNo}`)
       .then((Response) => {
 
         setUserInfoModalData({
@@ -162,7 +162,7 @@ const DeptUser = ({
                     textOverflow: "ellipsis",
                   }}
                   type={"text"}
-                  value={userInfoModalData.position}
+                  value={userInfoModalData.position || ''}
                   autoComplete={"off"}
                   placeholder={"직책 정보가 없습니다."}
                   onChange={(e) =>
