@@ -6,12 +6,7 @@ import SideChat2 from "./sidechat/SideChat2";
 import "../src/assets/css/Doki.css";
 import MemoIndex from "./mainContent/memo/Index";
 
-<<<<<<< HEAD
-export default function Doki({ allinfo }) {
-  
-=======
 export default function Doki({ allinfo, setAllinfo }) {
->>>>>>> main
   // [soo] division은 부서 번호이다
   const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);
