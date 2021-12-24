@@ -16,7 +16,32 @@ import axios from "axios";
 
 ReactModal.setAppElement("#root");
 
-export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
+export default function SidebarMenu({ division , hashKeyword, setHashKeyword, allinfo, setAllinfo, deptAuth, setDeptAuth}) {
+
+    console.log(allinfo)
+
+
+    // 부서가 바뀔 때나 그룹 권한이 바뀌었을 때(allinfo의 deptInfo) deptAuth를 바꿔준다(각 부서별 권한만 설정)
+    useEffect(() => {
+        console.log('[allinfo]')
+        console.log(allinfo)
+        if(allinfo.deptInfo !== undefined ){
+            console.log("여기가 실행되나아")
+            allinfo.deptInfo.forEach(data => {
+                if(data.departmentNo === division){
+                  setDeptAuth(data.auth)
+                }
+            })            
+        }
+      
+        if(division === 1){
+            setDeptAuth("0")
+        }
+      }, [division, allinfo])
+    
+    deptAuth !== undefined ? console.log("내 부서 권한은 "+deptAuth) : true;
+    // auth !== null ? console.log(auth) : true;
+
     // division은 부서 번호
     const [inviteState, setInviteState] = useState({ isOpen: false });
     const [groupPermissionState, setGroupPermissionState] = useState({
@@ -30,6 +55,8 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
     const [keyword, setKeyword] = useState("");
     const [allUserKeyword, setAllUserKeyword] = useState("");
     const [deptUserKeyword, setDeptUserKeyword] = useState("");
+    
+
 
     const onChangeDeptUserSearchKey = async (e) => {
         setDeptUserKeyword(e.target.value);
@@ -118,6 +145,28 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
             return
         }
 
+        
+        console.log("============================================================")
+        console.log(updateArr)
+        let changedAuth = null;
+        let updateAllinfoArr = null;
+        updateArr.forEach(data=> {
+            data.no === allinfo.no ? changedAuth = data.auth : true
+        })
+
+
+        if(changedAuth !== null){
+            console.log(changedAuth)
+
+            updateAllinfoArr = allinfo.deptInfo.map(data => {
+                return data.departmentNo === division ? {"departmentNo" : division, "auth": changedAuth} : null
+            }).filter(data => {
+                return data !== null
+            })
+            console.log(updateAllinfoArr)
+        }
+        
+
         // url부분 /api 설정으로 하는법 알아보기
         await axios
             .post(
@@ -136,6 +185,11 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
                         }
                     })
                 })
+
+                
+                const newObj = (Object.assign({}, allinfo, {"deptInfo" : updateAllinfoArr}))
+                setAllinfo(newObj)
+
             })
             .catch((Error) => {
                 console.error(Error);
@@ -154,21 +208,28 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
                 await axios.get(
                     "http://localhost:8080/doki/user/getAllUserList"            // res2
                 ), 
+                
+               
             ])
             .then(
-                axios.spread((res1, res2) => {
-                    console.log("====== get DeptUserList 요청! ======");
+                axios.spread((res1, res2, res3) => {
+                    console.log("[Get DeptUserList 요청!]");
                     console.log(res1.data)
                     setDeptUserDatas(res1.data);
 
-                    console.log("====== get AllUserList 요청! ======");
+                    console.log("[Get AllUserList 요청!]");
                     console.log(res2.data)
                     setAllUserDatas(res2.data)
+                    
                 })
             )
             .catch((Error) => {
                 console.log(Error);
             });
+            
+        
+            
+
     }, [division]); // division의 값이 변할 때 마다 실행 된다
 
     return (
@@ -196,7 +257,9 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
 
             <div>
                 <span>참가자</span>
-                <img
+                {
+                    deptAuth !== undefined && deptAuth === "2" ? 
+                    <img
                     onClick={groupPermissionClick}
                     style={{
                         float: "right",
@@ -206,8 +269,14 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
                     }}
                     src={RuedaDentadaImg}
                     alt=""
-                />
-                <img
+                    />
+                    :
+                    null
+                }
+                
+                {
+                    deptAuth !== undefined && deptAuth === "2" ? 
+                    <img
                     onClick={inviteClick}
                     style={{
                         float: "right",
@@ -217,7 +286,11 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword}) {
                     }}
                     src={PlusImg}
                     alt=""
-                />
+                    />
+                    :
+                    null
+                }
+                
 
                 {/* Invite Modal */}
                 <ReactModal

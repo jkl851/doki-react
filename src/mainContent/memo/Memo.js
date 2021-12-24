@@ -24,6 +24,8 @@ import PostedHash from './Components/PostedHash'
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 
+import { sendMessage, sendMessageOut } from "./modules/useSocket";
+
 import checkDelMemoStyle from "../../assets/css/modal/checkDelMemoStyle.module.css";
 
 // 컬러 변경 적용
@@ -36,12 +38,13 @@ const BackgroundColor = styled.div`
 export default function(props) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = props.pin;
+
   const [memo, setMemo] = useState(props);
   const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
   useEffect(() => {
     getMemoRoom(0);
-    // opensocket();
+    //opensocket();
   }, []);
 
 
@@ -71,12 +74,12 @@ export default function(props) {
 
         stompClient.subscribe(`/topic/0`, (msg) => {
           const data = JSON.parse(msg.body);
-          console.log('data : ' + JSON.stringify(data));
-          console.log(allinfo);
-          if(data.handling == 0 && data.userNo == allinfo.no ) {
+          // console.log('data : ' + JSON.stringify(data));
+          //console.log('allinfo : ' + JSON.stringify(allinfo));
+          if(data.userNo == allinfo.no ) {
+      
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
-            // set 들어갈부분
-            setMemo({...memo, [data.name] : data.value })
+            console.log(' name :' + data.name + 'value :' + data.value + 'userNo : ' + data.userNo );
 
           } else {
             setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
@@ -92,11 +95,14 @@ export default function(props) {
           const data = JSON.parse(msg.body);
           console.log('data : ' + JSON.stringify(data));
           if(data.userNo == allinfo.no ) {
-            setTimeout(() => {
-                // 소켓 연결 종료
-              setMemo({...memo, ["handling"]: "0" })
-              stompClient.disconnect();
-            }, 500);
+              // 소켓 연결 종료
+           
+            stompClient.disconnect();
+
+          } else {
+            // 소켓 연결 종료
+            setMemo({...memo, ["handling"]: "0" })
+            stompClient.disconnect();
             console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
           }
         });
@@ -113,65 +119,7 @@ export default function(props) {
 
 //name : e.target.name, value : e.target.value, handling: memo.handling
 
-  //메모 사용중을 보내는 함수
-  const sendMessage = async(name, value) => {
-
-    console.log('메모 번호1 : ' + memo.no);
-    console.log(name + "  =====   " + value);
-      try {
-        await axios({
-          method: "post",
-          url: `http://localhost:8080/doki/talk/memo`,
-          params: {
-            handling: memo.handling,
-            roomId: 0,
-            userNo: allinfo.no,
-            userName: allinfo.userName,
-            memoNo: memo.no,
-            name: name,
-            value: value
-          }
-        })
-        .then((response) => {
-          return response;
-        })
-        .catch((Error) => {
-          console.log(Error);
-        })
-
-      } catch (err) {
-        console.error(err);
-      }
-  };
-
-    //메모 사용끝을 보내는 함수
-    const sendMessageOut = async() => {
-      console.log('메모 번호2 : ' + memo.no);
-      console.log('handling2 : ' + memo.handling);
-        try {
-          await axios({
-            method: "post",
-            url: `http://localhost:8080/doki/talk/memoOut`,
-            params: {
-              handling: memo.handling,
-              roomId: 0,
-              userNo: allinfo.no,
-              userName: allinfo.userName,
-              memoNo: memo.no
-            }
-          })
-          .then((response) => {
-            return response;
-          })
-          .catch((Error) => {
-            console.log(Error);
-          })
-  
-        } catch (err) {
-          console.error(err);
-        }
-    };
-
+ 
   // 메모 토글 
   const [expandMemo, setExpandMemo] = useState(false);
   const [expandAlarm, setExpandAlarm] = useState(false);
@@ -186,7 +134,13 @@ export default function(props) {
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
   
-  
+  // 메모수정
+  const syncEvent = (e) => {
+    setMemo({...memo, [e.target.name]: e.target.value})
+    sendMessage({no: memo.no, name: e.target.name, value: e.target.value, allinfo: allinfo}) 
+  }
+
+
    // 메모삭제
   const deleteEvent = () => {
     let no = memo.no;
@@ -239,8 +193,8 @@ export default function(props) {
   
   const collapseCreateMemo = () => {
       setExpandMemo(false);
-      // dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
-      sendMessageOut();
+      //dispatch({ type: 'USER_LEAVE_MEMO', no: memo.no, handling : memo.handling , allinfo: allinfo})
+      sendMessageOut({no: memo.no, allinfo: allinfo});
   };
 
   const expandAlarmTable = () => {
@@ -343,8 +297,8 @@ export default function(props) {
                                     value={memo.title}
                                     name="title"
                                     onChange={ (e) => {
-                                      sendMessage(e.target.name, e.target.value)   
-                                      /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
+                                      syncEvent(e)
+                                    /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                                     } }
                                 />
                                 { pin === '1' ? (
@@ -375,7 +329,7 @@ export default function(props) {
                         name="contents"
                         onChange={ 
                           (e) => { 
-                          sendMessage(e.target.name, e.target.value) 
+                            syncEvent(e)
                           /*dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})*/
                          
                         }}
