@@ -21,21 +21,17 @@ const Transfer = ({ allinfo, bypass, check, setCheck, deptInfo, setAllinfo}) => 
         alert(Response.data.no)
         if(Response.data.no === undefined || Response.data.no === null){
           if(bypass === true){
-            alert('1')
             navigate("/login");
           }
           else if(bypass === false){
-            alert('2')
             navigate("/login");
           }
         }
         else if(Response.data.no !== undefined || Response.data.no !== null){
           if(bypass === true){
-            alert('3')
             setCheck(true);
           }
           else if(bypass ===false){
-            alert('4')
             setCheck(true);
           }
         }
