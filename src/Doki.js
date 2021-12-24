@@ -7,6 +7,7 @@ import "../src/assets/css/Doki.css";
 import MemoIndex from "./mainContent/memo/Index";
 
 export default function Doki({ allinfo }) {
+  
   // [soo] division은 부서 번호이다
   const [division, setDivision] = useState(1);
   const [chat, setChat] = useState(false);

@@ -3,43 +3,27 @@ import axios from "axios";
 import Doki from "../Doki";
 import { useNavigate } from "react-router-dom";
 
-const Transfer = ({ allinfo, bypass, check, setCheck}) => {
+const Transfer = ({ allinfo }) => {
 
+  
   const navigate = useNavigate();
+  const [flag, setFlag] = useState();
 
-  // 
-  // 로그인 할때마다 세션 아이디 값을 변경해서 변경값을 ResponseEntity에 반환한 다음 
-  // if (Respons.data !== null || Response.data )
-  // 첫번째 세션 아이디값을 저장하고 그 뒤로 부터 틀린거 들어오면 걍 바로 로그인페이지로 리다이렉트
-  // 
-  // 
   useEffect(async (e) => {
     await axios
       .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
         
-        alert(Response.data.no);
-        alert(allinfo.no);
-
-        if(Response.data.no === undefined || Response.data.no === null){
-          if(bypass === true){
-            alert("1-1");
-            navigate("/login");
-          }
-          else if(bypass === false){
-            alert("1-2");
-            navigate("/login");
-          }
+        if(Response.data[0] === undefined || Response.data[0] === null){
+          alert("1번");
+          navigate("/login");
         }
-        else if(Response.data.no !== undefined || Response.data.no !== null){
-          if(bypass === true){
-            alert("2-1");
-            setCheck(true);
-          }
-          else if(bypass ===false){
-            alert("2-2");
-            setCheck(true);
-          }
+        else if(allinfo === null){
+          alert("2번");
+          navigate("/login");
+        }
+        else if(allinfo !== null){
+          setFlag(true);
         }
       })
       .catch((Error) => {
@@ -47,9 +31,8 @@ const Transfer = ({ allinfo, bypass, check, setCheck}) => {
       });
   }, []);
 
-  if(check === true){
+  if(flag === true){
     return(
-      
       <Fragment>
         <Doki allinfo={allinfo}/>
       </Fragment>
