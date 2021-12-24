@@ -1,9 +1,11 @@
 import { createContext } from "react";
 import update from 'react-addons-update'
+import {sendMessage, sendMessageOut} from './useSocket';
 
 // export const memoList = data;
 export const memoList = [];
 export const MemoContext = createContext(memoList);
+
 
 export const memoReducer = (state, action) => {
   switch(action.type) {
@@ -32,12 +34,47 @@ export const memoReducer = (state, action) => {
       var newList = [];
       state.map( (value, index) =>  {
         if (value.no === action.no) { 
+        newList.push({...value, [action.name] : action.value, ["handling"]: "1"}) 
+        } else {
+        newList.push(value) }
+      }) 
+      state = newList;
+      return state
+
+    case 'MODIFY_MEMO_SELF':
+      //sendMessage(action)
+      var newList = [];
+      state.map( (value, index) =>  {
+        if (value.no === action.no) { 
         newList.push({...value, [action.name] : action.value}) 
         } else {
         newList.push(value) }
       }) 
       state = newList;
       return state
+
+    case 'USER_LEAVE_MEMO_SELF':
+      //sendMessageOut(action);
+      var newList = [];
+      state.map( (value, index) =>  {
+        if (value.no === action.no) { 
+        newList.push({...value, ["handling"]: "0"}) 
+        } else {
+        newList.push(value) }
+      }) 
+      state = newList;
+      return state
+
+    case 'USER_LEAVE_MEMO':
+    var newList = [];
+    state.map( (value, index) =>  {
+      if (value.no === action.no) { 
+      newList.push({...value, ["handling"]: "0"}) 
+      } else {
+      newList.push(value) }
+    }) 
+    state = newList;
+    return state
 
     case 'CHANGE_COLOR':
       return {
@@ -66,5 +103,3 @@ export const memoReducer = (state, action) => {
       throw new Error();
   }
 };                         
-
-

@@ -5,7 +5,6 @@ import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
 const Login = ({ setAllinfo, setChecked, checked }) => {
-  
   const refForm = useRef(null);
   const navigate = useNavigate();
   const [ID, setID] = useState("");
@@ -30,8 +29,17 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
   }
 
 
+  // 세션 유지 or 유지 안함
+  const handleChecked = () => {
+    if (checked === true){
+      setChecked(false);
+    }
+    else if (checked === false){
+      setChecked(true);
+    }
+  }
+  
   const handleSubmit = async (e) => {
-    
     e.preventDefault();
     try {
       if (ID === "") {
@@ -50,9 +58,11 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
         )
         .then((Response) => {
           
-          if (Response.data !== "") {
-            localStorage.setItem('User', JSON.stringify(Response.data));
+          // alert(JSON.stringify(Response.data));
+          
+          if (Response.data !== "") {  
             
+            localStorage.setItem('User', JSON.stringify(Response.data));
             setAllinfo(Response.data);
             navigate("/doki");
           } 

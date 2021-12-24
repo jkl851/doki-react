@@ -7,9 +7,11 @@
 		"title": "보거라",
 		"contents" : "남은 부분은 제가 내일 와서 처리하...",
 		"color": "#f28b82",
-		"hash": [],
+		"hash":null,
+		"hashCount":0,
 		"pin" : "1",
-		"visible": "1" 
+		"visible": "1",
+		"handling": "0" 
 	},
 	{
 		"no" : 2,
@@ -19,9 +21,11 @@
 		"title": "대리님",
 		"contents" : "대리님 말씀하신 코드수정 완료했...",
 		"color": "#FFFFFF",
-		"hash": [],
+		"hash":null,
+		"hashCount":0,
 		"pin" : "1",
-		"visible": "1" 
+		"visible": "1",
+		"handling": "0" 
 	},
 	{
 		"no" : 3,
@@ -31,9 +35,11 @@
 		"title": "클창인생",
 		"contents" : "클라이밍 저도 배우고 싶어서 가입...",
 		"color": "#a7ffeb",
-		"hash": [],
+		"hash":null,
+		"hashCount":0,
 		"pin" : "0",
-		"visible": "1" 
+		"visible": "1",
+		"handling": "0"  
 	},
 	{
 		"no" : 4,
@@ -43,8 +49,10 @@
 		"title": "인사",
 		"contents" : "안녕하세요~~~~ 반갑습니다! 저...",
 		"color": "#fdcfe8",
-		"hash": [],
+		"hash":null,
+		"hashCount":0,
 		"pin" : "0",
-		"visible": "1" 
+		"visible": "1",
+		"handling": "0"  
 	}
 ]
