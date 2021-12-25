@@ -523,20 +523,21 @@ export default function(memo) {
                     
                   
                     {/* 메모에 해시가 추가되는 부분 */}
-                    <div style={{display: "flex"}}>
-                      { memo.hashCount > 0 &&
+                    { memo.hashCount > 0 &&
+                    (<div style={{display: "flex"}}>
+                      
                         <div className="memo-hash">
                           <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
                         </div>
-                      }
+                      
                       { memo.hashCount > 1 && 
                         <div className="memo-hash">
                         <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
                       </div>
                       }
 
-                    </div>
-                    
+                    </div>)
+                    }
                     {/* 관리자만 삭제 버튼 활성화 */}
                     {memo.deptAuth === '2' &&
                     <Button className="delete-button" 

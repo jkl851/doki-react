@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import alarmModalStyles from "../assets/css/alarmmodal.module.css";
+import noneImg from '../../src/assets/images/katalk.png'
 
 export default function MemoMessage({
   userNo,
@@ -11,7 +12,13 @@ export default function MemoMessage({
   departmentName,
   pageMovement,
 }) {
-  let UserImg = "https://randomuser.me/api/portraits/men/" + (userNo) + ".jpg"  
+  let UserImg = null;
+  if(userNo !== null || userNo !== undefined){
+    UserImg = "https://randomuser.me/api/portraits/men/" + (userNo) + ".jpg"  
+  } else {
+    UserImg = noneImg;
+  }
+  
 
   return (
     <div
