@@ -159,7 +159,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
                     no: "",
                     title: "",
                     contents: "",
-                    alarm: new Date(),
+                    alarm: dayjs(new Date()).format("YYYY-MM-DD hh:mm"),
                     checked: '0',
                     alarmset: "0",
                     color: "#FFFFFF",
