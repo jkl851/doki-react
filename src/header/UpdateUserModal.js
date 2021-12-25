@@ -25,14 +25,16 @@ export default function MemoAlarmModal({ allinfo }) {
     await axios
       .get(`http://localhost:8080/doki/user/findUser/${no}`)
       .then((Response) => {
-        console.log("유저정보호출 : " + JSON.stringify(Response.data.list));
+        console.log("유저정보호출 : " + JSON.stringify(Response.data));
         setUserUpdateModalData({
-          no: Response.data.list.no,
-          name: Response.data.list.userName,
-          email: Response.data.list.email,
-          comment: Response.data.list.comment,
-          password: Response.data.list.password,
-          passwordcheck: Response.data.list.passwordcheck,
+          no: Response.data.no,
+          departmentName: Response.data.departmentName,
+          position: Response.data.position,
+          name: Response.data.userName,
+          email: Response.data.email,
+          comment: Response.data.comment,
+          password: Response.data.password,
+          passwordcheck: Response.data.passwordcheck,
           isOpen: true,
         });
       })
@@ -151,56 +153,43 @@ export default function MemoAlarmModal({ allinfo }) {
           <form ref={refForm} onSubmit={handleSubmit}>
             <label
               style={{
-                marginRight: "220px",
+                marginRight: "250px",
                 fontSize: "15px",
                 marginBottom: "2px",
               }}
             >
-              비밀번호
+              부서
             </label>
             <p>
               <input
                 style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
-                type={"password"}
-                name={"password"}
+                type={"text"}
+                name={"departmentName"}
                 // defaultValue={userUpdateModalData.password}
-                value={userUpdateModalData.password}
+                value={userUpdateModalData.departmentName}
                 autoComplete={"off"}
-                placeholder={"비밀번호"}
-                onChange={(e) =>
-                  setUserUpdateModalData(
-                    Object.assign({}, userUpdateModalData, {
-                      password: e.target.value,
-                    })
-                  )
-                }
+                readOnly
               />
             </p>
             <label
               style={{
-                marginRight: "190px",
+                marginRight: "250px",
                 fontSize: "15px",
                 marginBottom: "2px",
               }}
             >
-              비밀번호 확인
+              직책
             </label>
             <p>
               <input
                 style={{ width: "285px", height: "25px", paddingLeft: "5px" }}
-                type={"password"}
+                type={"text"}
                 name={"passwordcheck"}
-                value={userUpdateModalData.passwordcheck}
+                value={userUpdateModalData.position}
                 // defaultValue={userUpdateModalData.passwordcheck}
                 autoComplete={"off"}
                 placeholder={"비밀번호 확인"}
-                onChange={(e) =>
-                  setUserUpdateModalData(
-                    Object.assign({}, userUpdateModalData, {
-                      passwordcheck: e.target.value,
-                    })
-                  )
-                }
+                readOnly
               />
             </p>
             <label
@@ -209,6 +198,7 @@ export default function MemoAlarmModal({ allinfo }) {
                 fontSize: "15px",
                 marginBottom: "2px",
               }}
+              
             >
               이메일
             </label>
@@ -224,13 +214,7 @@ export default function MemoAlarmModal({ allinfo }) {
                 defaultValue={userUpdateModalData.email}
                 autoComplete={"off"}
                 placeholder={"이메일"}
-                onChange={(e) =>
-                  setUserUpdateModalData(
-                    Object.assign({}, userUpdateModalData, {
-                      email: e.target.value,
-                    })
-                  )
-                }
+                readOnly
               />
             </p>
             <label
@@ -238,7 +222,9 @@ export default function MemoAlarmModal({ allinfo }) {
                 marginRight: "210px",
                 fontSize: "15px",
                 marginBottom: "2px",
+                
               }}
+              
             >
               상태메세지
             </label>
@@ -250,13 +236,7 @@ export default function MemoAlarmModal({ allinfo }) {
                 defaultValue={userUpdateModalData.comment}
                 autoComplete={"off"}
                 placeholder={"상태메세지"}
-                onChange={(e) =>
-                  setUserUpdateModalData(
-                    Object.assign({}, userUpdateModalData, {
-                      comment: e.target.value,
-                    })
-                  )
-                }
+                readOnly
               />
             </p>
           </form>
@@ -279,13 +259,8 @@ export default function MemoAlarmModal({ allinfo }) {
                 backgroundColor: "#5048e5",
                 color: "white",
               }}
-              onClick={() => {
-                refForm.current.dispatchEvent(
-                  new Event("submit", { cancelable: true, bubbles: true })
-                );
-              }}
             >
-              수정 완료
+              확인
             </button>
           </div>
         </div>

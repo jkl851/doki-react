@@ -75,7 +75,7 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
         <img src={logo} style={{ width: "125px", height: "100%" }} />
         <div className="topnav-right" id="icons">
           <MemoAlarmPopover memoMessages={memoMessages} allinfo={allinfo} setDivision={setDivision} />
-          <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} setDivision={setDivision} />
+          {/* <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} setDivision={setDivision} /> */}
           <UpdateUserModal allinfo={allinfo} />
           <a onClick={chatControll} href="#about">
             채팅
