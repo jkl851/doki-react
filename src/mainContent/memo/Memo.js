@@ -54,7 +54,7 @@ export default function(memo) {
   // //메모 방(room) 생성 작업
   // const getMemoRoom = async(i) => {
   //   await axios
-  //     .post(`http://34.64.187.132:8080/doki/talk/memoRoom/${i}`)
+  //     .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
   //     .then((Response) => {
   //       // console.log(Response);
   //     })
@@ -68,7 +68,7 @@ export default function(memo) {
   // const opensocket = async() => {
   //     try{
   //     //소켓 열기
-  //     var socket = new SockJS('http://34.64.187.132:8080/doki/websocket');
+  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
   //     var stompClient = Stomp.over(socket); //stomp client 구성
       
   //     // SockJS와 stomp client를 통해 연결을 시도.
@@ -119,7 +119,7 @@ export default function(memo) {
   //     try {
   //       await axios({
   //         method: "post",
-  //         url: `http://34.64.187.132:8080/doki/talk/memo`,
+  //         url: `http://localhost:8080/doki/talk/memo`,
   //         params: {
   //           handling: memo.handling,
   //           roomId: 0,
@@ -147,7 +147,7 @@ export default function(memo) {
   //       try {
   //         await axios({
   //           method: "post",
-  //           url: `http://34.64.187.132:8080/doki/talk/memoOut`,
+  //           url: `http://localhost:8080/doki/talk/memoOut`,
   //           params: {
   //             handling: memo.handling,
   //             roomId: 0,
@@ -191,7 +191,7 @@ export default function(memo) {
     let obj = Object.assign({}, memo, {"visible": "0"});
     // api 통신 (visible => "0")
     axios
-    .post("http://34.64.187.132:8080/doki/memo/updateMemo", obj)
+    .post("http://localhost:8080/doki/memo/updateMemo", obj)
     .then((Response) => {
       console.log(Response.data)
     })
@@ -220,7 +220,7 @@ export default function(memo) {
       dispatch({ type: 'MODIFY_MEMO_SEND', no: memo.no, name: 'contents', value: memo.contents, allinfo: allinfo})
 
       axios
-        .post("http://34.64.187.132:8080/doki/memo/updateMemo", memo)
+        .post("http://localhost:8080/doki/memo/updateMemo", memo)
         .then((Response) => {
           console.log("[메모 Update 성공!!]")
         })
@@ -270,7 +270,7 @@ export default function(memo) {
     let obj = Object.assign({}, memo, {"pin": pin})
 
     axios
-      .post("http://34.64.187.132:8080/doki/memo/updateMemo", obj)
+      .post("http://localhost:8080/doki/memo/updateMemo", obj)
       .then((Response) => {
         console.log(Response.data)
       })
@@ -287,10 +287,10 @@ export default function(memo) {
       .all([
           // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
           await axios
-            .get('http://34.64.187.132:8080/doki/memo/getHashListByMemo/' + memo.no), 
+            .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no), 
           // 회사 전체 직원의 리스트 검색
           await axios
-          .get('http://34.64.187.132:8080/doki/hash/getAllHashList') 
+          .get('http://localhost:8080/doki/hash/getAllHashList') 
       ])
       .then(
           axios.spread((res1, res2) => {
