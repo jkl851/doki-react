@@ -7,6 +7,11 @@ import MemoAlarmPopover from "./MemoAlarmPopover";
 import UpdateUserModal from "./UpdateUserModal";
 import axios from "axios";
 
+//Stomp
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
+import ChatMessage from "./ChatMessage";
+
 export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
@@ -25,32 +30,67 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
     }
   };
 
-  useEffect(async () => {
-    getChatMessages();
-  }, []);
+  // useEffect(() => {
+  //   opensocket(deptNo);
+  // }, []);
 
+  // // 소켓 열기
+  // const opensocket = async(deptNo) => {
+  //   try{
+  //     //소켓 열기
+  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
+  //     var stompClient = Stomp.over(socket); //stomp client 구성
 
+  //     // SockJS와 stomp client를 통해 연결을 시도.
+  //     stompClient.connect({}, function () {
+  //       console.log('Chat Alarm Socket Connected: ' + `${deptNo}`);
+  //       stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
+  //         const data = JSON.parse(msg.body);
+  //         const broadCastingMessage = {}
+  //         broadCastingMessage.roomId = data.roomId;
+  //         broadCastingMessage.userNo = data.userNo;
+  //         broadCastingMessage.userName = data.sender;
+  //         broadCastingMessage.contents = data.message;
+  //         broadCastingMessage.departmentName = data.departmentName;
+  //         broadCastingMessage.date = data.date;
+  //         broadCastingMessage.position = data.position;
+  //         broadCastingMessage.flag = 0;
+  //         broadCastingMessage.image = null;
+
+  //         setChatMessages(chatMessages => 
+  //           chatMessages.concat(broadCastingMessage));
+  //       });
+
+  //     });
+  //       return null;
+    
+  //   }catch (error){
+  //       console.log(error);
+  //   }
+  // }
 
 
   //채팅 알림 받기
-  const [chatMessages, setChatMessages] = useState([]);
-  const getChatMessages = async() => {
-    await axios
-      .get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
-      .then((Response) => {
-        // console.log(no + "번 유저 채팅 알림 요청!")
-        // for(let i=0; i<Response.data.length; i++) {
-        //   console.log(Response.data[i]);
-        //     tempMessages.push(Response.data[i]);
-        // }
-        setChatMessages(Response.data);
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
+  // var tempMessages = [];
+  // const [chatMessages, setChatMessages] = useState([]);
+  // useEffect(async() => {
+  //   await axios
+  //     .get(`http://localhost:8080/doki/alarm/getAlarm/${no}/0`)
+  //     .then((Response) => {
+  //       console.log(no + "번 유저 채팅 알림 요청!")
+  //       // for(let i=0; i<Response.data.length; i++) {
+  //       //   console.log(Response.data[i]);
+  //       //     tempMessages.push(Response.data[i]);
+  //       // }
+  //       console.log(JSON.stringify(Response.data));
+  //       setChatMessages(Response.data);
+  //     })
+  //     .catch((Error) => {
+  //       console.log(Error);
+  //     });
 
-      // setChatMessages([...chatMessages, tempMessages]);
-  }
+  //     // setChatMessages([...chatMessages, tempMessages]);
+  // }, []);
 
 
   //메모 알림 받기
@@ -75,7 +115,7 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
         <img src={logo} style={{ width: "125px", height: "100%" }} />
         <div className="topnav-right" id="icons">
           <MemoAlarmPopover memoMessages={memoMessages} allinfo={allinfo} setDivision={setDivision} />
-          <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} setDivision={setDivision} />
+          {/* <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} setDivision={setDivision} /> */}
           <UpdateUserModal allinfo={allinfo} />
           <a onClick={chatControll} href="#about">
             채팅

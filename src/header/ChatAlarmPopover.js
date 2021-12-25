@@ -15,7 +15,7 @@ import { Stomp } from '@stomp/stompjs';
 export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo }) {
   //챗 알람 Modal
   const no = JSON.stringify(allinfo.no);
-  const deptNo = allinfo.departmentNo * 10;
+  const deptNo = allinfo.departmentNo;
 
   const target = useRef(null);
   const [chatAlarmPopover, setChatAlarmPopover] = useState({ isOpen: false });
@@ -39,29 +39,30 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
     console.log(departmentNo + "번 부서로 이동!!");
   };
 
+
   //알람 빨간불 갯수 표시
   useEffect(() => {
-    getChatRoom(10);
-    getChatRoom(20);
-    getChatRoom(30);
-    getChatRoom(40);
-    getChatRoom(50);
-    opensocket(deptNo);
-    getAlarmCount();
+    // getChatRoom(10);
+    // getChatRoom(20);
+    // getChatRoom(30);
+    // getChatRoom(40);
+    // getChatRoom(50);
+    // opensocket(deptNo);
+    // getAlarmCount();
   }, []);
 
 
     //부서별 채팅알람방(room) 생성 작업
-    const getChatRoom = async(i) => {
-      await axios
-        .post(`http://localhost:8080/doki/talk/topic/${i}`)
-        .then((Response) => {
-          // console.log(Response);
-        })
-        .catch((Error) => {
-          console.log(Error);
-        });
-    };
+    // const getChatRoom = async(i) => {
+    //   await axios
+    //     .post(`http://localhost:8080/doki/talk/chatAlarmRoom/${i}`)
+    //     .then((Response) => {
+    //       // console.log(Response);
+    //     })
+    //     .catch((Error) => {
+    //       console.log(Error);
+    //     });
+    // };
 
 
   // 소켓 열기
@@ -73,12 +74,15 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
 
       // SockJS와 stomp client를 통해 연결을 시도.
       stompClient.connect({}, function () {
-        console.log('Chat Alarm Socket Connected: ');
+        console.log('Chat Alarm Socket Connected: ' + `${deptNo}`);
         stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
           const data = JSON.parse(msg.body);
           console.log('chatPopOver socket sub : ' + JSON.stringify(data));
-          setCount(+1);
-          getAlarmCount();
+
+          if(chatAlarmPopover.isOpen == false) {
+            setCount(+1);
+            getAlarmCount();
+          } 
 
         });
       });

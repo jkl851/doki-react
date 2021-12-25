@@ -62,8 +62,8 @@ const opensocket = async(deptNo) => {
       stompClient.subscribe(`/topic/${deptNo}`, (msg) => {
         const data = JSON.parse(msg.body);
         console.log('memoPopOver socket sub : ' + JSON.stringify(data));
-        setCount(+1);
-        getAlarmCount();
+          setCount(+1);
+          getAlarmCount();
 
       });
     });
@@ -104,7 +104,7 @@ const updateAlarmCheck = async() => {
 
   //부서번호 상위 component로 이동
   const pageMovement = (departmentNo) => {
-    setChatAlarmPopover({ isOpen: false });
+    setMemoAlarmPopover({ isOpen: false });
     setDivision(departmentNo);
     console.log(departmentNo + "번 부서로 이동!!");
   };
