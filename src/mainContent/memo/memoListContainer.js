@@ -8,11 +8,13 @@ import { Stomp } from '@stomp/stompjs';
 
 import MemoList from "./MemoList";
 
-export default function memoList ({filter, title, deptAuth}) {
+export default function memoList ({filter, title, deptAuth, allinfo}) {
     // 전역 컨텍스트
     const [ memos, dispatch ] = useContext(MemoContext); 
     // 세션 유저정보
-    const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
+    
+    console.log(['[memolistcontainer==============]'])
+    console.log(allinfo)
 
     // 최상단 테스트 =====================================================================
     useEffect(() => {
@@ -130,7 +132,7 @@ export default function memoList ({filter, title, deptAuth}) {
 
     return (
         <div className="memo_list" ref={ref}>
-            <MemoList memos={filteredMemos} cols={cols} title={title} deptAuth={deptAuth}/>
+            <MemoList memos={filteredMemos} cols={cols} title={title} deptAuth={deptAuth} allinfo={allinfo}/>
         </div>
     );
 };

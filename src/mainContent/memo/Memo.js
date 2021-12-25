@@ -41,8 +41,10 @@ export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin;
   
-  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
+  let allinfo = memo.allinfo;
+
+  
   // useEffect(() => {
   //   getMemoRoom(0);
   //   // opensocket();

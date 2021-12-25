@@ -13,6 +13,8 @@ export default function App() {
 //  세션 유지로 로그인을 했는데, 새 페이지에서는 세션 유지 안됨. useState값은 넘어가지 않는다. checked 된 값은 해당 탭에서만 존재.
 //
 const [checked, setChecked] = useState(false);
+  console.log('[checked!!!!!!!!!!!]')
+  console.log(checked)
 
   if(checked === true){
 
@@ -22,7 +24,7 @@ const [checked, setChecked] = useState(false);
       <Router>
         <Routes>
           <Route exact path="/*" element={<Login setAllinfo={setAllinfo} setChecked={setChecked} checked={checked}/>}/>
-          <Route exact path="/doki" element={<Transfer allinfo={allinfo}/>}/>
+          <Route exact path="/doki" element={<Transfer allinfo={allinfo} setAllinfo={setAllinfo}/>}/>
         </Routes>
       </Router>
     );
