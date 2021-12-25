@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const Transfer = ({ allinfo, setAllinfo}) => {
 
-
-
   const navigate = useNavigate();
   const [flag, setFlag] = useState();
 

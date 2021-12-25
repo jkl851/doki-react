@@ -5,6 +5,7 @@ import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
 const Login = ({ setAllinfo, setChecked, checked }) => {
+
   const refForm = useRef(null);
   const navigate = useNavigate();
   const [ID, setID] = useState("");
@@ -178,18 +179,7 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
           {/* form form form form form form form form form form form form form form form form form form form form form form form form form form form form form form */}
         </form>
         {/* form form form form form form form form form form form form form form form form form form form form form form form form form form form form form form */}
-        <div>
-          <button
-            style={{
-              width: "400px",
-              height: "35px",
-              backgroundColor: "#fff",
-              border: "1px solid #b2b3b5",
-            }}
-          >
-            비밀번호 재설정
-          </button>
-        </div>
+        
       </div>
       {/* 밑받침 */}
       <div
