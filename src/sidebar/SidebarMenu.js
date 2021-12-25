@@ -379,17 +379,17 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
                         <div className={GroupPermmissionStyles["label"]}>
                             <div>
                                 <label style={{ width: "55%" }}>이름</label>
-                                <label style={{ fontSize: "10px" }}>
+                                <label style={{ fontSize: "12px" }}>
                                     읽기
                                     <br />
                                     전용
                                 </label>
-                                <label style={{ fontSize: "10px" }}>
+                                <label style={{ fontSize: "12px" }}>
                                     일반
                                     <br />
                                     권한
                                 </label>
-                                <label style={{ fontSize: "10px" }}>
+                                <label style={{ fontSize: "12px" }}>
                                     관리
                                     <br />
                                     권한

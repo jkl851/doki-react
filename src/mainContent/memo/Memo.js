@@ -262,7 +262,7 @@ export default function(memo) {
     if (memo.deptAuth === '0') {
       return
     }
-    dispatch({ type: 'MODIFY_MEMO', no: memo.no, name : "pin", value : pin })
+    dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "pin", value : pin })
 
     if(memo === null) {
       return true
@@ -491,7 +491,7 @@ export default function(memo) {
 
               ):( (memo.handling == 1) ? 
                 (
-                <BackgroundColor className="memo" color={memo.color} style={{border: "5px solid red"}}>
+                <BackgroundColor className="memo" color={memo.color} style={{border: "6px solid magenta"}}>
                    <div style={{display:"inline-block"}} >
                     <h4 className="memo-title" 
                       >{memo.title}</h4>
