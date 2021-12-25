@@ -12,10 +12,7 @@ export default function memoList ({filter, title, deptAuth, allinfo}) {
     // 전역 컨텍스트
     const [ memos, dispatch ] = useContext(MemoContext); 
     // 세션 유저정보
-    
-    console.log(['[memolistcontainer==============]'])
-    console.log(allinfo)
-
+  
     // 최상단 테스트 =====================================================================
     useEffect(() => {
         getMemoRoom(0);
