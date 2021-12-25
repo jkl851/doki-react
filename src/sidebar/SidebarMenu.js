@@ -403,6 +403,7 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
                                 deptUserDatas={deptUserDatas}
                                 setDeptUserDatas={setDeptUserDatas}
                                 keyword={deptUserKeyword}
+                                allinfo={allinfo}
                             />
                         </div>
                     </div>

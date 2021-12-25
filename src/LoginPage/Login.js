@@ -5,20 +5,19 @@ import Logo from "../assets/images/white_black_logo.svg";
 import axios from "axios";
 
 const Login = ({ setAllinfo, setChecked, checked }) => {
-
   const refForm = useRef(null);
   const navigate = useNavigate();
   const [ID, setID] = useState("");
   const [Password, setPassword] = useState("");
 
+
   const handleID = (e) => {
     setID(e.target.value);
   };
-
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
-
+  
   // 세션 유지 or 유지 안함
   const handleChecked = () => {
     if (checked === true){
@@ -28,7 +27,6 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
       setChecked(true);
     }
   }
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -75,7 +73,7 @@ const Login = ({ setAllinfo, setChecked, checked }) => {
       <div
         style={{
           margin: "auto",
-          height: "10vh",
+          height: "15vh",
           width: "100%",
         }}
       ></div>

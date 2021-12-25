@@ -41,8 +41,10 @@ export default function(memo) {
   const [ memos, dispatch ] = useContext(MemoContext);
   var pin = memo.pin;
   
-  const [allinfo, setAllinfo] = useState(JSON.parse(sessionStorage.getItem('User')));
 
+  let allinfo = memo.allinfo;
+
+  
   // useEffect(() => {
   //   getMemoRoom(0);
   //   // opensocket();
@@ -341,7 +343,19 @@ export default function(memo) {
                   <form className="create-memo-form" onMouseLeave={collapseCreateMemo}>
                     <BackgroundColor className="input_wrapper" color={memo.color}>
                             <div>
-                                <textarea
+                                {
+                                  memo.deptAuth === '0' ?
+                                  <textarea
+                                    readOnly={true}
+                                    no={memo.no}
+                                    type="text"
+                                    placeholder="제목"
+                                    className="title_input"
+                                    value={memo.title}
+                                    name="title"
+                                  />
+                                  :
+                                  <textarea
                                     no={memo.no}
                                     type="text"
                                     placeholder="제목"
@@ -351,7 +365,9 @@ export default function(memo) {
                                     onChange={ (e) => {
                                       dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo})
                                     } }
-                                />
+                                  />
+                                }
+                                
                                 { pin === '1' ? (
                                 <PinnedIcon
                                     no={memo.no}
@@ -371,15 +387,28 @@ export default function(memo) {
                                 )}
                             </div>
                         
-                      <textarea
-                        rows="6"
-                        column="20"
-                        placeholder=">"
-                        className="description_input"
-                        value={memo.contents}
-                        name="contents"
-                        onChange={ (e) => dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo}) }
-                        ></textarea>
+                        {
+                          memo.deptAuth === '0' ?
+                          <textarea
+                          rows="6"
+                          column="20"
+                          placeholder=">"
+                          className="description_input"
+                          value={memo.contents}
+                          name="contents"
+                          />
+                          :
+                          <textarea
+                            rows="6"
+                            column="20"
+                            placeholder=">"
+                            className="description_input"
+                            value={memo.contents}
+                            name="contents"
+                            onChange={ (e) => dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : e.target.name, value : e.target.value, handling: memo.handling, allinfo: allinfo}) }
+                          />
+                        }
+                        
             
                       {/* 확장된 메모에 해시가 추가되는 부분 */}
                       <div className="expand-memo-hash">

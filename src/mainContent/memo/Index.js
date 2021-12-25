@@ -37,8 +37,8 @@ export default function App({division, allinfo, hashKeyword, deptAuth}) {
     <div className="main_content">
         <div className="main_note">
             <CreateMemo allinfo={allinfo} division={division} deptAuth={deptAuth}/>
-            <MemoListContainer className="memolistcontainer" title="고정됨" filter = {{pin: "1", visible: "1"}} deptAuth={deptAuth}  />
-            <MemoListContainer className="memolistcontainer" title="일반" filter = {{pin: "0", visible: "1"} } deptAuth={deptAuth} />
+            <MemoListContainer className="memolistcontainer" title="고정됨" filter = {{pin: "1", visible: "1"}} deptAuth={deptAuth}  allinfo={allinfo}/>
+            <MemoListContainer className="memolistcontainer" title="일반" filter = {{pin: "0", visible: "1"} } deptAuth={deptAuth} allinfo={allinfo}/>
         </div>
     </div>
   );

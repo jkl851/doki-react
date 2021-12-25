@@ -14,7 +14,6 @@ export default function Doki({ allinfo, setAllinfo }) {
   const [deptAuth, setDeptAuth] = useState("0");
 
 
-
   return (
     <div id="whole_wrapper">
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>

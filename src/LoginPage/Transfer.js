@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const Transfer = ({ allinfo, setAllinfo}) => {
 
+
+
   const navigate = useNavigate();
   const [flag, setFlag] = useState();
 
@@ -18,7 +20,7 @@ const Transfer = ({ allinfo, setAllinfo}) => {
     await axios
       .get("http://localhost:8080/doki/user/checkSession")
       .then((Response) => {
-
+        
         if(Response.data.no === undefined || Response.data.no === null){
             navigate("/login");
         }
