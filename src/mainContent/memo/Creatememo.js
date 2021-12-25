@@ -45,7 +45,7 @@ const memoInitialState = {
 
 export default function CreateMemo({allinfo, division, deptAuth}) {
 
-    console.log("내 부서 권한(createMemo) "+deptAuth)
+    console.log("내 부서 권한(createMemo) "+ deptAuth)
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
     const [visible, setVisible] = useState(false);

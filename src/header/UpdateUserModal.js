@@ -11,8 +11,12 @@ import axios from "axios";
 Modal.setAppElement("body");
 
 export default function MemoAlarmModal({ allinfo }) {
+  let UserImg2 = null;
   let no = allinfo.no;
-
+  if(allinfo.no !== null){
+    UserImg2= "https://randomuser.me/api/portraits/men/" + (allinfo.no) + ".jpg"
+  }
+  
   const navigate = useNavigate();
 
   const refForm = useRef(null);
@@ -146,7 +150,7 @@ export default function MemoAlarmModal({ allinfo }) {
         </div>
 
         <div className={updateUserModalStyles["mid"]}>
-          <img src={user} alt="profile" />
+          <img src={UserImg2} alt="profile" />
           <div>{userUpdateModalData.name}</div>
         </div>
         <div className={updateUserModalStyles["form_wrapper"]}>
