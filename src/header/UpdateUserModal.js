@@ -262,6 +262,9 @@ export default function MemoAlarmModal({ allinfo }) {
                 backgroundColor: "#5048e5",
                 color: "white",
               }}
+              onClick={() => {
+                setUserUpdateModalData(false);
+              }}
             >
               확인
             </button>
