@@ -23,6 +23,7 @@ import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTagIcon from "@mui/icons-material/Tag";
+import dayjs from 'dayjs';
 
 const BackgroundColor = styled.div`
     background: ${({ color }) => color};
@@ -33,7 +34,7 @@ const memoInitialState = {
     title: "",
     image: "",
     contents: "",
-    alarm: new Date(),
+    alarm: dayjs(new Date()).format("YYYY-MM-DD hh:mm"),
     checked: '0',
     alarmset: "0",
     color: "#FFFFFF",
@@ -44,7 +45,7 @@ const memoInitialState = {
 
 export default function CreateMemo({allinfo, division, deptAuth}) {
 
-    console.log("내 부서 권한(createMemo) "+deptAuth)
+    console.log("내 부서 권한(createMemo) "+ deptAuth)
     const [imgBase64, setImgBase64] = useState(""); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일	
     const [visible, setVisible] = useState(false);

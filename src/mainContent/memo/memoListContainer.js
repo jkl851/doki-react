@@ -37,7 +37,7 @@ export default function memoList ({filter, title, deptAuth}) {
   const opensocket = async() => {
     try{
     //소켓 열기
-    var socket = new SockJS('http://localhost:8080/doki/websocket');
+    var socket = new SockJS('http://34.64.187.132:8080/doki/websocket');
     var stompClient = Stomp.over(socket); //stomp client 구성
     
     // SockJS와 stomp client를 통해 연결을 시도.
