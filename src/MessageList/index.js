@@ -83,6 +83,7 @@ export default function MessageList({allinfo}) {
             tempMessages.push(broadCastingMessage);
         
             setMessages([...messages, ...tempMessages]);
+
             scrollToBotton();
 
           });
@@ -123,7 +124,10 @@ export default function MessageList({allinfo}) {
       } catch (err) {
         console.error(err);
       }
+
+
   };
+
 
   var tempMessages = [];
   const getMessages = async() => {

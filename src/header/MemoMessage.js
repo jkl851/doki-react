@@ -24,7 +24,7 @@ export default function MemoMessage({
     <div
       className={alarmModalStyles.content}
       onClick={() => pageMovement(departmentNo)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", height: "80px" }}
     >
       <div
         className={alarmModalStyles.profile}
@@ -34,7 +34,7 @@ export default function MemoMessage({
           style={{
             borderRadius:"100px",
             transform: "scale(0.3)",
-            margin: "-39px 0px 0px -42px",
+            margin: "-28px 0px 0px -42px",
           }}
           src={UserImg}
           className={alarmModalStyles["user-profile"]}
@@ -53,7 +53,7 @@ export default function MemoMessage({
         <div
           style={{
             // border: "1px solid purple",
-            height: "60%",
+            height: "40%",
             fontWeight: "bolder",
             fontSize: "18px",
             width: "180px",
@@ -63,7 +63,7 @@ export default function MemoMessage({
         <div
           style={{
             // border: "1px solid magenta",
-            height: "40%",
+            height: "60%",
             width: "180px",
             textOverflow: "ellipsis",
             borderTop: "1px solid rgba(170, 170, 170, 0.3)",
