@@ -1,4 +1,4 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 
 // var cookie;
 
@@ -25,14 +25,14 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 //     }
 // };
 
-module.exports = function(app){
-  app.use(
-    '/doki',
-      createProxyMiddleware({
-          target: 'http://localhost:8080',
-          secure: false,
-          ws: true,
-          changeOrigin: true
-      })
-  )
-};
+// module.exports = function(app){
+//   app.use(
+//     '/doki',
+//       createProxyMiddleware({
+//           target: 'http://localhost:8080',
+//           secure: false,
+//           ws: true,
+//           changeOrigin: true
+//       })
+//   )
+// };
