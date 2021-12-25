@@ -10,6 +10,7 @@ const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, keyword, alli
                 .map(deptUserData =>
                     <DeptUser
                         key={deptUserData.deptUserNo}
+                        no={deptUserData.no}
                         deptUserNo={deptUserData.deptUserNo}
                         name={deptUserData.userName + " " + deptUserData.position}
                         image={deptUserData.image}

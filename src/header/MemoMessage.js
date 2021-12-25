@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import alarmModalStyles from "../assets/css/alarmmodal.module.css";
-import user from "../assets/images/katalk.png";
 
 export default function MemoMessage({
+  userNo,
   userName,
   position,
   contents,
@@ -11,6 +11,8 @@ export default function MemoMessage({
   departmentName,
   pageMovement,
 }) {
+  let UserImg = "https://randomuser.me/api/portraits/men/" + (userNo) + ".jpg"  
+
   return (
     <div
       className={alarmModalStyles.content}
@@ -23,10 +25,11 @@ export default function MemoMessage({
       >
         <img
           style={{
+            borderRadius:"100px",
             transform: "scale(0.3)",
             margin: "-39px 0px 0px -42px",
           }}
-          src={user}
+          src={UserImg}
           className={alarmModalStyles["user-profile"]}
           alt="profile"
         />

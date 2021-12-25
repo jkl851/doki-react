@@ -12,12 +12,12 @@ export default function Doki({ allinfo, setAllinfo }) {
   const [chat, setChat] = useState(false);
   const [hashKeyword, setHashKeyword] = useState('');
   const [deptAuth, setDeptAuth] = useState("0");
-
+  const [allUserDatas, setAllUserDatas] = useState([]);
 
   return (
     <div id="whole_wrapper">
       <MemoContext.Provider value={useReducer(memoReducer, memoList)}>
-      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat} setDivision={setDivision}/>
+      <HeaderDiv division={division} allinfo={allinfo} chat={chat} setChat={setChat} setDivision={setDivision} allUserDatas={allUserDatas}/>
         <div id="main_sidebar">
           <Sidebar
             division={division}
@@ -28,10 +28,12 @@ export default function Doki({ allinfo, setAllinfo }) {
             setHashKeyword={setHashKeyword}
             deptAuth={deptAuth}
             setDeptAuth={setDeptAuth}
+            allUserDatas={allUserDatas}
+            setAllUserDatas={setAllUserDatas}
           />
         </div>
         <MemoIndex division={division} allinfo={allinfo} hashKeyword={hashKeyword} deptAuth={deptAuth}/>
-      <SideChat2 allinfo={allinfo} />
+      <SideChat2 allinfo={allinfo}/>
       </MemoContext.Provider>
     </div>
   );
