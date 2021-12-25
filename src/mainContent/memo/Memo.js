@@ -54,7 +54,7 @@ export default function(memo) {
   // //메모 방(room) 생성 작업
   // const getMemoRoom = async(i) => {
   //   await axios
-  //     .post(`http://localhost:8080/doki/talk/memoRoom/${i}`)
+  //     .post(`http://34.64.187.132:8080/doki/talk/memoRoom/${i}`)
   //     .then((Response) => {
   //       // console.log(Response);
   //     })
@@ -68,7 +68,7 @@ export default function(memo) {
   // const opensocket = async() => {
   //     try{
   //     //소켓 열기
-  //     var socket = new SockJS('http://localhost:8080/doki/websocket');
+  //     var socket = new SockJS('http://34.64.187.132:8080/doki/websocket');
   //     var stompClient = Stomp.over(socket); //stomp client 구성
       
   //     // SockJS와 stomp client를 통해 연결을 시도.
@@ -92,50 +92,6 @@ export default function(memo) {
   //         const data = JSON.parse(msg.body);
   //         console.log('data : ' + JSON.stringify(data));
 
-  // 소켓 열기
-  const opensocket = async() => {
-      try{
-      //소켓 열기
-      var socket = new SockJS('http://localhost:8080/doki/websocket');
-      var stompClient = Stomp.over(socket); //stomp client 구성
-      
-      // SockJS와 stomp client를 통해 연결을 시도.
-      stompClient.connect({}, function () {
-        console.log('Memo In Socket Connected: ');
-
-        stompClient.subscribe(`/topic/0`, (msg) => {
-          const data = JSON.parse(msg.body);
-          // console.log('data : ' + JSON.stringify(data));
-          //console.log('allinfo : ' + JSON.stringify(allinfo));
-          if(data.userNo == allinfo.no ) {
-      
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
-            console.log(' name :' + data.name + 'value :' + data.value + 'userNo : ' + data.userNo );
-
-          } else {
-            setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
-              //사용중인 메모 알람 함수
-               //alert(data.userName + '님이 현재 사용 중 입니다.');
-          }
-        });
-
-
-        //
-        console.log('Memo Out Socket Connected: ');
-        stompClient.subscribe(`/topicOut/0`, (msg) => {
-          const data = JSON.parse(msg.body);
-          console.log('data : ' + JSON.stringify(data));
-          if(data.userNo == allinfo.no ) {
-            
-          } else {
-            setMemo({...memo, ["handling"]: "0" })
-            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
-          }
-          
-          // 소켓 연결 종료
-          stompClient.disconnect();
-
-        });
 
 
   //         console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
@@ -163,7 +119,7 @@ export default function(memo) {
   //     try {
   //       await axios({
   //         method: "post",
-  //         url: `http://localhost:8080/doki/talk/memo`,
+  //         url: `http://34.64.187.132:8080/doki/talk/memo`,
   //         params: {
   //           handling: memo.handling,
   //           roomId: 0,
@@ -191,7 +147,7 @@ export default function(memo) {
   //       try {
   //         await axios({
   //           method: "post",
-  //           url: `http://localhost:8080/doki/talk/memoOut`,
+  //           url: `http://34.64.187.132:8080/doki/talk/memoOut`,
   //           params: {
   //             handling: memo.handling,
   //             roomId: 0,
@@ -223,61 +179,7 @@ export default function(memo) {
   // 삭제 확인 모달
   const [checkDelMemo, setCheckDelMemo] = useState({
     isOpen: false,
-
   });
-
-
-
-  //MemoAlarm Pub 작업
-  const sendDeleteAlarm = async() => {
-      try {
-        await axios({
-            method: "post",
-            url: `http://localhost:8080/doki/talk/memoAlarmPub`,
-            params: {
-            roomId: allinfo.departmentNo * 100,
-            memoNo: memo.no,
-            title: memo.title,
-            senderNo: allinfo.no,
-            messageType: 'delete'
-            }
-        })
-        .then((response) => {
-            return response;
-        })
-        .catch((Error) => {
-            console.log(Error);
-        })
-
-    } catch (err) {
-    console.error(err);
-    }
-  }
-
-  const sendUpdateAlarm = async() => {
-    try {
-      await axios({
-          method: "post",
-          url: `http://localhost:8080/doki/talk/memoAlarmPub`,
-          params: {
-          roomId: allinfo.departmentNo * 100,
-          memoNo: memo.no,
-          title: memo.title,
-          senderNo: allinfo.no,
-          messageType: 'update'
-          }
-      })
-      .then((response) => {
-          return response;
-      })
-      .catch((Error) => {
-          console.log(Error);
-      })
-
-  } catch (err) {
-  console.error(err);
-  }
-}
 
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
@@ -289,16 +191,13 @@ export default function(memo) {
     let obj = Object.assign({}, memo, {"visible": "0"});
     // api 통신 (visible => "0")
     axios
-    .post("http://localhost:8080/doki/memo/updateMemo", obj)
+    .post("http://34.64.187.132:8080/doki/memo/updateMemo", obj)
     .then((Response) => {
       console.log(Response.data)
     })
     .catch(error => 
       console.error(error)
       )
-
-    //삭제 메세지 발송
-    sendDeleteAlarm();
 
     dispatch({ type: 'DEL_MEMO', no, pin});
   };
@@ -321,14 +220,13 @@ export default function(memo) {
       dispatch({ type: 'MODIFY_MEMO_SEND', no: memo.no, name: 'contents', value: memo.contents, allinfo: allinfo})
 
       axios
-        .post("http://localhost:8080/doki/memo/updateMemo", memo)
+        .post("http://34.64.187.132:8080/doki/memo/updateMemo", memo)
         .then((Response) => {
           console.log("[메모 Update 성공!!]")
         })
         .catch(error => 
           console.error(error)
           )
-        sendUpdateAlarm();
    };
 
 
@@ -372,7 +270,7 @@ export default function(memo) {
     let obj = Object.assign({}, memo, {"pin": pin})
 
     axios
-      .post("http://localhost:8080/doki/memo/updateMemo", obj)
+      .post("http://34.64.187.132:8080/doki/memo/updateMemo", obj)
       .then((Response) => {
         console.log(Response.data)
       })
@@ -389,10 +287,10 @@ export default function(memo) {
       .all([
           // 특정 부서 번호를 가지고 해당 부서의 참가자들 검색
           await axios
-            .get('http://localhost:8080/doki/memo/getHashListByMemo/' + memo.no), 
+            .get('http://34.64.187.132:8080/doki/memo/getHashListByMemo/' + memo.no), 
           // 회사 전체 직원의 리스트 검색
           await axios
-          .get('http://localhost:8080/doki/hash/getAllHashList') 
+          .get('http://34.64.187.132:8080/doki/hash/getAllHashList') 
       ])
       .then(
           axios.spread((res1, res2) => {
@@ -625,21 +523,20 @@ export default function(memo) {
                     
                   
                     {/* 메모에 해시가 추가되는 부분 */}
-                    { memo.hashCount > 0 &&
-                    (<div style={{display: "flex"}}>
-                      
+                    <div style={{display: "flex"}}>
+                      { memo.hashCount > 0 &&
                         <div className="memo-hash">
                           <PostedHash key={memo.hashNo} hashName={'#'+memo.hashName}/> 
                         </div>
-                      
+                      }
                       { memo.hashCount > 1 && 
                         <div className="memo-hash">
                         <PostedHash key={memo.hashNo} hashName={'외 '+ (memo.hashCount-1) +"개"}/> 
                       </div>
                       }
 
-                    </div>)
-                    }
+                    </div>
+                    
                     {/* 관리자만 삭제 버튼 활성화 */}
                     {memo.deptAuth === '2' &&
                     <Button className="delete-button" 
