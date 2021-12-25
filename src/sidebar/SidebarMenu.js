@@ -16,7 +16,7 @@ import axios from "axios";
 
 ReactModal.setAppElement("#root");
 
-export default function SidebarMenu({ division , hashKeyword, setHashKeyword, allinfo, setAllinfo, deptAuth, setDeptAuth}) {
+export default function SidebarMenu({ division , hashKeyword, setHashKeyword, allinfo, setAllinfo, deptAuth, setDeptAuth, allUserDatas, setAllUserDatas}) {
 
 
 
@@ -48,7 +48,7 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
     });
     const [deptUserDatas, setDeptUserDatas] = useState([]);
     const [copiedDeptUserDatas, setCopiedDeptUserDatas] = useState([]);
-    const [allUserDatas, setAllUserDatas] = useState([]);
+    
     const [isInvited, setIsInvited] = useState([]);
     const [flag, setFlag] = useState([]);
     const [keyword, setKeyword] = useState("");

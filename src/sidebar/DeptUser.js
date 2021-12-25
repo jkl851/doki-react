@@ -10,6 +10,7 @@ import userInfoModalStyles from "../assets/css/userupdatemodal.module.css";
 
 const DeptUser = ({
   deptUserNo,
+  no,
   name,
   image,
   auth,
@@ -19,7 +20,7 @@ const DeptUser = ({
   allinfo
 }) => {
 
-  const UserImg2= "https://randomuser.me/api/portraits/men/" + (deptUserNo) + ".jpg"
+  const UserImg= "https://randomuser.me/api/portraits/men/" + (no) + ".jpg"
   
   //정우 작업
   //userInfoModal 정보 불러오기
@@ -42,7 +43,7 @@ const DeptUser = ({
           id: Response.data.id,
           name: Response.data.userName,
           position: Response.data.position,
-          iamge: UserImg2,
+          iamge: UserImg,
           email: Response.data.email,
           comment: Response.data.comment,
           isOpen: true,
@@ -81,9 +82,9 @@ const DeptUser = ({
       <div>
         {/* src에 image 변수를 이용하여 db 데이터로 적용 시킬 것!! */}
         {isSidebar ? 
-          <img style={{borderRadius: "100px",width: "64px", height:"64px"}} src={UserImg2} alt=""  onClick={() => handleImgClick(deptUserNo)} />
+          <img style={{borderRadius: "100px",width: "64px", height:"64px"}} src={UserImg} alt=""  onClick={() => handleImgClick(deptUserNo)} />
           :
-          <img style={{borderRadius: "100px",width: "40px", height:"40px"}} src={UserImg2} alt=""  onClick={() => handleImgClick(deptUserNo)} />
+          <img style={{borderRadius: "100px",width: "40px", height:"40px"}} src={UserImg} alt=""  onClick={() => handleImgClick(deptUserNo)} />
         }
         
         <label>{name}</label>
@@ -140,7 +141,7 @@ const DeptUser = ({
         </div>
 
         <div className={userInfoModalStyles["mid"]}>
-          <img style={{borderRadius:"100px", width:"64px", height:"64px"}} src={UserImg2} alt="profile" />
+          <img style={{borderRadius:"100px", width:"64px", height:"64px"}} src={UserImg} alt="profile" />
           <div>{userInfoModalData.name}</div>
         </div>
 

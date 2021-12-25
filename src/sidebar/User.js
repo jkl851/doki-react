@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
-import UserImg from '../assets/images/user11.png'
 
 const User = ({no, name, image, isInvited, checkedItemHandler}) => {
+    const UserImg= "https://randomuser.me/api/portraits/men/" + (no) + ".jpg"  
 
     const [bChecked, setChecked] = useState(false);
 
@@ -12,7 +12,7 @@ const User = ({no, name, image, isInvited, checkedItemHandler}) => {
 
     return (
         <div>
-            <img src={UserImg} alt="" />
+            <img style={{borderRadius:"100px", width:"40px", height:"40px"}} src={UserImg} alt=""/>
             <label >{name}</label>
             <input checked={bChecked} disabled={isInvited[no-1] === true} onChange={(e) => checkHandler(e)} id={no} type='checkbox'></input>
         </div>
