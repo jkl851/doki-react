@@ -23,6 +23,7 @@ import AlarmAddIcon from "@mui/icons-material/AlarmAdd";
 import PaletteIcon from "@mui/icons-material/PaletteOutlined";
 import AddPhotoIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import HashTagIcon from "@mui/icons-material/Tag";
+import dayjs from 'dayjs'
 
 const BackgroundColor = styled.div`
     background: ${({ color }) => color};
@@ -33,7 +34,7 @@ const memoInitialState = {
     title: "",
     image: "",
     contents: "",
-    alarm: new Date(),
+    alarm: dayjs(new Date()).format("YYYY-MM-DD hh:mm"),
     checked: '0',
     alarmset: "0",
     color: "#FFFFFF",
@@ -129,7 +130,12 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
         axios
             .post("http://localhost:8080/doki/memo/addMemo", cmemo)
             .then((Response) => {
-
+                
+                Object.assign(cmemo, {"no": Response.data.no});
+                
+                console.log('[newObj!!!!!!!!!!!]')
+                console.log(cmemo)
+                
                 let newObj = null;
                 // 해시 길이가 0이상이면 새로운 객체로 만들어야한다
                 if(cmemo.hash.length > 0) {

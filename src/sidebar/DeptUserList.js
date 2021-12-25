@@ -1,13 +1,13 @@
 import React from 'react';
 import DeptUser from './DeptUser'
 
-const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, keyword}) => {
+const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, keyword, allinfo}) => {
     
     return (
         <ul>
             {deptUserDatas
                 .filter(deptUserData => deptUserData.userName.indexOf(keyword) !== -1 || deptUserData.position.indexOf(keyword) !== -1)
-                .map(deptUserData => 
+                .map(deptUserData =>
                     <DeptUser
                         key={deptUserData.deptUserNo}
                         deptUserNo={deptUserData.deptUserNo}
@@ -17,6 +17,7 @@ const DeptUserList = ({deptUserDatas, isSidebar, setDeptUserDatas, keyword}) => 
                         isSidebar={isSidebar}
                         deptUserDatas={deptUserDatas}
                         setDeptUserDatas={setDeptUserDatas}
+                        allinfo={allinfo}
                         />)}
         </ul>
     );
