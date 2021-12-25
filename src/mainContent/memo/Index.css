@@ -249,7 +249,7 @@ h4.memo-title {
 
 textarea.memo-description {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   border: none;
   resize: none;
   outline: none;
@@ -274,7 +274,7 @@ textarea.memo-description::-webkit-scrollbar-thumb {
 
 .memo-area {
   height: 100%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   cursor: pointer;
 }
 

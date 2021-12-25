@@ -137,7 +137,7 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
 
   return (
     <Fragment>
-      <a id="mypopover1" 
+      <a id="mypopover1"
         // ref={target} 
         ref={outsideRef} 
         onClick={chatAlarmInfo} href="#about">
@@ -167,8 +167,8 @@ export default function ChatAlarmPopover({ setDivision, chatMessages, allinfo })
             {chatMessages &&
               chatMessages.map((chatMessage) => (
                 <ChatMessage
-
                   key={chatMessage.no}
+                  no={allinfo.no}
                   userName={chatMessage.userName}
                   position={chatMessage.position}
                   date={chatMessage.date}

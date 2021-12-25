@@ -78,6 +78,7 @@ export default function MemoAlarmPopover({ setDivision, memoMessages, allinfo })
               memoMessages.map((memoMessage) => (
                 <MemoMessage
                   key={memoMessage.no}
+                  userNo={memoMessage.userNo}
                   userName={memoMessage.userName}
                   position={memoMessage.position}
                   date={memoMessage.date}

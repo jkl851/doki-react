@@ -1,10 +1,10 @@
 import React from "react";
 import moment from "moment";
 import "./Message.css";
-import Group from "../../assets/images/user2.png";
 
 export default function Message(props) {
-  const { data, isMine, startsSequence, endsSequence, showTimestamp } = props;
+  const { data, isMine, startsSequence, endsSequence, showTimestamp} = props;
+    let UserImg = "https://randomuser.me/api/portraits/men/" + (data.userNo) + ".jpg"
 
     const friendlyTimestamp = moment(data.date).format('LLLL');
     // console.log(JSON.stringify(data));
@@ -27,7 +27,9 @@ export default function Message(props) {
         </div>
         <div className="bubble-container">
         
-{!isMine && <img src={Group} alt=""/>}
+        {!isMine && 
+          <img style={{borderRadius:"100px", width:"64px", height:"64px"}} src={UserImg} alt=""/>
+          }
 
         <div className="bubble" title={friendlyTimestamp}>
           {data.message}

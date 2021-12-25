@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import alarmModalStyles from "../assets/css/alarmmodal.module.css";
-import user from "../assets/images/katalk.png";
 
 export default function ChatMessage({
+  no,
   userName,
   position,
   contents,
@@ -12,7 +12,8 @@ export default function ChatMessage({
   pageMovement,
 }) {
 
-
+  let UserImg = "https://randomuser.me/api/portraits/men/" + (no) + ".jpg"  
+  
 
   return (
     <div
@@ -29,7 +30,7 @@ export default function ChatMessage({
             transform: "scale(0.3)",
             margin: "-39px 0px 0px -42px",
           }}
-          src={user}
+          src={UserImg}
           className={alarmModalStyles["user-profile"]}
           alt="profile"
         />
