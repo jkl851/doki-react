@@ -92,6 +92,50 @@ export default function(memo) {
   //         const data = JSON.parse(msg.body);
   //         console.log('data : ' + JSON.stringify(data));
 
+  // 소켓 열기
+  const opensocket = async() => {
+      try{
+      //소켓 열기
+      var socket = new SockJS('http://localhost:8080/doki/websocket');
+      var stompClient = Stomp.over(socket); //stomp client 구성
+      
+      // SockJS와 stomp client를 통해 연결을 시도.
+      stompClient.connect({}, function () {
+        console.log('Memo In Socket Connected: ');
+
+        stompClient.subscribe(`/topic/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          // console.log('data : ' + JSON.stringify(data));
+          //console.log('allinfo : ' + JSON.stringify(allinfo));
+          if(data.userNo == allinfo.no ) {
+      
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용중!');
+            console.log(' name :' + data.name + 'value :' + data.value + 'userNo : ' + data.userNo );
+
+          } else {
+            setMemo({...memo, [data.name] : data.value, ["handling"]: "1" })
+              //사용중인 메모 알람 함수
+               //alert(data.userName + '님이 현재 사용 중 입니다.');
+          }
+        });
+
+
+        //
+        console.log('Memo Out Socket Connected: ');
+        stompClient.subscribe(`/topicOut/0`, (msg) => {
+          const data = JSON.parse(msg.body);
+          console.log('data : ' + JSON.stringify(data));
+          if(data.userNo == allinfo.no ) {
+            
+          } else {
+            setMemo({...memo, ["handling"]: "0" })
+            console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
+          }
+          
+          // 소켓 연결 종료
+          stompClient.disconnect();
+
+        });
 
 
   //         console.log(data.userName + ' 유저가 ' + data.memoNo + '번 메모를 사용끝!')
@@ -179,7 +223,61 @@ export default function(memo) {
   // 삭제 확인 모달
   const [checkDelMemo, setCheckDelMemo] = useState({
     isOpen: false,
+
   });
+
+
+
+  //MemoAlarm Pub 작업
+  const sendDeleteAlarm = async() => {
+      try {
+        await axios({
+            method: "post",
+            url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+            params: {
+            roomId: allinfo.departmentNo * 100,
+            memoNo: memo.no,
+            title: memo.title,
+            senderNo: allinfo.no,
+            messageType: 'delete'
+            }
+        })
+        .then((response) => {
+            return response;
+        })
+        .catch((Error) => {
+            console.log(Error);
+        })
+
+    } catch (err) {
+    console.error(err);
+    }
+  }
+
+  const sendUpdateAlarm = async() => {
+    try {
+      await axios({
+          method: "post",
+          url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+          params: {
+          roomId: allinfo.departmentNo * 100,
+          memoNo: memo.no,
+          title: memo.title,
+          senderNo: allinfo.no,
+          messageType: 'update'
+          }
+      })
+      .then((response) => {
+          return response;
+      })
+      .catch((Error) => {
+          console.log(Error);
+      })
+
+  } catch (err) {
+  console.error(err);
+  }
+}
 
   // 해당 메모의 해시 리스트
   const [allHashList, setAllHashList]  = useState([]);
@@ -198,6 +296,9 @@ export default function(memo) {
     .catch(error => 
       console.error(error)
       )
+
+    //삭제 메세지 발송
+    sendDeleteAlarm();
 
     dispatch({ type: 'DEL_MEMO', no, pin});
   };
@@ -227,6 +328,7 @@ export default function(memo) {
         .catch(error => 
           console.error(error)
           )
+        sendUpdateAlarm();
    };
 
 
