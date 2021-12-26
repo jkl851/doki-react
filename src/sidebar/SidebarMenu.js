@@ -74,6 +74,20 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
         setCopiedDeptUserDatas(deptUserDatas);  // 부서 모달을 클릭 시의 부서 유저 상태를 복사해둔다 => 바깥 클릭으로 닫았을 때 다시 돌리기 위함
     };
 
+    const [allUserList, setAllUserList] = useState([])
+
+    useEffect(()=> {
+        
+        axios
+            .get("http://localhost:8080/doki/user/getAllUserList")
+            .then(Response => {                
+                setAllUserList(Response.data);
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }, [])
+
     // [soo] 초대 모달에서 x버튼 클릭 시 해당 부서로 직원 초대
     const closeInviteModal = async () => {
         setInviteState({ isOpen: false });
@@ -410,6 +424,8 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
                 </ReactModal>
             </div>
 
+            {
+            division !== 1 ?
             <div className="sidebar-user">
                 <SidebarUser
                     deptUserDatas={deptUserDatas}
@@ -417,6 +433,16 @@ export default function SidebarMenu({ division , hashKeyword, setHashKeyword, al
                     setKeyword={setKeyword}
                 />
             </div>
+            :
+            <div className="sidebar-user">
+                <SidebarUser
+                    deptUserDatas={allUserList}
+                    keyword={keyword}
+                    setKeyword={setKeyword}
+                />
+            </div>
+            }
+            
         </div>
     );
 }

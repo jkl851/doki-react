@@ -12,7 +12,7 @@ import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import ChatMessage from "./ChatMessage";
 
-export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
+export default function HeaderDiv({ division, setDivision, allinfo, chat, setChat }) {
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
   const deptNo = allinfo.departmentNo;
@@ -117,9 +117,11 @@ export default function HeaderDiv({ setDivision, allinfo, chat, setChat }) {
           <MemoAlarmPopover memoMessages={memoMessages} allinfo={allinfo} setDivision={setDivision} />
           {/* <ChatAlarmPopover chatMessages={chatMessages} allinfo={allinfo} setDivision={setDivision} /> */}
           <UpdateUserModal allinfo={allinfo} />
-          <a onClick={chatControll} href="#about">
+          {
+            division !== 1 &&
+            <a onClick={chatControll} href="#about">
             채팅
-          </a>
+          </a>}
         </div>
       </div>
     </div>
