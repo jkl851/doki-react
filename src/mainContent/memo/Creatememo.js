@@ -106,6 +106,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
 
     // 메모 value 추가 이벤트
     const InputEvent = (name, value) => {
+        console.log(name +': 네임  인풋이벤트 밸류 : '+ value);
         setCmemo((prevValue) => {
             return {
                 ...prevValue,
@@ -446,6 +447,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
                                         className="memoAlarm"
                                         memo={cmemo}
                                         InputEvent={InputEvent}
+                                        isPosted={false}
                                     />
                                 </div>
                             ) : (
