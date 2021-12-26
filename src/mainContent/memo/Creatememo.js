@@ -184,28 +184,28 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
             });
         
             //MemoAlarm Pub 작업
-            try {
-                await axios({
-                    method: "post",
-                    url: `http://localhost:8080/doki/talk/memoAlarmPub`,
-                    params: {
-                    roomId: allinfo.departmentNo * 100,
-                    memoNo: 999,
-                    title: cmemo.title,
-                    senderNo: allinfo.no,
-                    messageType: 'add'
-                    }
-                })
-                .then((response) => {
-                    return response;
-                })
-                .catch((Error) => {
-                    console.log(Error);
-                })
+            // try {
+            //     await axios({
+            //         method: "post",
+            //         url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+            //         params: {
+            //         roomId: allinfo.departmentNo * 100,
+            //         memoNo: 999,
+            //         title: cmemo.title,
+            //         senderNo: allinfo.no,
+            //         messageType: 'add'
+            //         }
+            //     })
+            //     .then((response) => {
+            //         return response;
+            //     })
+            //     .catch((Error) => {
+            //         console.log(Error);
+            //     })
         
-            } catch (err) {
-            console.error(err);
-            }
+            // } catch (err) {
+            // console.error(err);
+            // }
     };
 
     // 토글에 따른 메모 버튼 활성화

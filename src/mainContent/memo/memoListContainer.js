@@ -62,7 +62,7 @@ export default function memoList ({filter, title, deptAuth, allinfo}) {
       });
 
 
-      //
+      
       console.log('Memo Out Socket Connected: ');
       stompClient.subscribe(`/topicOut/0`, (msg) => {
         const data = JSON.parse(msg.body);
