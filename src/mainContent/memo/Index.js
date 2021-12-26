@@ -22,7 +22,8 @@ export default function App({division, allinfo, hashKeyword, deptAuth}) {
       console.log(url)
       axios.get(url, {withCredentials: true})
       .then((Response) => {
-         
+        console.log("===== GET MemoList =====");
+        console.log(Response.data);
           dispatch({ type: 'GET_MEMOLIST', memoListFromServer : Response.data });
           console.log("===== GET MemoList =====");
           console.log(Response.data);

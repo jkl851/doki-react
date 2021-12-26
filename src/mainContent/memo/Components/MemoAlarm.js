@@ -7,12 +7,12 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import dayjs from 'dayjs';
 
-export default function MemoAlarm({memo, InputEvent, isPosted}) {
+export default function MemoAlarm({memo, InputEvent, isPosted, allinfo}) {
     const [ memos, dispatch ] = useContext(MemoContext);
 
     const changAlarmHandler = (e) => {
         isPosted === true ? 
-            dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "alarm", value : dayjs(e).format("YYYY-MM-DD hh:mm") }) 
+            dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "alarm", value : dayjs(e).format("YYYY-MM-DD hh:mm") , allinfo: allinfo}) 
             : 
             InputEvent('alarm', dayjs(e).format("YYYY-MM-DD hh:mm"))
     } 
@@ -20,12 +20,12 @@ export default function MemoAlarm({memo, InputEvent, isPosted}) {
     const changCheckHandler = (e) => {
         if( (memo.checked === '0') || (memo.checked === null) ) {
             isPosted === true ? 
-                    dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "checked", value : '1' })
+                    dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "checked", value : '1', allinfo: allinfo })
                     :
                     InputEvent('checked', '1') 
         } else {
             isPosted === true ? 
-                    dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "checked", value : '0' })
+                    dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : "checked", value : '0' , allinfo: allinfo })
                     :
                     InputEvent('checked', '0') 
         }

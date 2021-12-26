@@ -433,7 +433,7 @@ export default function(memo) {
                           </Button>
                           {expandAlarm ? (
                             <div className="alarm-div-dropdown">
-                              <MemoAlarm isPosted={true} className="memoAlarm" memo={memo}/>
+                              <MemoAlarm isPosted={true} className="memoAlarm" memo={memo} allinfo={allinfo}/>
                             </div>
                           ) : (
                             false
