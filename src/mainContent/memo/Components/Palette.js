@@ -44,7 +44,7 @@ const colors = [
     { color: "#e8eaed", tooltip: "회색" },
 ];
 
-export default function ColorPalette({ memo, InputEvent, isPosted }) {
+export default function ColorPalette({ memo, InputEvent, isPosted, allinfo }) {
     const [ memos, dispatch ] = useContext(MemoContext);
     return (
         <Wrapper>
@@ -55,7 +55,7 @@ export default function ColorPalette({ memo, InputEvent, isPosted }) {
                             key={idx}
                             name="color"
                             value={color.color}
-                            onClick={ (name, value) => dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : name, value : value }) }
+                            onClick={ (name, value) => dispatch({ type: 'MODIFY_MEMO_SELF', no: memo.no, name : name, value : value , allinfo: allinfo}) }
                             border={color.border ? color.border : color.color}
                             selectedColor={memo.color}
                             tooltip={color.tooltip}

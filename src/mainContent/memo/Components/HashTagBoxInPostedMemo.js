@@ -25,7 +25,7 @@ const HashTag = styled.div`
     align-items: center;
 `;
 
-const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList, memo}) => {
+const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList, memo, allinfo}) => {
     const [keyword, setKeyword] = useState("");
     const [canMakeFlag, setCanMakeFlag] = useState(false);
 
@@ -155,6 +155,7 @@ const HashTagBoxInPostedMemo = ({ allHashList, setAllHashList, memo}) => {
                                     allHashList={allHashList}
                                     setAllHashList={setAllHashList}
                                     memo={memo}
+                                    allinfo={allinfo}
                                 />
                             );
                         })}

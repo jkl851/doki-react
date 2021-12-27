@@ -7,7 +7,8 @@ const HashItemInPostedMemo = ({
     checkedHash,
     allHashList,
     setAllHashList,
-    memo
+    memo,
+    allinfo
 }) => {
 
     const [memos, dispatch] = useContext(MemoContext);
@@ -49,10 +50,10 @@ const HashItemInPostedMemo = ({
         console.log("===================");
         
         
-        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hash", value: postedHashDatas})
-        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashNo", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashNo : null})
-        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashName", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashName : null})
-        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashCount", value: postedHashDatas.length })
+        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hash", value: postedHashDatas, allinfo: allinfo})
+        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashNo", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashNo : null, allinfo: allinfo})
+        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashName", value: postedHashDatas.length > 0 ? postedHashDatas[0].hashName : null, allinfo: allinfo})
+        dispatch({type: 'MODIFY_MEMO_SELF', no: memo.no, name:"hashCount", value: postedHashDatas.length, allinfo: allinfo })
 
     };
     return (

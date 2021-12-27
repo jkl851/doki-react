@@ -430,7 +430,9 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
                         className="buttons-div"
                         style={{ textAlign: "center" }}
                     >
-                        <div className="alarm-div" ref={alarmOutsideRef}>
+                        <div className="alarm-div" 
+                        //ref={alarmOutsideRef}
+                        >
                             <Button
                                 className="alarmButton"
                                 onClick={expandAlarmTable}
@@ -490,7 +492,8 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
 
                         {/* HashTag */}
                         <Button onClick={hashTagEvent}
-                            ref={hashOutsideRef}>
+                            //</div>ref={hashOutsideRef}
+                            >
                             <HashTagIcon color="action" />
                         </Button>
                         {expandHashTag ? ( //false로 바꿔둠 (가리기용)
