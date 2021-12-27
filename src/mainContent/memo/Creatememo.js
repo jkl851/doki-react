@@ -106,6 +106,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
 
     // 메모 value 추가 이벤트
     const InputEvent = (name, value) => {
+        console.log(name +': 네임  인풋이벤트 밸류 : '+ value);
         setCmemo((prevValue) => {
             return {
                 ...prevValue,
@@ -159,7 +160,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
                     no: "",
                     title: "",
                     contents: "",
-                    alarm: new Date(),
+                    alarm: dayjs(new Date()).format("YYYY-MM-DD hh:mm"),
                     checked: '0',
                     alarmset: "0",
                     color: "#FFFFFF",
@@ -184,28 +185,28 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
             });
         
             //MemoAlarm Pub 작업
-            try {
-                await axios({
-                    method: "post",
-                    url: `http://localhost:8080/doki/talk/memoAlarmPub`,
-                    params: {
-                    roomId: allinfo.departmentNo * 100,
-                    memoNo: 999,
-                    title: cmemo.title,
-                    senderNo: allinfo.no,
-                    messageType: 'add'
-                    }
-                })
-                .then((response) => {
-                    return response;
-                })
-                .catch((Error) => {
-                    console.log(Error);
-                })
+            // try {
+            //     await axios({
+            //         method: "post",
+            //         url: `http://localhost:8080/doki/talk/memoAlarmPub`,
+            //         params: {
+            //         roomId: allinfo.departmentNo * 100,
+            //         memoNo: 999,
+            //         title: cmemo.title,
+            //         senderNo: allinfo.no,
+            //         messageType: 'add'
+            //         }
+            //     })
+            //     .then((response) => {
+            //         return response;
+            //     })
+            //     .catch((Error) => {
+            //         console.log(Error);
+            //     })
         
-            } catch (err) {
-            console.error(err);
-            }
+            // } catch (err) {
+            // console.error(err);
+            // }
     };
 
     // 토글에 따른 메모 버튼 활성화
@@ -448,6 +449,7 @@ export default function CreateMemo({allinfo, division, deptAuth}) {
                                         className="memoAlarm"
                                         memo={cmemo}
                                         InputEvent={InputEvent}
+                                        isPosted={false}
                                     />
                                 </div>
                             ) : (

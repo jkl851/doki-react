@@ -542,7 +542,7 @@ export default function(memo) {
 
               ):( (memo.handling == 1) ? 
                 (
-                <BackgroundColor className="memo" color={memo.color} style={{border: "5px solid red"}}>
+                <BackgroundColor className="memo" color={memo.color} style={{border: "6px solid magenta"}}>
                    <div style={{display:"inline-block"}} >
                     <h4 className="memo-title" 
                       >{memo.title}</h4>

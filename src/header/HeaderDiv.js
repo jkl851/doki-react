@@ -13,7 +13,6 @@ import { Stomp } from '@stomp/stompjs';
 import ChatMessage from "./ChatMessage";
 
 export default function HeaderDiv({ division, setDivision, allinfo, chat, setChat }) {
-  console.log(division)
   //현재 유저 no
   let no = JSON.stringify(allinfo.no);
   const deptNo = allinfo.departmentNo;

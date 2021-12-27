@@ -15,14 +15,15 @@ export default function App({division, allinfo, hashKeyword, deptAuth}) {
   // 메인 구현 후 사이드바 클릭시 불러오는거로 이동
     const groupNo = division;
     // console.log('groupNo ==> '+ groupNo)
+    
     useEffect(() => {
       
-      console.log(hashKeyword);
       const url = 'http://localhost:8080/doki/memo/list/'+ groupNo + (hashKeyword !== undefined ? ('/'+ hashKeyword) : '' );
       console.log(url)
       axios.get(url, {withCredentials: true})
       .then((Response) => {
-         
+        console.log("===== GET MemoList =====");
+        console.log(Response.data);
           dispatch({ type: 'GET_MEMOLIST', memoListFromServer : Response.data });
           console.log("===== GET MemoList =====");
           console.log(Response.data);
